@@ -14,6 +14,8 @@ class Farmer extends FlxNestedSprite {
   var items: ItemGroup;
   var weapon: Weapon;
 
+  private var throwingDistance: Float;
+
   public function new(items: ItemGroup, xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc);
 
@@ -21,6 +23,7 @@ class Farmer extends FlxNestedSprite {
 
     makeGraphic(16, 16, FlxColor.RED);
     maxVelocity.set(300, 300);
+    throwingDistance = 100;
     centerOrigin();
   }
 
@@ -41,18 +44,22 @@ class Farmer extends FlxNestedSprite {
 
       if (FlxG.keys.pressed.UP) {
         velocity.y = -maxVelocity.y;
+        facing = FlxObject.UP;
       }
 
       if (FlxG.keys.pressed.DOWN) {
         velocity.y = maxVelocity.y;
+        facing = FlxObject.DOWN;
       }
 
       if (FlxG.keys.pressed.LEFT) {
         velocity.x = -maxVelocity.x;
+        facing = FlxObject.LEFT;
       }
 
       if (FlxG.keys.pressed.RIGHT) {
         velocity.x = maxVelocity.x;
+        facing = FlxObject.RIGHT;
       }
 
       if (FlxG.keys.justPressed.SPACE) {
@@ -66,6 +73,12 @@ class Farmer extends FlxNestedSprite {
       if (FlxG.keys.justPressed.C) {
         if (holding != null) {
           attack();
+        }
+      }
+
+      if (FlxG.keys.justPressed.V) {
+        if (holding != null) {
+          throwItem();
         }
       }
     #end
@@ -92,5 +105,15 @@ class Farmer extends FlxNestedSprite {
 
   private function attack(): Void {
     this.holding.use();
+  }
+
+  private function throwItem(): Void {
+    switch this.facing {
+      case FlxObject.UP: holding.y -= throwingDistance;
+      case FlxObject.DOWN: holding.y += throwingDistance;
+      case FlxObject.LEFT: holding.x -= throwingDistance;
+      case FlxObject.RIGHT: holding.x += throwingDistance;
+    }
+    drop();
   }
 }
