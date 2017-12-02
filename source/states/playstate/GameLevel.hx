@@ -16,9 +16,16 @@ class GameLevel extends FlxGroup {
   private var uiLayer: FlxGroup;
 
   private var farmer: Farmer;
+<<<<<<< Updated upstream
   private var foods: FlxTypedGroup<Food>;
   private var weapon: Weapon;
   
+=======
+  private var tileCursor: TileCursor;
+
+  private var items: ItemGroup;
+
+>>>>>>> Stashed changes
   private var creatures: FlxTypedGroup<Creature>;
 
 	public function new(levelNumber): Void {
@@ -59,22 +66,25 @@ class GameLevel extends FlxGroup {
     backgroundLayer.add(levelMap.getBackgroundLayer());
     foregroundLayer.add(levelMap.getForegroundLayer());
 
-    foods = new FlxTypedGroup<Food>();
+    items = new ItemGroup();
     var food: Food = createFood(100, 100);
-    foods.add(food);
-    foregroundLayer.add(foods);
+    items.foods.add(food);
 
     creatures = new FlxTypedGroup<Creature>();
     for (i in 1...10) {
       trace("Create creature");
-      var creature: Creature = new Creature(FlxG.width / 2 + 16 * i, FlxG.height / 2 + 16 * i, foods);
+      var creature: Creature = new Creature(FlxG.width / 2 + 16 * i, FlxG.height / 2 + 16 * i, items.foods);
       creatures.add(creature);
     }
     
     foregroundLayer.add(creatures);
 
-    weapon = new Weapon();
-    farmer = new Farmer(foods, weapon, 100, 100);
+    var weapon: Weapon = createWeapon(200, 200, creatures);
+    items.weapons.add(weapon);
+
+    foregroundLayer.add(items);
+
+    farmer = new Farmer(items, 100, 100);
     foregroundLayer.add(farmer);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.getForegroundLayer().width, levelMap.getForegroundLayer().height, true);
@@ -114,5 +124,10 @@ class GameLevel extends FlxGroup {
   private function createFood(x: Float, y: Float): Food {
     var food = new Food(x, y);
     return food;
+  }
+
+  private function createWeapon(x: Float, y: Float, creatures: FlxTypedGroup<Creature>): Weapon {
+    var weapon = new Weapon(x, y, creatures);
+    return weapon;
   }
 }

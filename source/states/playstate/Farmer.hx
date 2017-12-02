@@ -10,16 +10,14 @@ import flixel.addons.display.FlxNestedSprite;
 
 class Farmer extends FlxNestedSprite {
 
-  var item: Food;
-  var foods: FlxTypedGroup<Food>;
+  var holding: Item;
+  var items: ItemGroup;
   var weapon: Weapon;
 
-  public function new(foods: FlxTypedGroup<Food>, weapon: Weapon, xLoc: Float, yLoc: Float) {
+  public function new(items: ItemGroup, xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc);
 
-    this.foods = foods;
-
-    this.weapon = weapon;
+    this.items = items;
 
     makeGraphic(16, 16, FlxColor.RED);
     maxVelocity.set(1, 1);
@@ -55,7 +53,7 @@ class Farmer extends FlxNestedSprite {
       }
 
       if (FlxG.keys.justPressed.SPACE) {
-        if (item == null) {
+        if (holding == null) {
           pickup();
         } else {
           drop();
@@ -63,7 +61,7 @@ class Farmer extends FlxNestedSprite {
       }
 
       if (FlxG.keys.justPressed.C) {
-        if (item == null) {
+        if (holding == null) {
           attack();
         }
       }
@@ -71,27 +69,23 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function pickup(): Void {
-    if (foods.members.length > 0 && this.item == null) {
-      FlxG.overlap(this, foods, function(self: Farmer, food: Food) {
-        if (this.item == null) {
-          this.add(food);
-          food.relativeX = 10;
-          food.relativeY = 10;
-          this.item = food;
-        }
-      });
-    }
+    FlxG.overlap(this, items, function(self: Farmer, item: Item) {
+      if (this.holding == null) {
+        this.add(item);
+        item.relativeX = 10;
+        item.relativeY = 10;
+        this.holding = item;
+      }
+    });
   }
 
   private function drop(): Void {
-    remove(item);
-    foods.add(item);
-    item = null;
+    remove(holding);
+    items.add(holding);
+    holding = null;
   }
 
   private function attack(): Void {
-    if (this.weapon != null && this.item == null) {
-      this.weapon.use();
-    }
+    trace("Attack");
   }
 }
