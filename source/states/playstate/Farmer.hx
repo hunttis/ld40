@@ -10,7 +10,7 @@ import flixel.addons.display.FlxNestedSprite;
 class Farmer extends FlxNestedSprite {
 
   var item: FlxNestedSprite;
-  var foods: GameLevel;
+  var foods: FlxGroup;
 
   public function new(foods: FlxGroup, xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc);

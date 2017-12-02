@@ -17,6 +17,8 @@ class GameLevel extends FlxGroup {
   private var tileCursor: TileCursor;
   private var foods: FlxGroup;
 
+  private var creatures: FlxTypedGroup<Creature>;
+
 	public function new(levelNumber): Void {
 		super();
     loadLevel(levelNumber);
@@ -57,6 +59,12 @@ class GameLevel extends FlxGroup {
     foregroundLayer.add(levelMap.getForegroundLayer());
 
     foods = new FlxGroup();
+
+    creatures = new FlxTypedGroup<Creature>();
+    var creature: Creature = new Creature(FlxG.width / 2, FlxG.height / 2);
+    creatures.add(creature);
+    
+    foregroundLayer.add(creatures);
 
     farmer = new Farmer(foods, 100, 100);
     foregroundLayer.add(farmer);
