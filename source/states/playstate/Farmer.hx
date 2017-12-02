@@ -1,5 +1,7 @@
 package states.playstate;
 
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.FlxObject;
@@ -109,10 +111,10 @@ class Farmer extends FlxNestedSprite {
 
   private function throwItem(): Void {
     switch this.facing {
-      case FlxObject.UP: holding.y -= throwingDistance;
-      case FlxObject.DOWN: holding.y += throwingDistance;
-      case FlxObject.LEFT: holding.x -= throwingDistance;
-      case FlxObject.RIGHT: holding.x += throwingDistance;
+      case FlxObject.UP: FlxTween.tween(holding, {y: holding.y - throwingDistance}, 0.5, {ease: FlxEase.quadIn});
+      case FlxObject.DOWN: FlxTween.tween(holding, {y: holding.y + throwingDistance}, 0.5, {ease: FlxEase.quadIn});
+      case FlxObject.LEFT: FlxTween.tween(holding, {x: holding.x - throwingDistance}, 0.5, {ease: FlxEase.quadIn});
+      case FlxObject.RIGHT: FlxTween.tween(holding, {x: holding.x + throwingDistance}, 0.5, {ease: FlxEase.quadIn});
     }
     drop();
   }
