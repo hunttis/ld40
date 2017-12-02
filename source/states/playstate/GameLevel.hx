@@ -16,20 +16,19 @@ class GameLevel extends FlxGroup {
   private var uiLayer: FlxGroup;
 
   private var farmer: Farmer;
-  private var tileCursor: TileCursor;
   private var foods: FlxTypedGroup<Food>;
-
+  private var weapon: Weapon;
+  
   private var creatures: FlxTypedGroup<Creature>;
 
 	public function new(levelNumber): Void {
 		super();
     loadLevel(levelNumber);
-    createTileCursor();
 	}
 	
 	override public function update(elapsed: Float): Void {
-		super.update(elapsed);
     checkControls(elapsed);
+		super.update(elapsed);
 	}
 
   private function checkControls(elapsed: Float): Void {
@@ -40,6 +39,7 @@ class GameLevel extends FlxGroup {
   private function checkCollisions(elapsed: Float): Void {
     if (levelMap != null) {
       FlxG.collide(levelMap.getForegroundLayer(), farmer);
+      var result = FlxG.collide(creatures);
     }
   }
 
@@ -57,7 +57,6 @@ class GameLevel extends FlxGroup {
     add(levelMap);
 
     backgroundLayer.add(levelMap.getBackgroundLayer());
-
     foregroundLayer.add(levelMap.getForegroundLayer());
 
     foods = new FlxTypedGroup<Food>();
@@ -66,12 +65,16 @@ class GameLevel extends FlxGroup {
     foregroundLayer.add(foods);
 
     creatures = new FlxTypedGroup<Creature>();
-    var creature: Creature = new Creature(FlxG.width / 2, FlxG.height / 2, foods);
-    creatures.add(creature);
+    for (i in 1...10) {
+      trace("Create creature");
+      var creature: Creature = new Creature(FlxG.width / 2 + 16 * i, FlxG.height / 2 + 16 * i, foods);
+      creatures.add(creature);
+    }
     
     foregroundLayer.add(creatures);
 
-    farmer = new Farmer(foods, 100, 100);
+    weapon = new Weapon();
+    farmer = new Farmer(foods, weapon, 100, 100);
     foregroundLayer.add(farmer);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.getForegroundLayer().width, levelMap.getForegroundLayer().height, true);
@@ -86,14 +89,6 @@ class GameLevel extends FlxGroup {
     add(backgroundLayer);
     add(foregroundLayer);
     add(uiLayer);
-  }
-
-  private function createTileCursor(): Void {
-    #if (!mobile)
-      // Mouse not on mobile!
-      tileCursor = new TileCursor();
-      uiLayer.add(tileCursor);
-    #end
   }
 
   public function isGameOver(): Bool {

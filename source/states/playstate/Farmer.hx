@@ -12,11 +12,14 @@ class Farmer extends FlxNestedSprite {
 
   var item: Food;
   var foods: FlxTypedGroup<Food>;
+  var weapon: Weapon;
 
-  public function new(foods: FlxTypedGroup<Food>, xLoc: Float, yLoc: Float) {
+  public function new(foods: FlxTypedGroup<Food>, weapon: Weapon, xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc);
 
     this.foods = foods;
+
+    this.weapon = weapon;
 
     makeGraphic(16, 16, FlxColor.RED);
     maxVelocity.set(1, 1);
@@ -58,6 +61,12 @@ class Farmer extends FlxNestedSprite {
           drop();
         }
       }
+
+      if (FlxG.keys.justPressed.C) {
+        if (item == null) {
+          attack();
+        }
+      }
     #end
   }
 
@@ -80,4 +89,9 @@ class Farmer extends FlxNestedSprite {
     item = null;
   }
 
+  private function attack(): Void {
+    if (this.weapon != null && this.item == null) {
+      this.weapon.use();
+    }
+  }
 }
