@@ -42,8 +42,9 @@ Then I had to install stuff:
 haxelib install lime
 haxelib install format
 haxelib install hxcpp
-# I am not sure if this last step ("lime rebuild ...") is necessary.
+# I am not sure if these last two steps ("lime rebuild ...") are necessary, but they helped for me.
 lime rebuild mac # (or whichever operating system you use)
+lime rebuild html5
 ```
 
 ### Running the template
