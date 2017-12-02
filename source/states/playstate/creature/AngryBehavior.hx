@@ -9,6 +9,10 @@ class AngryBehavior implements Behavior {
 
   public function new() {}
 
+  public function getType(): BehaviorType {
+    return BehaviorType.ANGRY;
+  }
+
   public function init(creature: Creature) {
     creature.loadGraphic("assets/bug_angry.png");
     findTarget(creature);
@@ -19,11 +23,11 @@ class AngryBehavior implements Behavior {
     creature.velocity.set(0, 0);
 
     if (creature.hunger <= 2) {
-      creature.state = new IdleBehavior();
+      creature.behavior = new IdleBehavior();
     }
 
     if (creature.hunger <= 10) {
-      creature.state = new HungryBehavior();
+      creature.behavior = new HungryBehavior();
     }
 
     moveInRoute(creature);

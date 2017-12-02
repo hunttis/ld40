@@ -3,8 +3,13 @@ package states.playstate.creature;
 import flixel.math.FlxVelocity;
 import flixel.FlxG;
 import flixel.FlxG;
+
 class HungryBehavior implements Behavior {
   public function new() {}
+
+  public function getType(): BehaviorType {
+    return BehaviorType.HUNGRY;
+  }
 
   public function init(creature: Creature) {
     creature.loadGraphic("assets/bug_hungry.png");
@@ -15,11 +20,11 @@ class HungryBehavior implements Behavior {
     creature.velocity.set(0, 0);
 
     if (creature.hunger <= 2) {
-      creature.state = new IdleBehavior();
+      creature.behavior = new IdleBehavior();
     }
 
     if (creature.hunger > 10) {
-      creature.state = new AngryBehavior();
+      creature.behavior = new AngryBehavior();
     }
 
     if (creature.targetFood == null) {
