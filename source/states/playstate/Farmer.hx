@@ -3,6 +3,7 @@ package states.playstate;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.FlxObject;
+import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.addons.display.FlxNestedSprite;
@@ -10,9 +11,9 @@ import flixel.addons.display.FlxNestedSprite;
 class Farmer extends FlxNestedSprite {
 
   var item: FlxNestedSprite;
-  var foods: GameLevel;
+  var foods: FlxTypedGroup<FlxNestedSprite>;
 
-  public function new(foods: FlxGroup, xLoc: Float, yLoc: Float) {
+  public function new(foods: FlxTypedGroup<FlxNestedSprite>, xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc);
 
     this.foods = foods;
@@ -60,8 +61,15 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function pickup(): Void {
-    item = createFood();
-    add(item);
+    if (foods.members.length > 0) {
+      foods.members.sort(function(a, b) return FlxMath.distanceBetween(a, this) - FlxMath.distanceBetween(b, this));
+      var food = foods.members[0];
+      if (FlxMath.distanceBetween(food, this) < 20) {
+        add(food);
+        food.relativeX = 10;
+        food.relativeY = 10;
+      }
+    }
   }
 
   private function drop(): Void {
@@ -70,11 +78,4 @@ class Farmer extends FlxNestedSprite {
     item = null;
   }
 
-  private function createFood(): FlxNestedSprite {
-    var food = new FlxNestedSprite(0, 0);
-    food.makeGraphic(16, 16, FlxColor.GREEN);
-    food.relativeX = 10;
-    food.relativeY = 10;   
-    return food;
-  }
 }

@@ -1,9 +1,11 @@
 package states.playstate;
 
 import flixel.FlxG;
+import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import states.playstate.LevelMap;
+import flixel.addons.display.FlxNestedSprite;
 
 class GameLevel extends FlxGroup {
 
@@ -15,7 +17,7 @@ class GameLevel extends FlxGroup {
 
   private var farmer: Farmer;
   private var tileCursor: TileCursor;
-  private var foods: FlxGroup;
+  private var foods: FlxTypedGroup<FlxNestedSprite>;
 
 	public function new(levelNumber): Void {
 		super();
@@ -56,7 +58,10 @@ class GameLevel extends FlxGroup {
 
     foregroundLayer.add(levelMap.getForegroundLayer());
 
-    foods = new FlxGroup();
+    foods = new FlxTypedGroup();
+    var food = createFood(100, 100);
+    foods.add(food);
+    foregroundLayer.add(foods);
 
     farmer = new Farmer(foods, 100, 100);
     foregroundLayer.add(farmer);
@@ -103,4 +108,9 @@ class GameLevel extends FlxGroup {
     return false;
   }
 
+  private function createFood(x: Float, y: Float): FlxNestedSprite {
+    var food = new FlxNestedSprite(x, y);
+    food.makeGraphic(16, 16, FlxColor.GREEN);
+    return food;
+  }
 }
