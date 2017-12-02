@@ -26,6 +26,26 @@ haxelib install flixel-tools
 haxelib run flixel setup
 ```
 
+### Installing lime
+
+At least for me (vpeurala) lime did not appear in my path automatically when I ran `haxelib install lime`.
+I had to create a file in `/usr/local/bin/lime` (or whichever location you like to use for the lime script, as long as it's in your PATH) with contents:
+
+```bash
+#!/bin/sh
+haxelib run lime "$@"
+```
+
+Then I had to install stuff:
+
+```bash
+haxelib install lime
+haxelib install format
+haxelib install hxcpp
+# I am not sure if this last step ("lime rebuild ...") is necessary.
+lime rebuild mac # (or whichever operating system you use)
+```
+
 ### Running the template
 
 ```
