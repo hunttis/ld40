@@ -20,7 +20,7 @@ class Farmer extends FlxNestedSprite {
     this.items = items;
 
     makeGraphic(16, 16, FlxColor.RED);
-    maxVelocity.set(3, 3);
+    maxVelocity.set(300, 300);
     centerOrigin();
   }
 
@@ -36,20 +36,23 @@ class Farmer extends FlxNestedSprite {
   private function checkKeys(elapsed: Float): Void {
     #if (!mobile) // Keys are not available on mobile
 
+      velocity.y = 0;
+      velocity.x = 0;
+
       if (FlxG.keys.pressed.UP) {
-        y -= maxVelocity.y;
+        velocity.y = -maxVelocity.y;
       }
 
       if (FlxG.keys.pressed.DOWN) {
-        y += maxVelocity.y;
+        velocity.y = maxVelocity.y;
       }
 
       if (FlxG.keys.pressed.LEFT) {
-        x -= maxVelocity.x;
+        velocity.x = -maxVelocity.x;
       }
 
       if (FlxG.keys.pressed.RIGHT) {
-        x += maxVelocity.x;
+        velocity.x = maxVelocity.x;
       }
 
       if (FlxG.keys.justPressed.SPACE) {
@@ -80,6 +83,8 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function drop(): Void {
+    holding.velocity.x = 0;
+    holding.velocity.y = 0;
     remove(holding);
     items.add(holding);
     holding = null;
