@@ -7,7 +7,7 @@
   "author": "Ville Nuutinen, Tommi Helander, Joni Katajamäki",
   "license": "MIT",
   "scripts": {
-    "start": "browser-sync start --server 'export/html5/bin' --files 'export/html5/bin/*.js'"
+    "start": "browser-sync start --reload-delay 200 --reload-debounce 200 --server 'export/html5/bin' --files 'export/html5/bin/*.js'"
   },
   "devDependencies": {
     "browser-sync": "^2.18.13"
