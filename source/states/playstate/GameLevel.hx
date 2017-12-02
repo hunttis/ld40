@@ -47,31 +47,25 @@ class GameLevel extends FlxGroup {
   private function loadLevel(levelNumber: Int): Void {
     createLayers();
 
-    levelMap = new LevelMap(levelNumber);
+    items = new ItemGroup();
+
+    levelMap = new LevelMap(levelNumber, items);
     add(levelMap);
+
+    creatures = levelMap.getCreatures();
+    farmer = levelMap.getFarmer();
+
+    var food: Food = createFood(100, 100);
+    items.foods.add(food);
+    
+    var weapon: Weapon = createWeapon(200, 200, creatures);
+    items.weapons.add(weapon);
 
     backgroundLayer.add(levelMap.getBackgroundLayer());
     foregroundLayer.add(levelMap.getForegroundLayer());
-
-    items = new ItemGroup();
-    var food: Food = createFood(100, 100);
-    items.foods.add(food);
-
-    creatures = new FlxTypedGroup<Creature>();
-    for (i in 1...10) {
-      trace("Create creature");
-      var creature: Creature = new Creature(FlxG.width / 2 + 64 * i, FlxG.height / 2 + 64 * i, items.foods, creatures);
-      creatures.add(creature);
-    }
-    
     foregroundLayer.add(creatures);
-
-    var weapon: Weapon = createWeapon(200, 200, creatures);
-    items.weapons.add(weapon);
-    foregroundLayer.add(items);
-
-    farmer = new Farmer(items, 100, 100);
     foregroundLayer.add(farmer);
+    foregroundLayer.add(items);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.getForegroundLayer().width, levelMap.getForegroundLayer().height, true);
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);

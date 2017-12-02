@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.addons.editors.tiled.TiledMap;
@@ -11,14 +12,18 @@ class LevelMap extends FlxGroup {
 
   private var foregroundLayer: FlxTilemap;
   private var backgroundLayer: FlxTilemap;
+  private var creatures: FlxTypedGroup<Creature>;
+  private var farmer: Farmer;
 
-  public function new(levelNumber: Int) {
+  public function new(levelNumber: Int, items: ItemGroup) {
     super();
     var tiledData: TiledMap = new TiledMap("assets/level" + levelNumber + ".tmx", "assets/");
 
     var tileSize = tiledData.tileWidth;
     var mapWidth = tiledData.width;
     var mapHeight = tiledData.height;
+
+    creatures = new FlxTypedGroup<Creature>();
 
     trace("Loaded map with: " + tileSize + " size tiles and " + mapWidth + "x" + mapHeight + " map");
 
@@ -41,6 +46,20 @@ class LevelMap extends FlxGroup {
         else {
           trace("Unknown layer, not creating! " + tileLayer.name);
         }
+      } else if (layer.type == TiledLayerType.OBJECT) {
+        
+        var objectLayer = cast(layer, TiledObjectLayer);
+        for (item in objectLayer.objects) {
+
+          trace("object in layer: " + item.name);
+          if (item.name == "creature") {
+            creatures.add(new Creature(item.x, item.y, items.foods, creatures));
+          } else if (item.name == "farmer") {
+            farmer = new Farmer(items, item.x, item.y);
+          }
+
+        };
+            
       } else {
         trace("Other layer!");
       }
@@ -53,6 +72,14 @@ class LevelMap extends FlxGroup {
 
   public function getBackgroundLayer(): FlxTilemap {
     return backgroundLayer;
+  }
+
+  public function getCreatures(): FlxTypedGroup<Creature> {
+    return creatures;
+  }
+
+  public function getFarmer(): Farmer {
+    return farmer;
   }
 
 }

@@ -116,7 +116,6 @@ class Creature extends FlxSprite {
 
     creatures.forEachAlive(function(creature) {
       var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
-      trace("Distance: " + distanceToCreature);
       if (this != creature && (closestCreature == null || distanceToCreature < distance)) {
         closestCreature = creature;
         distance = distanceToCreature;
