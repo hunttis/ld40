@@ -1,0 +1,4 @@
+#!/bin/bash
+echo Building neko..
+lime build neko
+echo Done building neko!
