@@ -1,5 +1,6 @@
 package states.playstate;
 
+import states.playstate.creature.BehaviorType;
 import flixel.tile.FlxTilemap;
 import flixel.math.FlxMath;
 import flixel.FlxSprite;
@@ -35,7 +36,6 @@ class Creature extends FlxSprite {
   }
 
   override public function update(elapsed: Float) {
-    hunger += elapsed;
     // trace(hunger);
 
     velocity.x = 0;
@@ -68,7 +68,7 @@ class Creature extends FlxSprite {
   }
 
   public function findClosestReproducingCreature(): Void {
-    var closestCreature = findClosestCreatureWith(function(creature) return true);
+    var closestCreature = findClosestCreatureWith(function(creature) return creature.behavior.getType() == BehaviorType.REPRODUCING);
     targetCreature = closestCreature;
   }
 
@@ -85,7 +85,11 @@ class Creature extends FlxSprite {
         }
       }
     });
-
     return closestCreature;
+  }
+
+  public function reproduce(): Void {
+    var newCreature: Creature = new Creature(x + 50, y + 50, tilemap, foods, creatures);
+    creatures.add(newCreature);
   }
 }
