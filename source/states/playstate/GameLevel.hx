@@ -40,7 +40,6 @@ class GameLevel extends FlxGroup {
     if (levelMap != null) {
       FlxG.collide(levelMap.getForegroundLayer(), farmer);
       var result = FlxG.collide(creatures);
-      trace("Collision Result: " + result);
     }
   }
 
