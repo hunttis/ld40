@@ -14,7 +14,7 @@ class Creature extends FlxSprite {
 
   public function new(xLoc: Float, yLoc: Float, foods: FlxTypedGroup<Food>) {
     super(xLoc, yLoc);
-    makeGraphic(16, 16, FlxColor.CYAN);
+    loadGraphic("assets/bug.png");
   }
 
   override public function update(elapsed: Float) {
@@ -25,7 +25,7 @@ class Creature extends FlxSprite {
     checkForFood();
 
     if (hunger > 10) {
-      makeGraphic(16, 16, FlxColor.RED);
+      loadGraphic("assets/bug_angry.png");
     }
   }
 
