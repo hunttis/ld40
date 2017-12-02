@@ -13,8 +13,9 @@ class GameLevel extends FlxGroup {
   private var foregroundLayer: FlxGroup;
   private var uiLayer: FlxGroup;
 
-  private var player: Player;
+  private var farmer: Farmer;
   private var tileCursor: TileCursor;
+  private var foods: FlxGroup;
 
 	public function new(levelNumber): Void {
 		super();
@@ -34,7 +35,7 @@ class GameLevel extends FlxGroup {
 
   private function checkCollisions(elapsed: Float): Void {
     if (levelMap != null) {
-      FlxG.collide(levelMap.getForegroundLayer(), player);
+      FlxG.collide(levelMap.getForegroundLayer(), farmer);
     }
   }
 
@@ -55,11 +56,13 @@ class GameLevel extends FlxGroup {
 
     foregroundLayer.add(levelMap.getForegroundLayer());
 
-    player = new Player(100, 100);
-    foregroundLayer.add(player);
+    foods = new FlxGroup();
+
+    farmer = new Farmer(foods, 100, 100);
+    foregroundLayer.add(farmer);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.getForegroundLayer().width, levelMap.getForegroundLayer().height, true);
-    FlxG.camera.follow(player, PLATFORMER, 0.3);
+    FlxG.camera.follow(farmer, PLATFORMER, 0.3);
   }
 
   private function createLayers(): Void {
