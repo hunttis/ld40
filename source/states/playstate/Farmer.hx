@@ -19,7 +19,7 @@ class Farmer extends FlxNestedSprite {
 
     this.items = items;
 
-    makeGraphic(16, 16, FlxColor.RED);
+    loadGraphic("assets/farmer.png");
     maxVelocity.set(3, 3);
     centerOrigin();
   }

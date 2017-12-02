@@ -6,7 +6,7 @@ class Food extends Item {
 
   public function new(xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc);
-    makeGraphic(16, 16, FlxColor.GREEN);
+    loadGraphic("assets/food.png");
   }
 
   override public function update(elapsed: Float): Void {
