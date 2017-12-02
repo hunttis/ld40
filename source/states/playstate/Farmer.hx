@@ -61,7 +61,7 @@ class Farmer extends FlxNestedSprite {
       }
 
       if (FlxG.keys.justPressed.C) {
-        if (holding == null) {
+        if (holding != null) {
           attack();
         }
       }
@@ -86,6 +86,6 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function attack(): Void {
-    trace("Attack");
+    this.holding.use();
   }
 }

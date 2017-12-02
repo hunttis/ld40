@@ -16,16 +16,10 @@ class GameLevel extends FlxGroup {
   private var uiLayer: FlxGroup;
 
   private var farmer: Farmer;
-<<<<<<< Updated upstream
-  private var foods: FlxTypedGroup<Food>;
   private var weapon: Weapon;
-  
-=======
-  private var tileCursor: TileCursor;
 
   private var items: ItemGroup;
 
->>>>>>> Stashed changes
   private var creatures: FlxTypedGroup<Creature>;
 
 	public function new(levelNumber): Void {
