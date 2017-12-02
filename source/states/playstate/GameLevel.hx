@@ -16,7 +16,6 @@ class GameLevel extends FlxGroup {
   private var uiLayer: FlxGroup;
 
   private var farmer: Farmer;
-  private var tileCursor: TileCursor;
   private var foods: FlxTypedGroup<Food>;
   private var weapon: Weapon;
   
@@ -25,7 +24,6 @@ class GameLevel extends FlxGroup {
 	public function new(levelNumber): Void {
 		super();
     loadLevel(levelNumber);
-    createTileCursor();
 	}
 	
 	override public function update(elapsed: Float): Void {
@@ -88,14 +86,6 @@ class GameLevel extends FlxGroup {
     add(backgroundLayer);
     add(foregroundLayer);
     add(uiLayer);
-  }
-
-  private function createTileCursor(): Void {
-    #if (!mobile)
-      // Mouse not on mobile!
-      tileCursor = new TileCursor();
-      uiLayer.add(tileCursor);
-    #end
   }
 
   public function isGameOver(): Bool {
