@@ -21,7 +21,7 @@ class Creature extends FlxSprite {
   var creatures: FlxTypedGroup<Creature>;
   public var behavior(default, set): Behavior;
   
-  var gameLevel: GameLevel;
+  public var gameLevel: GameLevel;
 
   public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
     super(xLoc, yLoc);
@@ -94,7 +94,7 @@ class Creature extends FlxSprite {
   }
 
   public function reproduce(): Void {
-    var newCreature: Creature = new Creature(x + 50, y + 50, tilemap, foods, creatures);
+    var newCreature: Creature = new Creature(x + 50, y + 50, gameLevel);
     creatures.add(newCreature);
   }
 }
