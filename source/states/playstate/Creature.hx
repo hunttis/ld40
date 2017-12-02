@@ -1,47 +1,33 @@
 package states.playstate;
 
-import flixel.math.FlxVelocity;
 import flixel.math.FlxMath;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
-import flixel.FlxG;
+import states.playstate.creature.Behavior;
+import states.playstate.creature.IdleBehavior;
 
 class Creature extends FlxSprite {
 
-  private var hunger: Float = 0;
+  public var hunger: Float = 0;
   
-  private var targetFood: Food;
-  private var targetCreature: Creature;
+  public var targetFood: Food;
+  public var targetCreature: Creature;
 
-  private var foods: FlxTypedGroup<Food>;
-  private var creatures: FlxTypedGroup<Creature>;
-  private var state: CreatureState;
+  var foods: FlxTypedGroup<Food>;
+  var creatures: FlxTypedGroup<Creature>;
+  public var state(default, set): Behavior;
 
   public function new(xLoc: Float, yLoc: Float, foods: FlxTypedGroup<Food>, creatures: FlxTypedGroup<Creature>) {
     super(xLoc, yLoc);
-    setNormalState();
+    state = new IdleBehavior();
     this.foods = foods;
     this.creatures = creatures;
     hunger = Math.random() * 10;
   }
 
-  function setNormalState() {
-    state = IDLE;
-    loadGraphic("assets/bug.png");
-  }
-
-  function setHungryState() {
-    state = HUNGRY;
-    loadGraphic("assets/bug_hungry.png");
-  }
-
-  function setAngryState() {
-    state = ANGRY;
-    loadGraphic("assets/bug_angry.png");
-  }
-
-  function setScaredState() {
-    state = SCARED;
+  public function set_state(nextBehavior: Behavior) {
+    nextBehavior.init(this);
+    return state = nextBehavior;
   }
 
   override public function update(elapsed: Float) {
@@ -51,50 +37,12 @@ class Creature extends FlxSprite {
     velocity.x = 0;
     velocity.y = 0;
 
-    if (state != IDLE && hunger < 2) {
-      setNormalState();
-    }
-
-    if (state != HUNGRY && hunger > 2) {
-      setHungryState();
-    }
-
-    if (state != ANGRY && hunger > 10) {
-      setAngryState();
-    }
-
-    if (state == HUNGRY) {
-      if (targetFood == null) {
-        checkForFood();
-      } else {
-        FlxVelocity.moveTowardsObject(this, targetFood, 50);
-        FlxG.overlap(this, targetFood, function(self: Creature, food: Food) {
-          food.hurt(0.1);
-          hunger = 0;
-        });
-        
-      }
-    }
-
-    if (state == ANGRY) {
-      if (targetCreature == null) {
-        findClosestCreature();
-      } else {
-        FlxVelocity.moveTowardsObject(this, targetCreature, 30);
-        FlxG.overlap(this, targetCreature, function(self: Creature, creature: Creature) {
-          creature.hurt(0.1);
-          if (!creature.alive) {
-            targetCreature = null;
-          }
-        });
-      }
-    }
+    state.update(this, elapsed);
 
     super.update(elapsed);
-
   }
 
-  private function checkForFood(): Void {
+  public function checkForFood(): Void {
     var closestFood: Food = null;
     var distance: Float = 1000000;
     foods.forEachAlive(function(food) {
@@ -110,7 +58,7 @@ class Creature extends FlxSprite {
     targetFood = closestFood;
   }
 
-  private function findClosestCreature(): Void {
+  public function findClosestCreature(): Void {
     var closestCreature: Creature = null;
     var distance: Float = 100000;
 
@@ -124,12 +72,4 @@ class Creature extends FlxSprite {
     });
     targetCreature = closestCreature;
   }
-
-}
-
-enum CreatureState {
-  IDLE;
-  HUNGRY;
-  ANGRY;
-  SCARED;
 }
