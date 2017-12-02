@@ -2,12 +2,9 @@ package states.playstate;
 
 import flixel.math.FlxVelocity;
 import flixel.math.FlxMath;
-import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
-import flixel.FlxObject;
 import flixel.FlxG;
-import flixel.addons.display.FlxNestedSprite;
 
 class Creature extends FlxSprite {
 
@@ -17,8 +14,20 @@ class Creature extends FlxSprite {
 
   public function new(xLoc: Float, yLoc: Float, foods: FlxTypedGroup<Food>) {
     super(xLoc, yLoc);
-    loadGraphic("assets/bug.png");
+    setNormalState();
     this.foods = foods;
+  }
+
+  function setNormalState() {
+    loadGraphic("assets/bug.png");
+  }
+
+  function setHungryState() {
+    loadGraphic("assets/bug_hungry.png");
+  }
+
+  function setAngryState() {
+    loadGraphic("assets/bug_angry.png");
   }
 
   override public function update(elapsed: Float) {
@@ -29,11 +38,11 @@ class Creature extends FlxSprite {
     velocity.y = 0;
 
     if (hunger < 2) {
-      makeGraphic(16, 16, FlxColor.CYAN);
+      setNormalState();
     }
 
     if (hunger > 2) {
-      makeGraphic(16, 16, FlxColor.YELLOW);
+      setHungryState();
 
       if (targetFood == null) {
         checkForFood();
@@ -50,7 +59,7 @@ class Creature extends FlxSprite {
     }
 
     if (hunger > 10) {
-      loadGraphic("assets/bug_angry.png");
+      setAngryState();
     }
 
     super.update(elapsed);
