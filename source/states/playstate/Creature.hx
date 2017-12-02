@@ -19,14 +19,19 @@ class Creature extends FlxSprite {
   var foods: FlxTypedGroup<Food>;
   var creatures: FlxTypedGroup<Creature>;
   public var behavior(default, set): Behavior;
+  
+  var gameLevel: GameLevel;
 
-  public function new(xLoc: Float, yLoc: Float, tilemap: FlxTilemap, foods: FlxTypedGroup<Food>, creatures: FlxTypedGroup<Creature>) {
+  public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
     super(xLoc, yLoc);
-    this.tilemap = tilemap;
+
+    this.gameLevel = gameLevel;
+    this.tilemap = gameLevel.levelMap.getForegroundLayer();
+
     behavior = new IdleBehavior();
-    this.foods = foods;
-    this.creatures = creatures;
-    hunger = Math.random() * 10;
+    this.foods = gameLevel.items.foods;
+    this.creatures = gameLevel.creatures;
+    // hunger = Math.random() * 10;
   }
 
   public function set_behavior(nextBehavior: Behavior) {

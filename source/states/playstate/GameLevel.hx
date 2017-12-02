@@ -9,7 +9,7 @@ import flixel.addons.display.FlxNestedSprite;
 
 class GameLevel extends FlxGroup {
 
-  private var levelMap: LevelMap;
+  public var levelMap: LevelMap;
 
   private var backgroundLayer: FlxGroup;
   private var foregroundLayer: FlxGroup;
@@ -18,11 +18,9 @@ class GameLevel extends FlxGroup {
   private var farmer: Farmer;
   private var weapon: Weapon;
 
-  private var items: ItemGroup;
-
-  private var salesShip: SalesShip;
-
-  private var creatures: FlxTypedGroup<Creature>;
+  public var items: ItemGroup;
+  public var salesShip: SalesShip;
+  public var creatures: FlxTypedGroup<Creature>;
 
 	public function new(levelNumber): Void {
 		super();
@@ -51,10 +49,12 @@ class GameLevel extends FlxGroup {
 
     items = new ItemGroup();
 
-    levelMap = new LevelMap(levelNumber, items);
+    levelMap = new LevelMap(levelNumber, this);
+    creatures = levelMap.getCreatures();
+    levelMap.createTileLayers();
+    levelMap.createObjectLayer();
     add(levelMap);
 
-    creatures = levelMap.getCreatures();
     farmer = levelMap.getFarmer();
 
     var food: Food = createFood(100, 100);

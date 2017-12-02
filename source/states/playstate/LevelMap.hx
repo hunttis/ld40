@@ -17,18 +17,27 @@ class LevelMap extends FlxGroup {
 
   private var salesPoint: FlxPoint;
 
-  public function new(levelNumber: Int, items: ItemGroup) {
-    super();
-    var tiledData: TiledMap = new TiledMap("assets/level" + levelNumber + ".tmx", "assets/");
+  private var tiledData: TiledMap;
+  private var tileSize: Int;
 
-    var tileSize = tiledData.tileWidth;
+  private var gameLevel: GameLevel;
+
+  public function new(levelNumber: Int, gameLevel: GameLevel) {
+    super();
+
+    this.gameLevel = gameLevel;
+    tiledData = new TiledMap("assets/level" + levelNumber + ".tmx", "assets/");
+
+    tileSize = tiledData.tileWidth;
     var mapWidth = tiledData.width;
     var mapHeight = tiledData.height;
 
     creatures = new FlxTypedGroup<Creature>();
 
     trace("Loaded map with: " + tileSize + " size tiles and " + mapWidth + "x" + mapHeight + " map");
+  }
 
+  public function createTileLayers() {
     for (layer in tiledData.layers) {
       if (layer.type == TiledLayerType.TILE) {
         var tileLayer = cast(layer, TiledTileLayer);
@@ -48,22 +57,26 @@ class LevelMap extends FlxGroup {
         else {
           trace("Unknown layer, not creating! " + tileLayer.name);
         }
-      } else if (layer.type == TiledLayerType.OBJECT) {
+      }
+    }
+  }
+
+  public function createObjectLayer() {
+    for (layer in tiledData.layers) {
+      if (layer.type == TiledLayerType.OBJECT) {
         var objectLayer = cast(layer, TiledObjectLayer);
         for (item in objectLayer.objects) {
 
           trace("object in layer: " + item.name);
           if (item.name == "creature") {
-            creatures.add(new Creature(item.x, item.y, foregroundLayer, items.foods, creatures));
+            creatures.add(new Creature(item.x, item.y, gameLevel));
           } else if (item.name == "farmer") {
-            farmer = new Farmer(items, item.x, item.y);
+            farmer = new Farmer(gameLevel.items, item.x, item.y);
           } else if (item.name == "salespoint") {
             salesPoint = new FlxPoint(item.x, item.y);
           }
 
         };
-      } else {
-        trace("Other layer!");
       }
     }
   }
