@@ -25,7 +25,7 @@ class Farmer extends FlxNestedSprite {
 
     loadGraphic("assets/farmer.png");
     maxVelocity.set(300, 300);
-    throwingDistance = 100;
+    throwingDistance = 150;
     centerOrigin();
   }
 
