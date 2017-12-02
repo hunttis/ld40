@@ -25,6 +25,7 @@
 	"search.exclude": {
 		"export/**/*.hx": true
 	},
+	"editor.tabSize": 2,
 	"codedox": {
 		"commentdescription": "\n",
 		"paramFormat": "@param   ${name} ",

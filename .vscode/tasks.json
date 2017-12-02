@@ -29,6 +29,10 @@
 			"taskName": "html5 debug",
 			"command": "haxelib",
 			"args": ["run", "lime", "test", "html5", "-debug"],
+      "group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"problemMatcher": "$haxe"
 		},
 		{
@@ -41,10 +45,6 @@
 			"taskName": "neko debug",
 			"command": "haxelib",
       "args": ["run", "lime", "test", "neko", "-debug"],
-      "group": {
-				"kind": "build",
-				"isDefault": true
-			},
 			"problemMatcher": "$haxe"
 		},
 		{
