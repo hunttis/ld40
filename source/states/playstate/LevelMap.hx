@@ -6,6 +6,7 @@ import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledLayer;
 import flixel.addons.editors.tiled.TiledTileLayer;
 import flixel.tile.FlxTilemap;
+import flixel.math.FlxPoint;
 
 class LevelMap extends FlxGroup {
 
@@ -13,6 +14,8 @@ class LevelMap extends FlxGroup {
   private var backgroundLayer: FlxTilemap;
   private var creatures: FlxTypedGroup<Creature>;
   private var farmer: Farmer;
+
+  private var salesPoint: FlxPoint;
 
   public function new(levelNumber: Int, items: ItemGroup) {
     super();
@@ -46,7 +49,6 @@ class LevelMap extends FlxGroup {
           trace("Unknown layer, not creating! " + tileLayer.name);
         }
       } else if (layer.type == TiledLayerType.OBJECT) {
-        
         var objectLayer = cast(layer, TiledObjectLayer);
         for (item in objectLayer.objects) {
 
@@ -55,10 +57,11 @@ class LevelMap extends FlxGroup {
             creatures.add(new Creature(item.x, item.y, foregroundLayer, items.foods, creatures));
           } else if (item.name == "farmer") {
             farmer = new Farmer(items, item.x, item.y);
+          } else if (item.name == "salespoint") {
+            salesPoint = new FlxPoint(item.x, item.y);
           }
 
         };
-            
       } else {
         trace("Other layer!");
       }
@@ -79,6 +82,10 @@ class LevelMap extends FlxGroup {
 
   public function getFarmer(): Farmer {
     return farmer;
+  }
+
+  public function getSalesPoint(): FlxPoint {
+    return salesPoint;
   }
 
 }

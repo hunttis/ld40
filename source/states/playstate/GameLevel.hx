@@ -20,6 +20,8 @@ class GameLevel extends FlxGroup {
 
   private var items: ItemGroup;
 
+  private var salesShip: SalesShip;
+
   private var creatures: FlxTypedGroup<Creature>;
 
 	public function new(levelNumber): Void {
@@ -61,11 +63,14 @@ class GameLevel extends FlxGroup {
     var weapon: Weapon = createWeapon(200, 200, creatures);
     items.weapons.add(weapon);
 
+    salesShip = new SalesShip(levelMap.getSalesPoint(), creatures);
+    
     backgroundLayer.add(levelMap.getBackgroundLayer());
     foregroundLayer.add(levelMap.getForegroundLayer());
     foregroundLayer.add(creatures);
     foregroundLayer.add(farmer);
     foregroundLayer.add(items);
+    foregroundLayer.add(salesShip);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.getForegroundLayer().width, levelMap.getForegroundLayer().height, true);
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);
