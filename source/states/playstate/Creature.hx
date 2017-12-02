@@ -63,31 +63,29 @@ class Creature extends FlxSprite {
   }
 
   public function findClosestCreature(): Creature {
-    var closestCreature: Creature = null;
-    var distance: Float = 100000;
-
-    creatures.forEachAlive(function(creature) {
-      var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
-      if (this != creature && (closestCreature == null || distanceToCreature < distance)) {
-        closestCreature = creature;
-        distance = distanceToCreature;
-      }
-    });
-    targetCreature = closestCreature;
-    return closestCreature;
+    targetCreature = findClosestCreatureWith(function(creature) return true);
+    return targetCreature;
   }
 
   public function findClosestReproducingCreature(): Void {
+    var closestCreature = findClosestCreatureWith(function(creature) return true);
+    targetCreature = closestCreature;
+  }
+
+  public function findClosestCreatureWith(predicate: Creature -> Bool): Creature {
     var closestCreature: Creature = null;
-    var distance: Float = 100000;
+    var distance: Float = FlxMath.MAX_VALUE_INT;
 
     creatures.forEachAlive(function(creature) {
-      var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
-      if (this != creature && (closestCreature == null || distanceToCreature < distance)) {
-        closestCreature = creature;
-        distance = distanceToCreature;
+      if (creature != this && predicate(creature)) {
+        var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
+        if (distanceToCreature < distance) {
+          closestCreature = creature;
+          distance = distanceToCreature;
+        }
       }
     });
-    targetCreature = closestCreature;
+
+    return closestCreature;
   }
 }
