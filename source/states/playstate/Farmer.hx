@@ -63,7 +63,7 @@ class Farmer extends FlxNestedSprite {
 
   private function pickup(): Void {
     if (foods.members.length > 0 && this.item == null) {
-      FlxG.overlap(this, foods, function(self, food) {
+      FlxG.overlap(this, foods, function(self: Farmer, food: Food) {
         if (this.item == null) {
           this.add(food);
           food.relativeX = 10;
