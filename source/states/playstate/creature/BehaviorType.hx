@@ -6,4 +6,5 @@ enum BehaviorType {
   HUNGRY;
   ANGRY;
   SCARED;
+  COLLECTED;
 }
