@@ -67,7 +67,7 @@ class GameLevel extends FlxGroup {
     creatures = new FlxTypedGroup<Creature>();
     for (i in 1...10) {
       trace("Create creature");
-      var creature: Creature = new Creature(FlxG.width / 2 + 16 * i, FlxG.height / 2 + 16 * i, items.foods);
+      var creature: Creature = new Creature(FlxG.width / 2 + 64 * i, FlxG.height / 2 + 64 * i, items.foods);
       creatures.add(creature);
     }
     
