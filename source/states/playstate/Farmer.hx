@@ -14,13 +14,16 @@ class Farmer extends FlxNestedSprite {
   var items: ItemGroup;
   var weapon: Weapon;
 
+  private var throwingDistance: Float;
+
   public function new(items: ItemGroup, xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc);
 
     this.items = items;
 
     loadGraphic("assets/farmer.png");
-    maxVelocity.set(3, 3);
+    maxVelocity.set(300, 300);
+    throwingDistance = 100;
     centerOrigin();
   }
 
@@ -36,20 +39,27 @@ class Farmer extends FlxNestedSprite {
   private function checkKeys(elapsed: Float): Void {
     #if (!mobile) // Keys are not available on mobile
 
+      velocity.y = 0;
+      velocity.x = 0;
+
       if (FlxG.keys.pressed.UP) {
-        y -= maxVelocity.y;
+        velocity.y = -maxVelocity.y;
+        facing = FlxObject.UP;
       }
 
       if (FlxG.keys.pressed.DOWN) {
-        y += maxVelocity.y;
+        velocity.y = maxVelocity.y;
+        facing = FlxObject.DOWN;
       }
 
       if (FlxG.keys.pressed.LEFT) {
-        x -= maxVelocity.x;
+        velocity.x = -maxVelocity.x;
+        facing = FlxObject.LEFT;
       }
 
       if (FlxG.keys.pressed.RIGHT) {
-        x += maxVelocity.x;
+        velocity.x = maxVelocity.x;
+        facing = FlxObject.RIGHT;
       }
 
       if (FlxG.keys.justPressed.SPACE) {
@@ -63,6 +73,12 @@ class Farmer extends FlxNestedSprite {
       if (FlxG.keys.justPressed.C) {
         if (holding != null) {
           attack();
+        }
+      }
+
+      if (FlxG.keys.justPressed.V) {
+        if (holding != null) {
+          throwItem();
         }
       }
     #end
@@ -80,6 +96,8 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function drop(): Void {
+    holding.velocity.x = 0;
+    holding.velocity.y = 0;
     remove(holding);
     items.add(holding);
     holding = null;
@@ -87,5 +105,15 @@ class Farmer extends FlxNestedSprite {
 
   private function attack(): Void {
     this.holding.use();
+  }
+
+  private function throwItem(): Void {
+    switch this.facing {
+      case FlxObject.UP: holding.y -= throwingDistance;
+      case FlxObject.DOWN: holding.y += throwingDistance;
+      case FlxObject.LEFT: holding.x -= throwingDistance;
+      case FlxObject.RIGHT: holding.x += throwingDistance;
+    }
+    drop();
   }
 }

@@ -1,7 +1,6 @@
 package states.playstate;
 
 import flixel.FlxG;
-import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledLayer;
@@ -32,12 +31,12 @@ class LevelMap extends FlxGroup {
         if (tileLayer.name == "foreground") {
           trace("Creating foreground!");
           foregroundLayer = new FlxTilemap();
-          foregroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/foregroundtiles.png", 64, 64, null, 1, 1, 1);
-        } 
+          foregroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/foregroundtiles.png", tileSize, tileSize, null, 1, 1, 1);
+        }
         else if (tileLayer.name == "background") {
           trace("Creating background!");
           backgroundLayer = new FlxTilemap();
-          backgroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/backgroundtiles.png", 64, 64, null, 65, 65, 65);
+          backgroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/backgroundtiles.png", tileSize, tileSize, null, 65, 65, 65);
         }
         else {
           trace("Unknown layer, not creating! " + tileLayer.name);

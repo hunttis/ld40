@@ -29,26 +29,19 @@ class GameLevel extends FlxGroup {
 	
 	override public function update(elapsed: Float): Void {
     checkControls(elapsed);
+    checkCollisions(elapsed);
 		super.update(elapsed);
 	}
 
   private function checkControls(elapsed: Float): Void {
-    checkMouse(elapsed);
-    checkCollisions(elapsed);
   }
 
   private function checkCollisions(elapsed: Float): Void {
     if (levelMap != null) {
       FlxG.collide(levelMap.getForegroundLayer(), farmer);
-      var result = FlxG.collide(creatures);
+      FlxG.collide(creatures);
+      FlxG.collide(levelMap.getForegroundLayer(), creatures);
     }
-  }
-
-  private function checkMouse(elapsed: Float): Void {
-    #if (!mobile)
-      // Mouse not on mobile!
-      
-    #end
   }
 
   private function loadLevel(levelNumber: Int): Void {
@@ -67,7 +60,7 @@ class GameLevel extends FlxGroup {
     creatures = new FlxTypedGroup<Creature>();
     for (i in 1...10) {
       trace("Create creature");
-      var creature: Creature = new Creature(FlxG.width / 2 + 64 * i, FlxG.height / 2 + 64 * i, items.foods);
+      var creature: Creature = new Creature(FlxG.width / 2 + 64 * i, FlxG.height / 2 + 64 * i, items.foods, creatures);
       creatures.add(creature);
     }
     
@@ -75,7 +68,6 @@ class GameLevel extends FlxGroup {
 
     var weapon: Weapon = createWeapon(200, 200, creatures);
     items.weapons.add(weapon);
-
     foregroundLayer.add(items);
 
     farmer = new Farmer(items, 100, 100);
