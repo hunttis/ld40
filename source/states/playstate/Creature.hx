@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.tile.FlxTilemap;
 import flixel.math.FlxMath;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
@@ -12,14 +13,16 @@ class Creature extends FlxSprite {
   
   public var targetFood: Food;
   public var targetCreature: Creature;
+  public var tilemap: FlxTilemap;
 
   var foods: FlxTypedGroup<Food>;
   var creatures: FlxTypedGroup<Creature>;
   public var state(default, set): Behavior;
 
-  public function new(xLoc: Float, yLoc: Float, foods: FlxTypedGroup<Food>, creatures: FlxTypedGroup<Creature>) {
+  public function new(xLoc: Float, yLoc: Float, tilemap: FlxTilemap, foods: FlxTypedGroup<Food>, creatures: FlxTypedGroup<Creature>) {
     super(xLoc, yLoc);
     state = new IdleBehavior();
+    this.tilemap = tilemap;
     this.foods = foods;
     this.creatures = creatures;
     hunger = Math.random() * 10;
@@ -58,7 +61,7 @@ class Creature extends FlxSprite {
     targetFood = closestFood;
   }
 
-  public function findClosestCreature(): Void {
+  public function findClosestCreature(): Creature {
     var closestCreature: Creature = null;
     var distance: Float = 100000;
 
@@ -70,5 +73,6 @@ class Creature extends FlxSprite {
       }
     });
     targetCreature = closestCreature;
+    return closestCreature;
   }
 }

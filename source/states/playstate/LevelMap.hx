@@ -1,7 +1,6 @@
 package states.playstate;
 
 import flixel.addons.editors.tiled.TiledObjectLayer;
-import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.addons.editors.tiled.TiledLayer;
@@ -53,7 +52,7 @@ class LevelMap extends FlxGroup {
 
           trace("object in layer: " + item.name);
           if (item.name == "creature") {
-            creatures.add(new Creature(item.x, item.y, items.foods, creatures));
+            creatures.add(new Creature(item.x, item.y, foregroundLayer, items.foods, creatures));
           } else if (item.name == "farmer") {
             farmer = new Farmer(items, item.x, item.y);
           }
