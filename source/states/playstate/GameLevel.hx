@@ -18,7 +18,8 @@ class GameLevel extends FlxGroup {
   private var farmer: Farmer;
   private var tileCursor: TileCursor;
   private var foods: FlxTypedGroup<Food>;
-
+  private var weapon: Weapon;
+  
   private var creatures: FlxTypedGroup<Creature>;
 
 	public function new(levelNumber): Void {
@@ -71,7 +72,8 @@ class GameLevel extends FlxGroup {
     
     foregroundLayer.add(creatures);
 
-    farmer = new Farmer(foods, 100, 100);
+    weapon = new Weapon();
+    farmer = new Farmer(foods, weapon, 100, 100);
     foregroundLayer.add(farmer);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.getForegroundLayer().width, levelMap.getForegroundLayer().height, true);
