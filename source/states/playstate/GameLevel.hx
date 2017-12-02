@@ -17,7 +17,7 @@ class GameLevel extends FlxGroup {
 
   private var farmer: Farmer;
   private var tileCursor: TileCursor;
-  private var foods: FlxTypedGroup<FlxNestedSprite>;
+  private var foods: FlxTypedGroup<Food>;
 
   private var creatures: FlxTypedGroup<Creature>;
 
@@ -60,13 +60,13 @@ class GameLevel extends FlxGroup {
 
     foregroundLayer.add(levelMap.getForegroundLayer());
 
-    foods = new FlxTypedGroup();
-    var food = createFood(100, 100);
+    foods = new FlxTypedGroup<Food>();
+    var food: Food = createFood(100, 100);
     foods.add(food);
     foregroundLayer.add(foods);
 
     creatures = new FlxTypedGroup<Creature>();
-    var creature: Creature = new Creature(FlxG.width / 2, FlxG.height / 2);
+    var creature: Creature = new Creature(FlxG.width / 2, FlxG.height / 2, foods);
     creatures.add(creature);
     
     foregroundLayer.add(creatures);
@@ -116,9 +116,8 @@ class GameLevel extends FlxGroup {
     return false;
   }
 
-  private function createFood(x: Float, y: Float): FlxNestedSprite {
-    var food = new FlxNestedSprite(x, y);
-    food.makeGraphic(16, 16, FlxColor.GREEN);
+  private function createFood(x: Float, y: Float): Food {
+    var food = new Food(x, y);
     return food;
   }
 }

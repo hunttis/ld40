@@ -10,10 +10,10 @@ import flixel.addons.display.FlxNestedSprite;
 
 class Farmer extends FlxNestedSprite {
 
-  var item: FlxNestedSprite;
-  var foods: FlxTypedGroup<FlxNestedSprite>;
+  var item: Food;
+  var foods: FlxTypedGroup<Food>;
 
-  public function new(foods: FlxTypedGroup<FlxNestedSprite>, xLoc: Float, yLoc: Float) {
+  public function new(foods: FlxTypedGroup<Food>, xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc);
 
     this.foods = foods;
@@ -76,6 +76,8 @@ class Farmer extends FlxNestedSprite {
 
   private function drop(): Void {
     remove(item);
+    foods.add(item);
     item = null;
   }
+
 }
