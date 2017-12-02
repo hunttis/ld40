@@ -9,9 +9,9 @@ class ReproductionBehavior implements Behavior {
   public function getType(): BehaviorType {
     return BehaviorType.REPRODUCING;
   }
-  
+
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug.png");
+    creature.loadGraphic("assets/bug_lovin.png");
   }
 
   public function update(creature: Creature, elapsed: Float): Void {
@@ -20,8 +20,7 @@ class ReproductionBehavior implements Behavior {
     } else {
       FlxVelocity.moveTowardsObject(creature, creature.targetCreature, 30);
       FlxG.overlap(creature, creature.targetCreature, function(self: Creature, other: Creature) {
-        // Spawn new creature here
-
+        creature.reproduce();
         self.satisfaction = 0;
         other.satisfaction = 0;
         self.behavior = new IdleBehavior();
