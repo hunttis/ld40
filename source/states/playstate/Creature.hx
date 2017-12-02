@@ -1,6 +1,5 @@
 package states.playstate;
 
-
 import flixel.math.FlxVelocity;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
@@ -23,7 +22,6 @@ class Creature extends FlxSprite {
   }
 
   override public function update(elapsed: Float) {
-    super.update(elapsed);
     hunger += elapsed;
     // trace(hunger);
 
@@ -54,6 +52,8 @@ class Creature extends FlxSprite {
     if (hunger > 10) {
       makeGraphic(16, 16, FlxColor.RED);
     }
+
+    super.update(elapsed);
 
   }
 
