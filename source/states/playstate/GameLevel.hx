@@ -1,11 +1,8 @@
 package states.playstate;
 
 import flixel.FlxG;
-import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
-import flixel.text.FlxText;
 import states.playstate.LevelMap;
-import flixel.addons.display.FlxNestedSprite;
 
 class GameLevel extends FlxGroup {
 
@@ -65,8 +62,9 @@ class GameLevel extends FlxGroup {
 
     salesShip = new SalesShip(levelMap.getSalesPoint(), creatures);
     
-    backgroundLayer.add(levelMap.getBackgroundLayer());
-    foregroundLayer.add(levelMap.getForegroundLayer());
+    backgroundLayer.add(levelMap.backgroundLayer);
+    foregroundLayer.add(levelMap.foregroundLayer);
+    foregroundLayer.add(levelMap.grassLayer);
     foregroundLayer.add(creatures);
     foregroundLayer.add(farmer);
     foregroundLayer.add(items);

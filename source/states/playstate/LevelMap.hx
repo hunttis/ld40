@@ -9,9 +9,9 @@ import flixel.tile.FlxTilemap;
 import flixel.math.FlxPoint;
 
 class LevelMap extends FlxGroup {
-
-  private var foregroundLayer: FlxTilemap;
-  private var backgroundLayer: FlxTilemap;
+  public var foregroundLayer(default, null): FlxTilemap;
+  public var grassLayer(default, null): FlxTilemap;
+  public var backgroundLayer(default, null): FlxTilemap;
   private var creatures: FlxTypedGroup<Creature>;
   private var farmer: Farmer;
 
@@ -47,12 +47,16 @@ class LevelMap extends FlxGroup {
         if (tileLayer.name == "foreground") {
           trace("Creating foreground!");
           foregroundLayer = new FlxTilemap();
-          foregroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/foregroundtiles.png", tileSize, tileSize, null, 1, 1, 1);
+          foregroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 1, 1);
         }
-        else if (tileLayer.name == "background") {
+        else if (tileLayer.name == "grass") {
+          trace("Creating grass!");
+          grassLayer = new FlxTilemap();
+          grassLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 6, 1);
+        } else if (tileLayer.name == "background") {
           trace("Creating background!");
           backgroundLayer = new FlxTilemap();
-          backgroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/backgroundtiles.png", tileSize, tileSize, null, 65, 65, 65);
+          backgroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 1, 1);
         }
         else {
           trace("Unknown layer, not creating! " + tileLayer.name);
