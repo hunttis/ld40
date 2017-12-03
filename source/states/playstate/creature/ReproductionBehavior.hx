@@ -20,7 +20,7 @@ class ReproductionBehavior implements Behavior {
       FlxVelocity.moveTowardsObject(creature, creature.targetCreature, 60);
       FlxG.overlap(creature, creature.targetCreature, function(self: Creature, other: Creature) {
         creature.reproduce();
-        creature.targetCreature.reproduce()
+        creature.targetCreature.reproduce();
         self.satisfaction = 0;
         other.satisfaction = 0;
         self.behavior = new IdleBehavior();

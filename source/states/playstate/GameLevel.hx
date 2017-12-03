@@ -30,8 +30,6 @@ class GameLevel extends FlxGroup {
   public var importShip: ImportShip;
   public var creatures: FlxTypedGroup<Creature>;
 
-  static var GRASS_GROW_DELAY_SECONDS = 0.5;
-  public var grassDelay = GRASS_GROW_DELAY_SECONDS;
   public var shipIndicators: ShipIndicators;
 
 	public function new(levelNumber): Void {
@@ -132,12 +130,12 @@ class GameLevel extends FlxGroup {
   }
 
   private function createFood(x: Float, y: Float): Food {
-    var food = new Food(x, y);
+    var food = new Food(x, y, this);
     return food;
   }
 
   private function createWeapon(x: Float, y: Float, creatures: FlxTypedGroup<Creature>): Weapon {
-    var weapon = new Weapon(x, y, creatures);
+    var weapon = new Weapon(x, y, creatures, this);
     return weapon;
   }
 }
