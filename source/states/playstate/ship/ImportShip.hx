@@ -4,11 +4,9 @@ import flixel.math.FlxPoint;
 
 class ImportShip extends Ship {
 
-  var unloadCounter: Float = 0;
-
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
-    waitMaximum = 30;
+    waitMaximum = 5;
     stateTimer = waitMaximum;
   }
 
@@ -17,15 +15,16 @@ class ImportShip extends Ship {
   }
 
   override function arrivedStartAction() {
-    unloadCounter = 10;
+      for (i in 0...3) {
+        for (j in 0...3) {
+          var newCreature: Creature = new Creature(shipLight.getGraphicMidpoint().x - 48 + i * 32, shipLight.getGraphicMidpoint().y - 48 + j * 32, gameLevel);
+          creatures.add(newCreature);
+        }
+      }
   }
 
   override function arrivedContinuousAction(elapsed: Float) {
-    if (unloadCounter > 0) {
-      var newCreature: Creature = new Creature(shipLight.getGraphicMidpoint().x + (Math.random() * 100) - 50 - 16, shipLight.getGraphicMidpoint().y + (Math.random() * 100) - 50 - 16, gameLevel);
-      creatures.add(newCreature);
-      unloadCounter--;
-    }
+      
   }
 
 }
