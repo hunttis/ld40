@@ -1,5 +1,6 @@
 package states.playstate.grass;
 
+import flixel.FlxG;
 import flixel.tile.FlxTilemap;
 import flixel.math.FlxPoint;
 import flixel.math.FlxMath;
@@ -99,6 +100,11 @@ class Grass {
     var tile = grassLayer.getTile(x, y);
     if (!isEatableTile(tile)) {
       return 0.0;
+    }
+    if (Math.random() < 0.5) {
+      FlxG.sound.play("assets/chomp.mp3");
+    } else {
+      FlxG.sound.play("assets/chomp2.mp3");
     }
     grassLayer.setTile(x, y, 2);
     removeEatableGrass(x, y);

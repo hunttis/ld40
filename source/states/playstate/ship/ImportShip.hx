@@ -5,13 +5,19 @@ import haxe.Timer;
 
 class ImportShip extends Ship {
 
+  private var hasVisited: Bool = false;
+
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
     waitMaximum = 5;
     stateTimer = waitMaximum;
+    visitingTime = 1;
   }
 
   override public function update(elapsed: Float): Void {
+    if (hasVisited) {
+      return;
+    }
     super.update(elapsed);
   }
 
@@ -21,6 +27,10 @@ class ImportShip extends Ship {
 
   override function arrivedContinuousAction(elapsed: Float) {
       
+  }
+
+  override function visitedAction(): Void {
+    hasVisited = true;
   }
 
   function dropCreatures() {

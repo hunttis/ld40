@@ -73,16 +73,8 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
- <objectgroup name="objectlayer" visible="0">
+ <objectgroup name="objectlayer">
   <object id="1" name="farmer" gid="2" x="536.461" y="490.957" width="32" height="32"/>
-  <object id="2" name="creature" gid="2" x="739.09" y="199.681" width="32" height="32"/>
-  <object id="3" name="creature" gid="2" x="1104.22" y="358.104" width="32" height="32"/>
-  <object id="5" name="creature" gid="2" x="1089.42" y="211.475" width="32" height="32"/>
-  <object id="6" name="creature" gid="2" x="776.686" y="272.626" width="32" height="32"/>
-  <object id="8" name="creature" gid="2" x="800.096" y="476.367" width="32" height="32"/>
-  <object id="9" name="creature" gid="2" x="986.056" y="350.755" width="32" height="32"/>
-  <object id="10" name="creature" gid="2" x="1084.66" y="495.236" width="32" height="32"/>
-  <object id="11" name="creature" gid="2" x="685.146" y="338.961" width="32" height="32"/>
-  <object id="12" name="salespoint" gid="1" x="681.445" y="462.468" width="32" height="32"/>
+  <object id="12" name="salespoint" gid="1" x="787.444" y="368.515" width="32" height="32"/>
  </objectgroup>
 </map>
