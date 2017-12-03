@@ -50,9 +50,6 @@ class PlayState extends FlxState {
     var angryCreatures = creatures.filter(function(creature) {
       return creature.behavior.getType() == BehaviorType.ANGRY;
     });
-    // TODO @kukko Remove debug output
-    trace("Number of all creatures: " + creatures.length);
-    trace("Number of angry creatures: " + angryCreatures.length);
     if (creatures.length > 0 && angryCreatures.length >= (creatures.length / 4)) {
       Music.playAngryTheme();
     } else {
