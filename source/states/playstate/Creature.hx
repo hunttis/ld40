@@ -13,7 +13,7 @@ import states.playstate.creature.ScaredLeaderBehavior;
 import states.playstate.creature.ScaredFollowerBehavior;
 import states.playstate.creature.CreatureUtil;
 
-class Creature extends FlxSprite {
+class Creature extends FlxNestedSprite {
 
   public var hunger: Float = 0;
   public var satisfaction: Float = 0;
@@ -48,10 +48,11 @@ class Creature extends FlxSprite {
     this.height = 8;
     // solid = false;
 
-    // var shadow = new FlxNestedSprite(xLoc, yLoc, "assets/shadow.png");
-    // shadow.relativeX = 0;
-    // shadow.relativeY = 24;
-    // add(shadow);
+    var shadow = new FlxNestedSprite(xLoc, yLoc, "assets/shadow.png");
+    shadow.relativeX = 0;
+    shadow.relativeY = 28;
+    shadow.solid = false;
+    add(shadow);
 
 
   }
@@ -77,46 +78,6 @@ class Creature extends FlxSprite {
     targetGrass = grass;
     pos.put();
   }
-
-  // public function findClosestCreature(): Creature {
-  //   targetCreature = findClosestCreatureWith(function(creature) return true);
-  //   return targetCreature;
-  // }
-
-  // public function findClosestReproducingCreature(): Void {
-  //   var closestCreature = findClosestCreatureWith(function(creature) return creature.behavior.getType() == BehaviorType.REPRODUCING);
-  //   targetCreature = closestCreature;
-  // }
-
-  // public function findClosestStableCreature(maxDistance: Float = FlxMath.MAX_VALUE_INT): Void {
-  //   var closestCreature = findClosestCreatureWith(maxDistance, function(creature)
-  //     return creature.behavior.getType() != BehaviorType.ANGRY
-  //         && creature.behavior.getType() != BehaviorType.SCARED_LEADER
-  //         && creature.behavior.getType() != BehaviorType.SCARED_FOLLOWER);
-  //   targetCreature = closestCreature;
-  // }
-
-  // public function findClosestScaredLeader(): Void {
-  //    var closestCreature = findClosestCreatureWith(function(creature)
-  //     return creature.behavior.getType() == BehaviorType.SCARED_LEADER);
-  //   targetCreature = closestCreature;
-  // }
-
-  // public function findClosestCreatureWith(maxDistance: Float = FlxMath.MAX_VALUE_INT, predicate: Creature -> Bool): Creature {
-  //   var closestCreature: Creature = null;
-  //   var distance: Float = FlxMath.MAX_VALUE_INT;
-
-  //   creatures.forEachAlive(function(creature) {
-  //     if (creature != this && predicate(creature)) {
-  //       var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
-  //       if (distanceToCreature < distance && distanceToCreature <= maxDistance) {
-  //         closestCreature = creature;
-  //         distance = distanceToCreature;
-  //       }
-  //     }
-  //   });
-  //   return closestCreature;
-  // }
 
   public function eatGrass(): Void {
     var coords = tileCoords();

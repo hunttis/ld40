@@ -11,6 +11,7 @@ import flixel.addons.display.FlxNestedSprite;
 import states.playstate.ship.*;
 import flixel.math.FlxPoint;
 import states.playstate.ui.*;
+import states.playstate.decoration.*;
 
 class GameLevel extends FlxGroup {
 
@@ -79,6 +80,9 @@ class GameLevel extends FlxGroup {
     salesShip = new SalesShip(levelMap.getSalesPoint(), this);
     importShip = new ImportShip(new FlxPoint(levelMap.foregroundLayer.width / 2, levelMap.foregroundLayer.height / 2), this);
     
+    var backdropAsteroid = new BackdropAsteroid(FlxG.width, -128);
+    backgroundLayer.add(backdropAsteroid);
+
     backgroundLayer.add(levelMap.backgroundLayer);
     foregroundLayer.add(levelMap.foregroundLayer);
     foregroundLayer.add(levelMap.grassLayer);
