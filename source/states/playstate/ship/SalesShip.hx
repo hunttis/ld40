@@ -10,6 +10,7 @@ class SalesShip extends Ship {
 
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
+    stateTimer = 10;
   }
 
   override public function update(elapsed: Float): Void {
