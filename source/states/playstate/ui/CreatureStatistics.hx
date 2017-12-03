@@ -9,6 +9,7 @@ class CreatureStatistics extends FlxGroup {
   public function new(gameLevel:GameLevel) {
     super();
     totalAmountOfCreaturesText = createText("Total amount of creatures");
+    totalAmountOfCreaturesText.scrollFactor.set(0, 0);
     add(totalAmountOfCreaturesText);
   }
 
