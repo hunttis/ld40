@@ -66,17 +66,17 @@ class Music {
 
   private static function getHappyThemeAsset(): FlxSoundAsset {
     #if flash
-      return happy_theme_v1__mp3;
+      return "assets/music/happy_theme_v1.mp3";
     #else
-      return happy_theme_v1__ogg;
+      return "assets/music/happy_theme_v1.ogg";
     #end
   }
 
   private static function getAngryThemeAsset(): FlxSoundAsset {
     #if flash
-      return angry_theme_v1__mp3;
+      return "assets/music/angry_theme_v1.mp3";
     #else
-      return angry_theme_v1__ogg;
+      return "assets/music/angry_theme_v1.ogg";
     #end
   }
 
