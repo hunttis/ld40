@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.math.FlxPoint;
 import states.playstate.creature.BehaviorType;
 import states.playstate.creature.CreatureUtil;
 import flixel.tweens.FlxEase;
@@ -110,8 +111,15 @@ class Farmer extends FlxNestedSprite {
   private function drop(): Void {
     holding.velocity.x = 0;
     holding.velocity.y = 0;
+
+    if (holding.type == ItemType.SEED) {
+      holding.kill();
+      plantGrass();
+    } else {
+      items.add(holding);
+    }
+
     remove(holding);
-    items.add(holding);
     holding = null;
   }
 
@@ -134,5 +142,10 @@ class Farmer extends FlxNestedSprite {
     if (creature != null) {
       creature.becomeScaredLeader();
     }
+  }
+
+  private function plantGrass(): Void {
+    var index = gameLevel.levelMap.grassLayer.getTileIndexByCoords(getGraphicMidpoint());
+    gameLevel.levelMap.grassLayer.setTileByIndex(index, 7);
   }
 }

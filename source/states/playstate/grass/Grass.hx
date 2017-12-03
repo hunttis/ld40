@@ -115,7 +115,7 @@ class Grass {
     for (i in 0...eatableGrass.length) {
       var c = eatableGrass[i];
       if (Std.int(c.x) == x && Std.int(c.y) == y) {
-        eatableGrass.splice(i, 1)[0].put();
+        eatableGrass.splice(i, 1)[0];
         return;
       }
     } 
@@ -123,7 +123,8 @@ class Grass {
 
   public function findNearEatableGrass(x: Int, y: Int): FlxPoint {
     var minDist = FlxMath.MAX_VALUE_INT;
-    var point: FlxPoint = null;
+    var point = eatableGrass.pop();
+    /*
     for (c in eatableGrass) {
       var pt = FlxPoint.get(x, y);
       var dist = c.distanceTo(pt);
@@ -136,8 +137,11 @@ class Grass {
     if (point == null) {
       return null;
     }
+    */
+    // removeEatableGrass(Math.floor(point.y), Math.floor(point.x));
     var index = Math.round(point.y * grassLayer.widthInTiles + point.x);
     var coordsPoint = grassLayer.getTileCoordsByIndex(index);
+    point.put();
     return coordsPoint;
   }
 

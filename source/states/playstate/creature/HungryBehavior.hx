@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.math.FlxMath;
 
 class HungryBehavior implements Behavior {
+
   public function new() {}
 
   public function getType(): BehaviorType {
@@ -19,6 +20,8 @@ class HungryBehavior implements Behavior {
     creature.hunger += elapsed;
     creature.velocity.set(0, 0);
 
+    creature.eatGrass();
+
     if (creature.hunger <= 2) {
       creature.behavior = new IdleBehavior();
     }
@@ -30,10 +33,7 @@ class HungryBehavior implements Behavior {
     if (creature.targetGrass == null) {
       creature.checkForFood();
     } else {
-      FlxVelocity.moveTowardsPoint(creature, creature.targetGrass, 50);
-      if (FlxMath.isDistanceToPointWithin(creature, creature.targetGrass, 10)) {
-        creature.eatGrass();
-      }
+      creature.moveTowards(creature.targetGrass.x, creature.targetGrass.y, 50);
     }
   }
 }

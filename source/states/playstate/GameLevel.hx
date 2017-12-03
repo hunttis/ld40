@@ -29,6 +29,7 @@ class GameLevel extends FlxGroup {
   public var salesShip: SalesShip;
   public var importShip: ImportShip;
   public var creatures: FlxTypedGroup<Creature>;
+  public var seedMachine: SeedMachine;
 
   public var shipIndicators: ShipIndicators;
 
@@ -41,6 +42,7 @@ class GameLevel extends FlxGroup {
     checkControls(elapsed);
     checkCollisions(elapsed);
     grass.update(elapsed);
+    seedMachine.update(elapsed);
     creatures.sort(FlxSort.byY);
 		super.update(elapsed);
 	}
@@ -71,6 +73,8 @@ class GameLevel extends FlxGroup {
 
     var food: Food = createFood(100, 100);
     items.foods.add(food);
+
+    seedMachine = new SeedMachine(this);
     
     var weapon: Weapon = createWeapon(200, 200, creatures);
     items.weapons.add(weapon);

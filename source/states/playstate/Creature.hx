@@ -4,6 +4,7 @@ import flixel.addons.display.FlxNestedSprite;
 import states.playstate.creature.BehaviorType;
 import flixel.tile.FlxTilemap;
 import flixel.math.FlxMath;
+import flixel.math.FlxVelocity;
 import flixel.math.FlxPoint;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
@@ -12,6 +13,7 @@ import states.playstate.creature.IdleBehavior;
 import states.playstate.creature.ScaredLeaderBehavior;
 import states.playstate.creature.ScaredFollowerBehavior;
 import states.playstate.creature.CreatureUtil;
+import flixel.math.FlxVector;
 
 class Creature extends FlxNestedSprite {
 
@@ -26,6 +28,8 @@ class Creature extends FlxNestedSprite {
   var foods: FlxTypedGroup<Food>;
   public var creatures: FlxTypedGroup<Creature>;
   public var behavior(default, set): Behavior;
+  var separation = new FlxVector(0.0, 0.0);
+  var targetDirVector = new FlxVector(0.0, 0.0);
   
   public var gameLevel: GameLevel;
 
@@ -84,7 +88,9 @@ class Creature extends FlxNestedSprite {
     var satiation = gameLevel.grass.eatGrass(Math.round(coords.x), Math.round(coords.y));
     coords.put();
     this.hunger -= satiation;
-    this.targetGrass = null;
+    if (this.targetGrass != null && FlxMath.isDistanceToPointWithin(this, this.targetGrass, 10)) {
+      this.targetGrass = null;
+    }
   }
 
   function tileCoords(): FlxPoint {
@@ -107,6 +113,58 @@ class Creature extends FlxNestedSprite {
 
   public function becomeScaredFollower(): Void {
     this.behavior = new ScaredFollowerBehavior();
+  }
+
+  public function moveTowards(x: Float, y: Float, speed: Int = 60): Void {
+    var p = FlxPoint.get(x, y);
+    if (FlxMath.isDistanceToPointWithin(this, p, 3)) {
+      p.put();
+      return;
+    }
+    p.put();
+
+    targetDirVector.set(x - this.x, y - this.y);
+    targetDirVector.normalize();
+
+    calculateSeparation();
+    targetDirVector.add(separation.x, separation.y);
+
+    targetDirVector.normalize();
+    targetDirVector.x *= speed;
+    targetDirVector.y *= speed;
+
+    velocity.x = targetDirVector.x;
+    velocity.y = targetDirVector.y;
+  }
+
+  function calculateSeparation() {
+    separation.set(0, 0);
+    var n = 0;
+    for (c in gameLevel.creatures.members) {
+      if (c != this) {
+        if (FlxMath.isDistanceWithin(this, c, 30)) {
+          separation.x += c.x - x;
+          separation.y += c.y - y;
+          n++;
+        }
+      }
+    }
+    if (n > 0) {
+      separation.x /= n;
+      separation.y /= n;
+      separation.normalize();
+      separation.negate();
+      separation.x *= 100;
+      separation.y *= 100;
+    }
+  }
+
+  public function separate() {
+    calculateSeparation();
+    if (!separation.isZero()) {
+      separation.add(x, y);
+      FlxVelocity.moveTowardsPoint(this, separation, 100);
+    }
   }
 
   public function scareClosestStableCreature(): Void {
