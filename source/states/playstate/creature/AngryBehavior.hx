@@ -1,5 +1,6 @@
 package states.playstate.creature;
 
+import flixel.FlxG;
 import flixel.math.FlxMath;
 import flixel.math.FlxVelocity;
 import flixel.math.FlxPoint;
@@ -14,8 +15,7 @@ class AngryBehavior implements Behavior {
   }
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug_angry.png");
-    findTarget(creature);
+    creature.animation.play("angry");
   }
 
   public function update(creature: Creature, elapsed: Float): Void {
@@ -29,8 +29,21 @@ class AngryBehavior implements Behavior {
     if (creature.hunger <= 10) {
       creature.behavior = new HungryBehavior();
     }
+    
+    if (route == null) {
+      findTarget(creature);
+    } else {
+      moveInRoute(creature);
+    }
 
-    moveInRoute(creature);
+    FlxG.overlap(creature, creature.targetCreature, hurtTarget);
+  }
+
+  function hurtTarget(self: Creature, target: Creature) {
+    self.hurt(0.4);
+    target.hurt(1);
+    self.targetCreature = null;
+    route = null;
   }
 
   function moveInRoute(creature: Creature) {

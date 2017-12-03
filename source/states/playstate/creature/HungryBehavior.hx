@@ -12,7 +12,7 @@ class HungryBehavior implements Behavior {
   }
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug_hungry.png");
+    creature.animation.play("hungry");
   }
 
   public function update(creature: Creature, elapsed: Float): Void {

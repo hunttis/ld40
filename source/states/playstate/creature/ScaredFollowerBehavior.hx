@@ -6,7 +6,7 @@ class ScaredFollowerBehavior implements Behavior {
   public function new() {}
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug_lovin.png");
+    creature.animation.play("loving");
   }
 
   public function getType(): BehaviorType {

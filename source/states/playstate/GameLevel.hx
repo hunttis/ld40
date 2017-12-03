@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.util.FlxSort;
 import flixel.FlxG;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
@@ -41,6 +42,7 @@ class GameLevel extends FlxGroup {
     checkControls(elapsed);
     checkCollisions(elapsed);
     grass.update(elapsed);
+    creatures.sort(FlxSort.byY);
 		super.update(elapsed);
 	}
 

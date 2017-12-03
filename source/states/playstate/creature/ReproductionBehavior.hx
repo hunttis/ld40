@@ -11,7 +11,7 @@ class ReproductionBehavior implements Behavior {
   }
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug_lovin.png");
+    creature.animation.play("loving");
   }
 
   public function update(creature: Creature, elapsed: Float): Void {

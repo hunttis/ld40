@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.addons.display.FlxNestedSprite;
 import states.playstate.creature.BehaviorType;
 import flixel.tile.FlxTilemap;
 import flixel.math.FlxMath;
@@ -30,12 +31,28 @@ class Creature extends FlxSprite {
   public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
     super(xLoc, yLoc);
 
+    loadGraphic("assets/bugs.png", true, 32, 32);
+    animation.add("idle", [0], 1, false);
+    animation.add("hungry", [1], 1, false);
+    animation.add("loving", [2], 1, false);
+    animation.add("angry", [3], 1, false);
+    
     this.gameLevel = gameLevel;
     this.tilemap = gameLevel.levelMap.foregroundLayer;
 
     behavior = new IdleBehavior();
     this.foods = gameLevel.items.foods;
     this.creatures = gameLevel.creatures;
+    this.offset.y = 24;
+    this.height = 8;
+    // solid = false;
+
+    // var shadow = new FlxNestedSprite(xLoc, yLoc, "assets/shadow.png");
+    // shadow.relativeX = 0;
+    // shadow.relativeY = 24;
+    // add(shadow);
+
+
   }
 
   public function set_behavior(nextBehavior: Behavior) {
@@ -109,13 +126,12 @@ class Creature extends FlxSprite {
   }
 
   function tileCoords(): FlxPoint {
-    var pos = FlxPoint.get(x, y);
+    var pos = getGraphicMidpoint();
     var index = gameLevel.levelMap.grassLayer.getTileIndexByCoords(pos);
-    pos.put();
     var width = gameLevel.levelMap.grassLayer.widthInTiles;
-    var x = index % Math.round(width);
-    var y = index / Math.round(width);
-    return FlxPoint.get(x + 1, y + 1);
+    var x = Math.floor(index % width);
+    var y = Math.floor(index / width);
+    return FlxPoint.get(x, y);
   }
 
   public function reproduce(): Void {
