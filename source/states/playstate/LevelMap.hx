@@ -47,7 +47,7 @@ class LevelMap extends FlxGroup {
         if (tileLayer.name == "foreground") {
           trace("Creating foreground!");
           foregroundLayer = new FlxTilemap();
-          foregroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 1, 1);
+          foregroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 2, 1);
         }
         else if (tileLayer.name == "grass") {
           trace("Creating grass!");
