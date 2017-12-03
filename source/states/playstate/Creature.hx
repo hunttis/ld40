@@ -13,7 +13,7 @@ import states.playstate.creature.ScaredLeaderBehavior;
 import states.playstate.creature.ScaredFollowerBehavior;
 import states.playstate.creature.CreatureUtil;
 
-class Creature extends FlxSprite {
+class Creature extends FlxNestedSprite {
 
   public var hunger: Float = 0;
   public var satisfaction: Float = 0;
