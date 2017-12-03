@@ -7,7 +7,6 @@ import flixel.group.FlxGroup;
 import flixel.ui.FlxBar;
 
 class ShipIndicators extends FlxGroup {
-
   var salesBar: FlxBar;
   var importBar: FlxBar;
 
@@ -25,5 +24,4 @@ class ShipIndicators extends FlxGroup {
     var bar: FlxBar = new FlxBar(xLoc, yLoc, FlxBarFillDirection.LEFT_TO_RIGHT, Math.floor(FlxG.width / 3), 16, ship, name, 0, ship.waitMaximum, true);
     return bar;
   }
-
 }

@@ -106,7 +106,9 @@ class GameLevel extends FlxGroup {
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);
 
     var indicatorBars = new ShipIndicators(this);
+    var creatureStatistics = new CreatureStatistics(this);
     uiLayer.add(indicatorBars);
+    uiLayer.add(creatureStatistics);
   }
 
   private function createLayers(): Void {
