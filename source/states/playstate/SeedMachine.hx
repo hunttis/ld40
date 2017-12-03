@@ -14,9 +14,9 @@ class SeedMachine {
     if (processing) {
       processTime += elapsed;
     }
-    if (producedSeed == null || (!processing && producedSeed.pickedUp)) {
+    if ((producedSeed == null && !processing) || (!processing && producedSeed.pickedUp)) {
       processing = true;
-      trace("Seed Machine: Processing new seed...");
+      trace("Processing new seed...");
     }
     if (processTime > 10) {
       processing = false;
@@ -24,7 +24,7 @@ class SeedMachine {
       var seed = new Seed(250, 250);
       producedSeed = seed;
       gameLevel.items.seeds.add(seed);
-      trace("Seed Machine: Seed ready!");
+      trace("Seed ready!");
     }
   }
 }
