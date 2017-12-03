@@ -10,7 +10,7 @@ class Grass {
 
   var grassLayer(get, never): FlxTilemap;
 
-  static var GRASS_GROW_DELAY_SECONDS = 3.0;
+  static var GRASS_GROW_DELAY_SECONDS = 1.0;
   public var grassDelay = GRASS_GROW_DELAY_SECONDS;
 
   var eatableGrass = new Array<FlxPoint>();
