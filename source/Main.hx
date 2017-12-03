@@ -10,6 +10,6 @@ class Main extends Sprite {
   public function new() {
     super();
     addChild(new FlxGame(800, 480, PlayState, 1, 60, 60, true));
-    Music.startMusic();
+    Music.playHappyTheme();
   }
 }
