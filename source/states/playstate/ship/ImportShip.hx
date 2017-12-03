@@ -22,7 +22,7 @@ class ImportShip extends Ship {
 
   override function arrivedContinuousAction(elapsed: Float) {
     if (unloadCounter > 0) {
-      var newCreature: Creature = new Creature(landingPoint.x + Math.random() * 100 - 50, landingPoint.y + Math.random() * 100 - 50, gameLevel);
+      var newCreature: Creature = new Creature(shipLight.getGraphicMidpoint().x + (Math.random() * 100) - 50 - 16, shipLight.getGraphicMidpoint().y + (Math.random() * 100) - 50 - 16, gameLevel);
       creatures.add(newCreature);
       unloadCounter--;
     }

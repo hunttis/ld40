@@ -77,7 +77,7 @@ class GameLevel extends FlxGroup {
     items.weapons.add(weapon);
 
     salesShip = new SalesShip(levelMap.getSalesPoint(), this);
-    importShip = new ImportShip(new FlxPoint(100, 100), this);
+    importShip = new ImportShip(new FlxPoint(levelMap.foregroundLayer.width / 2, levelMap.foregroundLayer.height / 2), this);
     
     backgroundLayer.add(levelMap.backgroundLayer);
     foregroundLayer.add(levelMap.foregroundLayer);
