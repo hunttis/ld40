@@ -10,19 +10,8 @@ class ScaredBehavior implements Behavior {
   }
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug.png");
+    creature.loadGraphic("assets/bug_lovin.png");
   }
 
-  public function update(creature: Creature, elapsed: Float): Void {
-    creature.hunger += elapsed;
-    creature.velocity.set(0, 0);
-
-    if (creature.hunger <= 2) {
-      creature.behavior = new IdleBehavior();
-    }
-
-    if (creature.hunger <= 10) {
-      creature.behavior = new HungryBehavior();
-    }
-  }
+  public function update(creature: Creature, elapsed: Float): Void {}
 }

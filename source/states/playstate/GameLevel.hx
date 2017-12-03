@@ -20,9 +20,9 @@ class GameLevel extends FlxGroup {
   private var uiLayer: FlxGroup;
   private var grass: Grass;
 
-  private var farmer: Farmer;
   private var weapon: Weapon;
 
+  public var farmer: Farmer;
   public var items: ItemGroup;
   public var salesShip: SalesShip;
   public var importShip: ImportShip;

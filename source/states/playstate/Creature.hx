@@ -7,11 +7,13 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import states.playstate.creature.Behavior;
 import states.playstate.creature.IdleBehavior;
+import states.playstate.creature.ScaredLeaderBehavior;
 
 class Creature extends FlxSprite {
 
   public var hunger: Float = 0;
   public var satisfaction: Float = 0;
+  public var scareTime: Float = 0;
   
   public var targetFood: Food;
   public var targetCreature: Creature;
@@ -96,5 +98,11 @@ class Creature extends FlxSprite {
   public function reproduce(): Void {
     var newCreature: Creature = new Creature(x + 50, y + 50, gameLevel);
     creatures.add(newCreature);
+  }
+
+  public function becomeScaredLeader(): Void {
+    if (this.behavior.getType() != BehaviorType.ANGRY) {
+      this.behavior = new ScaredLeaderBehavior();
+    }
   }
 }

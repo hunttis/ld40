@@ -6,5 +6,7 @@ enum BehaviorType {
   HUNGRY;
   ANGRY;
   SCARED;
+  SCARED_LEADER;
+  SCARED_FOLLOWER;
   COLLECTED;
 }

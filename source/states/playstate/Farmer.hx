@@ -1,5 +1,6 @@
 package states.playstate;
 
+import states.playstate.creature.BehaviorType;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.FlxSprite;
@@ -13,15 +14,19 @@ import flixel.addons.display.FlxNestedSprite;
 class Farmer extends FlxNestedSprite {
 
   var holding: Item;
+  var gameLevel: GameLevel;
   var items: ItemGroup;
+  var creatures: FlxTypedGroup<Creature>;
   var weapon: Weapon;
 
-  private var throwingDistance: Float;
+  var throwingDistance: Float;
 
-  public function new(items: ItemGroup, xLoc: Float, yLoc: Float) {
+  public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
     super(xLoc, yLoc);
 
-    this.items = items;
+    this.gameLevel = gameLevel;
+    this.items = gameLevel.items;
+    this.creatures = gameLevel.creatures;
 
     loadGraphic("assets/farmer.png");
     maxVelocity.set(300, 300);
@@ -83,6 +88,10 @@ class Farmer extends FlxNestedSprite {
           throwItem();
         }
       }
+
+      if (FlxG.keys.justPressed.S) {
+        scareClosestCreature();
+      }
     #end
   }
 
@@ -117,5 +126,36 @@ class Farmer extends FlxNestedSprite {
       case FlxObject.RIGHT: FlxTween.tween(holding, {x: holding.x + throwingDistance}, 0.5, {ease: FlxEase.quadIn});
     }
     drop();
+  }
+
+  private function scareClosestCreature(): Void {
+    var creature = findClosestStableCreature();
+    if (creature != null) {
+      creature.becomeScaredLeader();
+    }
+  }
+
+  private function findClosestStableCreature(): Creature {
+    var closestCreature = findClosestCreatureWith(function(creature)
+      return creature.behavior.getType() != BehaviorType.ANGRY
+          && creature.behavior.getType() != BehaviorType.SCARED_LEADER 
+          && creature.behavior.getType() != BehaviorType.SCARED_FOLLOWER);
+    return closestCreature;
+  }
+
+  private function findClosestCreatureWith(predicate: Creature -> Bool): Creature {
+    var closestCreature: Creature = null;
+    var distance: Float = FlxMath.MAX_VALUE_INT;
+
+    creatures.forEachAlive(function(creature) {
+      if (predicate(creature)) {
+        var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
+        if (distanceToCreature < distance) {
+          closestCreature = creature;
+          distance = distanceToCreature;
+        }
+      }
+    });
+    return closestCreature;
   }
 }
