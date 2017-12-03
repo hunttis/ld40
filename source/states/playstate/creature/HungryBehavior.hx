@@ -31,7 +31,7 @@ class HungryBehavior implements Behavior {
       creature.checkForFood();
     } else {
       FlxVelocity.moveTowardsPoint(creature, creature.targetGrass, 50);
-      if (FlxMath.isDistanceToPointWithin(creature, creature.targetGrass, 1)) {
+      if (FlxMath.isDistanceToPointWithin(creature, creature.targetGrass, 10)) {
         creature.eatGrass();
       }
     }

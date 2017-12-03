@@ -125,13 +125,11 @@ class Grass {
     var minDist = FlxMath.MAX_VALUE_INT;
     var point: FlxPoint = null;
     for (c in eatableGrass) {
-      var cx = Std.int(c.x);
-      var cy = Std.int(c.x);
-      var dist = manhattanDistance(cx, cy, x, y);
-      if (dist <= 3) {
-        return grassLayer.getTileCoordsByIndex(cx * cy);
-      } else if (dist < minDist) {
-        minDist = dist;
+      var pt = FlxPoint.get(x, y);
+      var dist = c.distanceTo(pt);
+      pt.put();
+      if (dist < minDist) {
+        minDist = Math.round(dist);
         point = c;
       }
     }
