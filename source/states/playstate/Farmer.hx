@@ -129,28 +129,28 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function scareClosestCreature(): Void {
-    var creature = findClosestStableCreature();
+    var creature = findClosestStableCreature(200);
     if (creature != null) {
       creature.becomeScaredLeader();
     }
   }
 
-  private function findClosestStableCreature(): Creature {
-    var closestCreature = findClosestCreatureWith(function(creature)
+  private function findClosestStableCreature(maxDistance: Float = FlxMath.MAX_VALUE_INT): Creature {
+    var closestCreature = findClosestCreatureWith(maxDistance, function(creature)
       return creature.behavior.getType() != BehaviorType.ANGRY
           && creature.behavior.getType() != BehaviorType.SCARED_LEADER 
           && creature.behavior.getType() != BehaviorType.SCARED_FOLLOWER);
     return closestCreature;
   }
 
-  private function findClosestCreatureWith(predicate: Creature -> Bool): Creature {
+  private function findClosestCreatureWith(maxDistance: Float = FlxMath.MAX_VALUE_INT, predicate: Creature -> Bool): Creature {
     var closestCreature: Creature = null;
     var distance: Float = FlxMath.MAX_VALUE_INT;
 
     creatures.forEachAlive(function(creature) {
       if (predicate(creature)) {
         var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
-        if (distanceToCreature < distance) {
+        if (distanceToCreature < distance && distanceToCreature <= maxDistance) {
           closestCreature = creature;
           distance = distanceToCreature;
         }

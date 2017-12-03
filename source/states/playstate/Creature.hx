@@ -80,8 +80,8 @@ class Creature extends FlxSprite {
     targetCreature = closestCreature;
   }
 
-  public function findClosestStableCreature(): Void {
-    var closestCreature = findClosestCreatureWith(function(creature)
+  public function findClosestStableCreature(maxDistance: Float = FlxMath.MAX_VALUE_INT): Void {
+    var closestCreature = findClosestCreatureWith(maxDistance, function(creature)
       return creature.behavior.getType() != BehaviorType.ANGRY
           && creature.behavior.getType() != BehaviorType.SCARED_LEADER
           && creature.behavior.getType() != BehaviorType.SCARED_FOLLOWER);
@@ -94,14 +94,14 @@ class Creature extends FlxSprite {
     targetCreature = closestCreature;
   }
 
-  public function findClosestCreatureWith(predicate: Creature -> Bool): Creature {
+  public function findClosestCreatureWith(maxDistance: Float = FlxMath.MAX_VALUE_INT, predicate: Creature -> Bool): Creature {
     var closestCreature: Creature = null;
     var distance: Float = FlxMath.MAX_VALUE_INT;
 
     creatures.forEachAlive(function(creature) {
       if (creature != this && predicate(creature)) {
         var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
-        if (distanceToCreature < distance) {
+        if (distanceToCreature < distance && distanceToCreature <= maxDistance) {
           closestCreature = creature;
           distance = distanceToCreature;
         }
@@ -124,7 +124,7 @@ class Creature extends FlxSprite {
   }
 
   public function scareClosestStableCreature(): Void {
-    findClosestStableCreature();
+    findClosestStableCreature(100);
     if (targetCreature != null) {
       targetCreature.becomeScaredFollower();
     }
