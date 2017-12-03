@@ -1,4 +1,6 @@
-export
-node_modules/
 *.sw?
 .DS_store
+.idea/
+export
+node_modules/
+
