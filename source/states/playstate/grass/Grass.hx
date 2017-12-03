@@ -1,5 +1,6 @@
 package states.playstate.grass;
 
+import audio.Sounds;
 import flixel.FlxG;
 import flixel.tile.FlxTilemap;
 import flixel.math.FlxPoint;
@@ -102,9 +103,9 @@ class Grass {
       return 0.0;
     }
     if (Math.random() < 0.5) {
-      FlxG.sound.play("assets/chomp.mp3");
+      Sounds.playChomp();
     } else {
-      FlxG.sound.play("assets/chomp2.mp3");
+      Sounds.playChomp2();
     }
     grassLayer.setTile(x, y, 2);
     removeEatableGrass(x, y);

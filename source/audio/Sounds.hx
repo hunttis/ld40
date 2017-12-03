@@ -28,11 +28,26 @@ class Sounds {
       false
     );
     chomp.volume = 1.0;
-    chomp.time = 1600;
-    chomp.looped = true;
-    chomp.loopTime = 4800;
-    soundEffectGroup.add(happyTheme);
+    chomp.time = 0;
+    chomp.looped = false;
+    chomp.loopTime = 0;
+    soundEffectGroup.add(chomp);
     soundFrontEnd.cache(getChompAsset());
+
+    chomp2 = soundFrontEnd.load(
+      getChomp2Asset(),
+      1,
+      true,
+      soundEffectGroup,
+      false,
+      false
+    );
+    chomp.volume = 1.0;
+    chomp.time = 0;
+    chomp.looped = false;
+    chomp.loopTime = 0;
+    soundEffectGroup.add(chomp2);
+    soundFrontEnd.cache(getChomp2Asset());
   }
 
   private function playSound(sound: FlxSound): Void {
