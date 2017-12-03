@@ -25,8 +25,13 @@ class AngryBehavior implements Behavior {
     if (creature.hunger <= 10) {
       creature.behavior = new HungryBehavior();
     }
+
+    if (creature.hunger > 50) {
+      creature.kill();
+    }
     
-    if (creature.targetCreature == null) {
+    var target = creature.targetCreature;
+    if (target == null || !target.alive || target.behavior.getType() == BehaviorType.ANGRY) {
       findTarget(creature);
     } else {
       moveTowardsTarget(creature);
@@ -36,8 +41,8 @@ class AngryBehavior implements Behavior {
   }
 
   function hurtTarget(self: Creature, target: Creature) {
-    self.hurt(0.4);
     target.hurt(1);
+    self.scale.add(0.05, 0.05);
     self.targetCreature = null;
   }
 
@@ -48,7 +53,7 @@ class AngryBehavior implements Behavior {
   }
 
   function findTarget(creature: Creature) {
-    var closest = CreatureUtil.findClosestCreature(creature, creature.creatures);
+    var closest = CreatureUtil.findClosestCreatureWith(creature, creature.creatures, function(creature) return creature.behavior.getType() != BehaviorType.ANGRY);
     creature.targetCreature = closest;
   }
 }
