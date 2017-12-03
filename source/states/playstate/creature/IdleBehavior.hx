@@ -18,6 +18,7 @@ class IdleBehavior implements Behavior {
 
     if (creature.hunger > Creature.HUNGRY_LIMIT) {
       creature.behavior = new HungryBehavior();
+      creature.satisfaction = 0;
     }
     if (creature.satisfaction > 5) {
       creature.behavior = new ReproductionBehavior();

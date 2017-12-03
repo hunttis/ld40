@@ -117,11 +117,15 @@ class Creature extends FlxNestedSprite {
   }
 
   public function becomeScaredLeader(): Void {
-    this.behavior = new ScaredLeaderBehavior();
+    if (this.behavior.getType() != BehaviorType.COLLECTED) {
+      this.behavior = new ScaredLeaderBehavior();
+    }
   }
 
   public function becomeScaredFollower(): Void {
-    this.behavior = new ScaredFollowerBehavior();
+    if (this.behavior.getType() != BehaviorType.COLLECTED) {
+      this.behavior = new ScaredFollowerBehavior();
+    }
   }
 
   public function moveTowards(x: Float, y: Float, speed: Int = 60): Void {
