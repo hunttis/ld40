@@ -22,7 +22,7 @@ class SalesShip extends Ship {
     var creature: Creature = findClosestCreature();
     if (creature != null) {
       creature.behavior = new CollectionBehavior();
-      FlxTween.tween(creature, {x: this.getGraphicMidpoint().x, y: this.getGraphicMidpoint().y }, 3);
+      FlxTween.tween(creature, {x: shipSprite.getGraphicMidpoint().x, y: shipSprite.getGraphicMidpoint().y }, 3);
     }
   }
 
@@ -31,7 +31,7 @@ class SalesShip extends Ship {
     var distance: Float = 100000;
 
     creatures.forEachAlive(function(creature) {
-      var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
+      var distanceToCreature: Float = FlxMath.distanceBetween(shipSprite, creature);
       if (creature.behavior.getType() != BehaviorType.COLLECTED && creature.behavior.getType() != BehaviorType.ANGRY && (closestCreature == null || distanceToCreature < distance)) {
         closestCreature = creature;
         distance = distanceToCreature;
