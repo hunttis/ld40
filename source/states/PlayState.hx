@@ -2,7 +2,10 @@ package states;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import music.Music;
+import states.playstate.Creature;
 import states.playstate.GameLevel;
+import states.playstate.creature.BehaviorType;
 
 class PlayState extends FlxState {
 
@@ -14,12 +17,13 @@ class PlayState extends FlxState {
     currentLevel = loadLevel(currentLevelNumber);
     add(currentLevel);
 	}
-	
+
 	override public function update(elapsed: Float): Void {
     super.update(elapsed);
     Util.checkQuitKey();
     checkForGameOver();
     checkForLevelEnd();
+    checkForMusicChange();
 	}
 
   private function loadLevel(levelNumber: Int): GameLevel {
@@ -40,4 +44,19 @@ class PlayState extends FlxState {
     }
   }
 
+  private function checkForMusicChange(): Void {
+    var creatures: Array<Creature> = currentLevel.creatures.members;
+    // If 25 % or more of the creatures are angry, change the music to angry_theme.
+    var angryCreatures = creatures.filter(function(creature) {
+      return creature.behavior.getType() == BehaviorType.ANGRY;
+    });
+    // TODO @kukko Remove debug output
+    trace("Number of all creatures: " + creatures.length);
+    trace("Number of angry creatures: " + angryCreatures.length);
+    if (creatures.length > 0 && angryCreatures.length >= (creatures.length / 4)) {
+      Music.playAngryTheme();
+    } else {
+      Music.playHappyTheme();
+    }
+  }
 }
