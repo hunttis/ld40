@@ -80,8 +80,6 @@ class Music {
     #end
   }
 
-  @:access(flixel.system.frontEnds.SoundFrontEnd)
-  @:access(flixel.system.frontEnds.SoundFrontEnd.music)
   static public function playHappyTheme(): Void {
     if (instance == null) {
       instance = new Music();
@@ -89,8 +87,6 @@ class Music {
     instance.playTheme(instance.happyTheme);
   }
 
-  @:access(flixel.system.frontEnds.SoundFrontEnd)
-  @:access(flixel.system.frontEnds.SoundFrontEnd.music)
   static public function playAngryTheme(): Void {
     if (instance == null) {
       instance = new Music();
