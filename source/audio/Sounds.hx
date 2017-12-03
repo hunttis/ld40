@@ -51,15 +51,7 @@ class Sounds {
   }
 
   private function playSound(sound: FlxSound): Void {
-    if (currentlyPlaying == null) {
-      sound.play(false, sound.time);
-    } else if (currentlyPlaying == sound) {
-      // Let it play on, don't restart it.
-    } else {
-      currentlyPlaying.fadeOut(1000, 0, function(_) {
-        sound.play(false, sound.time);
-      });
-    }
+    sound.play(true, sound.time);
     currentlyPlaying = sound;
   }
 
