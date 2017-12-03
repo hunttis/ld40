@@ -125,18 +125,8 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function attack(): Void {
-    var directionX = 0;
-    var directionY = 0;
-    if (facing == FlxObject.UP) {
-      directionY = -1;
-    } else if (facing == FlxObject.DOWN) {
-      directionY = 1;
-    } else if (facing == FlxObject.LEFT) {
-      directionX = -1;
-    } else if (facing == FlxObject.RIGHT) {
-      directionX = 1;
-    }
-    this.holding.use(directionX, directionY);
+    
+    this.holding.use(facing);
   }
 
   private function throwItem(): Void {

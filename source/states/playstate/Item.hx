@@ -19,5 +19,5 @@ class Item extends FlxNestedSprite {
     super.update(elapsed);
   }
 
-  public function use(directionX: Float, directionY: Float): Void {}
+  public function use(facing: Int): Void {}
 }
