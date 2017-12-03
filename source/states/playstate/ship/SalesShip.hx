@@ -32,7 +32,7 @@ class SalesShip extends Ship {
 
     creatures.forEachAlive(function(creature) {
       var distanceToCreature: Float = FlxMath.distanceBetween(shipSprite, creature);
-      if (creature.behavior.getType() != BehaviorType.COLLECTED && creature.behavior.getType() != BehaviorType.ANGRY && (closestCreature == null || distanceToCreature < distance)) {
+      if (distanceToCreature < 320 && creature.behavior.getType() != BehaviorType.COLLECTED && creature.behavior.getType() != BehaviorType.ANGRY && (closestCreature == null || distanceToCreature < distance)) {
         closestCreature = creature;
         distance = distanceToCreature;
       }

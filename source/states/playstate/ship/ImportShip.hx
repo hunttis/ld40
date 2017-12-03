@@ -5,11 +5,11 @@ import haxe.Timer;
 
 class ImportShip extends Ship {
 
-  private var hasVisited: Bool = false;
+  public var hasVisited: Bool = false;
 
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
-    waitMaximum = 5;
+    waitMaximum = 30;
     stateTimer = waitMaximum;
     visitingTime = 1;
   }

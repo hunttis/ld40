@@ -16,9 +16,8 @@ class SeedMachine {
     }
     if ((producedSeed == null && !processing) || (!processing && producedSeed.pickedUp)) {
       processing = true;
-      trace("Processing new seed...");
     }
-    if (processTime > 10) {
+    if (processTime > 5) {
       processing = false;
       processTime = 0;
       var seed = new Seed(250, 250);

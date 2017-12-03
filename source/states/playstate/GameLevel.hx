@@ -1,5 +1,6 @@
 package states.playstate;
 
+import states.playstate.creature.BehaviorType;
 import flixel.util.FlxSort;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -78,8 +79,6 @@ class GameLevel extends FlxGroup {
 
     farmer = levelMap.getFarmer();
 
-    var food: Food = createFood(100, 100);
-    items.foods.add(food);
 
     seedMachine = new SeedMachine(this);
     
@@ -123,13 +122,20 @@ class GameLevel extends FlxGroup {
   }
 
   public function isGameOver(): Bool {
+
+    if (importShip.hasVisited) {
+      for (creature in creatures.members) {
+        if (creature.alive && creature.behavior.getType() != BehaviorType.ANGRY) {
+          return false;
+        }
+      }
+    } 
+    return importShip.hasVisited;
     #if debug // This part (cheat) of the code is only active if the -debug parameter is present
       if (FlxG.keys.justPressed.ZERO) {
         return true;
       }
     #end
-    // Write your game over check here
-    return false;
   }
 
   public function isLevelComplete(): Bool {
