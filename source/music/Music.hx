@@ -12,10 +12,13 @@ class Music {
   var soundFrontEnd: SoundFrontEnd;
   var backgroundMusicGroup: FlxSoundGroup;
   var happyTheme: FlxSound;
+  var angryTheme: FlxSound;
 
   public function new() {
     soundFrontEnd = FlxG.sound;
+
     backgroundMusicGroup = new FlxSoundGroup();
+
     happyTheme = soundFrontEnd.load(
       iloinen_teema_v1__ogg,
       1,
@@ -25,7 +28,18 @@ class Music {
       false
     );
     soundFrontEnd.cache(iloinen_teema_v1__ogg);
+    backgroundMusicGroup.add(happyTheme);
 
+    angryTheme = soundFrontEnd.load(
+      ahdistava_teema_v1__ogg,
+      1,
+      true,
+      backgroundMusicGroup,
+      false,
+      false
+    );
+    soundFrontEnd.cache(ahdistava_teema_v1__ogg);
+    backgroundMusicGroup.add(angryTheme);
   }
 
   @:access(flixel.system.frontEnds.SoundFrontEnd)
