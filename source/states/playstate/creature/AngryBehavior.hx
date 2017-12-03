@@ -18,15 +18,7 @@ class AngryBehavior implements Behavior {
     creature.hunger += elapsed;
     creature.velocity.set(0, 0);
 
-    if (creature.hunger <= 2) {
-      creature.behavior = new IdleBehavior();
-    }
-
-    if (creature.hunger <= 10) {
-      creature.behavior = new HungryBehavior();
-    }
-
-    if (creature.hunger > 50) {
+    if (creature.hunger > Creature.CANNIBAL_DEATH_LIMIT) {
       creature.kill();
     }
     

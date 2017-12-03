@@ -16,7 +16,7 @@ class IdleBehavior implements Behavior {
     creature.satisfaction += elapsed;
     // creature.velocity.set(0, 0);
 
-    if (creature.hunger > 2) {
+    if (creature.hunger > Creature.HUNGRY_LIMIT) {
       creature.behavior = new HungryBehavior();
     }
     if (creature.satisfaction > 5) {

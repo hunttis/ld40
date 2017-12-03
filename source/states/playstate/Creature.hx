@@ -18,6 +18,10 @@ import flixel.math.FlxVector;
 
 class Creature extends FlxNestedSprite {
 
+  public static var HUNGRY_LIMIT: Float = 4;
+  public static var ANGRY_LIMIT: Float = 15;
+  public static var CANNIBAL_DEATH_LIMIT: Float = 30;
+
   public var hunger: Float = 0;
   public var satisfaction: Float = 0;
   public var scareTime: Float = 0;

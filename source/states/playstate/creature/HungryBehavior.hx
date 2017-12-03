@@ -22,11 +22,11 @@ class HungryBehavior implements Behavior {
 
     creature.eatGrass();
 
-    if (creature.hunger <= 2) {
+    if (creature.hunger <= Creature.HUNGRY_LIMIT) {
       creature.behavior = new IdleBehavior();
     }
 
-    if (creature.hunger > 10) {
+    if (creature.hunger > Creature.ANGRY_LIMIT) {
       creature.behavior = new AngryBehavior();
     }
 
