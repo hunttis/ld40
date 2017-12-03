@@ -8,6 +8,7 @@ import states.playstate.LevelMap;
 import flixel.addons.display.FlxNestedSprite;
 import states.playstate.ship.*;
 import flixel.math.FlxPoint;
+import states.playstate.ui.*;
 
 class GameLevel extends FlxGroup {
 
@@ -27,6 +28,7 @@ class GameLevel extends FlxGroup {
 
   static var GRASS_GROW_DELAY_SECONDS = 0.5;
   public var grassDelay = GRASS_GROW_DELAY_SECONDS;
+  public var shipIndicators: ShipIndicators;
 
 	public function new(levelNumber): Void {
 		super();
@@ -84,6 +86,9 @@ class GameLevel extends FlxGroup {
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.foregroundLayer.width, levelMap.foregroundLayer.height, true);
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);
+
+    var indicatorBars = new ShipIndicators(this);
+    uiLayer.add(indicatorBars);
   }
 
   private function createLayers(): Void {
