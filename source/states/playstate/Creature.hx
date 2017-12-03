@@ -48,10 +48,11 @@ class Creature extends FlxSprite {
     this.height = 8;
     // solid = false;
 
-    // var shadow = new FlxNestedSprite(xLoc, yLoc, "assets/shadow.png");
-    // shadow.relativeX = 0;
-    // shadow.relativeY = 24;
-    // add(shadow);
+    var shadow = new FlxNestedSprite(xLoc, yLoc, "assets/shadow.png");
+    shadow.relativeX = 0;
+    shadow.relativeY = 28;
+    shadow.solid = false;
+    add(shadow);
 
 
   }
