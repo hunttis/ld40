@@ -1,9 +1,10 @@
 package states.playstate;
 
-class Food extends Item {
+class Seed extends Item {
 
   public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
     super(xLoc, yLoc, gameLevel);
+    type = ItemType.SEED;
     loadGraphic("assets/food.png");
   }
 

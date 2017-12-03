@@ -4,10 +4,13 @@ import flixel.addons.display.FlxNestedSprite;
 
 class Item extends FlxNestedSprite {
 
-  var gameLevel: GameLevel;
+  public var type: ItemType;
 
+  var gameLevel: GameLevel;
+  
   public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
     super(xLoc, yLoc);
+    type = ItemType.ITEM;
     this.gameLevel = gameLevel;
   }
 

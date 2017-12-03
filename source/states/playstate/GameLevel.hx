@@ -71,6 +71,10 @@ class GameLevel extends FlxGroup {
 
     var food: Food = createFood(100, 100);
     items.foods.add(food);
+
+    var seed: Seed = createSeed(150, 150);
+    items.seeds.add(seed);
+    
     
     var weapon: Weapon = createWeapon(200, 200, creatures);
     items.weapons.add(weapon);
@@ -132,6 +136,11 @@ class GameLevel extends FlxGroup {
   private function createFood(x: Float, y: Float): Food {
     var food = new Food(x, y, this);
     return food;
+  }
+
+  private function createSeed(x: Float, y: Float): Seed {
+    var seed = new Seed(x, y, this);
+    return seed;
   }
 
   private function createWeapon(x: Float, y: Float, creatures: FlxTypedGroup<Creature>): Weapon {
