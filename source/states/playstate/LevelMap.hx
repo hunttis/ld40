@@ -85,14 +85,6 @@ class LevelMap extends FlxGroup {
     }
   }
 
-  public function getForegroundLayer(): FlxTilemap {
-    return foregroundLayer;
-  }
-
-  public function getBackgroundLayer(): FlxTilemap {
-    return backgroundLayer;
-  }
-
   public function getCreatures(): FlxTypedGroup<Creature> {
     return creatures;
   }

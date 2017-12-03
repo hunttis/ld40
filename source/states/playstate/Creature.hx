@@ -27,7 +27,7 @@ class Creature extends FlxSprite {
     super(xLoc, yLoc);
 
     this.gameLevel = gameLevel;
-    this.tilemap = gameLevel.levelMap.getForegroundLayer();
+    this.tilemap = gameLevel.levelMap.foregroundLayer;
 
     behavior = new IdleBehavior();
     this.foods = gameLevel.items.foods;

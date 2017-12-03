@@ -19,6 +19,9 @@ class GameLevel extends FlxGroup {
   public var salesShip: SalesShip;
   public var creatures: FlxTypedGroup<Creature>;
 
+  static var GRASS_GROW_DELAY_SECONDS = 0.5;
+  public var grassDelay = GRASS_GROW_DELAY_SECONDS;
+
 	public function new(levelNumber): Void {
 		super();
     loadLevel(levelNumber);
@@ -27,6 +30,7 @@ class GameLevel extends FlxGroup {
 	override public function update(elapsed: Float): Void {
     checkControls(elapsed);
     checkCollisions(elapsed);
+    updateGrass(elapsed);
 		super.update(elapsed);
 	}
 
@@ -35,9 +39,9 @@ class GameLevel extends FlxGroup {
 
   private function checkCollisions(elapsed: Float): Void {
     if (levelMap != null) {
-      FlxG.collide(levelMap.getForegroundLayer(), farmer);
+      FlxG.collide(levelMap.foregroundLayer, farmer);
       FlxG.collide(creatures);
-      FlxG.collide(levelMap.getForegroundLayer(), creatures);
+      FlxG.collide(levelMap.foregroundLayer, creatures);
     }
   }
 
@@ -70,7 +74,7 @@ class GameLevel extends FlxGroup {
     foregroundLayer.add(items);
     foregroundLayer.add(salesShip);
 
-    FlxG.camera.setScrollBoundsRect(0, 0, levelMap.getForegroundLayer().width, levelMap.getForegroundLayer().height, true);
+    FlxG.camera.setScrollBoundsRect(0, 0, levelMap.foregroundLayer.width, levelMap.foregroundLayer.height, true);
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);
   }
 
@@ -82,6 +86,67 @@ class GameLevel extends FlxGroup {
     add(backgroundLayer);
     add(foregroundLayer);
     add(uiLayer);
+  }
+
+  function updateGrass(elapsed: Float) {
+    grassDelay -= elapsed;
+    if (grassDelay > 0) {
+      return;
+    }
+    trace("grass is growing");
+    grassDelay = GRASS_GROW_DELAY_SECONDS;
+
+    var width = levelMap.grassLayer.widthInTiles;
+    var height = levelMap.grassLayer.heightInTiles;
+
+    for (y in 0...height) {
+      for (x in 0...width) {
+        var tile = levelMap.grassLayer.getTile(x, y);
+        if (isFullyGrownGrassTile(tile)) {
+          // UP
+          if (y > 0) {
+            spreadGrassTo(x, y-1);
+          }
+          // DOWN
+          if (y < height - 1) {
+            spreadGrassTo(x, y+1);
+          }
+          // LEFT
+          if (x > 0) {
+            spreadGrassTo(x-1, y);
+          }
+          // RIGHT
+          if (x < width - 1) {
+            spreadGrassTo(x+1, y);
+          }
+        } else if (isGrowingGrassTile(tile)) {
+          growGrass(x, y, tile);
+        }
+      }
+    }
+  }
+
+  function isFullyGrownGrassTile(tile: Int): Bool {
+    return tile == 11;
+  }
+
+  function isGrowingGrassTile(tile: Int): Bool {
+    return tile >= 7 && tile <= 11;
+  }
+
+  function isBareGroundTile(tile: Int): Bool {
+    return tile == 2;
+  }
+
+  function spreadGrassTo(x: Int, y: Int): Void {
+    var tile = levelMap.grassLayer.getTile(x, y);
+    if (isBareGroundTile(tile) && Math.random() > 0.8) {
+      levelMap.grassLayer.setTile(x, y, 7);
+    }
+  }
+
+  function growGrass(x: Int, y: Int, tile: Int): Void {
+    levelMap.grassLayer.setTile(x, y, tile + 1);
   }
 
   public function isGameOver(): Bool {

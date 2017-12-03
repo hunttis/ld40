@@ -2,7 +2,6 @@ package states.playstate.creature;
 
 import flixel.math.FlxVelocity;
 import flixel.FlxG;
-import flixel.FlxG;
 
 class HungryBehavior implements Behavior {
   public function new() {}
