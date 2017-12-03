@@ -6,6 +6,8 @@ import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import states.playstate.LevelMap;
 import flixel.addons.display.FlxNestedSprite;
+import states.playstate.ship.*;
+import flixel.math.FlxPoint;
 
 class GameLevel extends FlxGroup {
 
@@ -20,6 +22,7 @@ class GameLevel extends FlxGroup {
 
   public var items: ItemGroup;
   public var salesShip: SalesShip;
+  public var importShip: ImportShip;
   public var creatures: FlxTypedGroup<Creature>;
 
 	public function new(levelNumber): Void {
@@ -63,7 +66,8 @@ class GameLevel extends FlxGroup {
     var weapon: Weapon = createWeapon(200, 200, creatures);
     items.weapons.add(weapon);
 
-    salesShip = new SalesShip(levelMap.getSalesPoint(), creatures);
+    salesShip = new SalesShip(levelMap.getSalesPoint(), this);
+    importShip = new ImportShip(new FlxPoint(100, 100), this);
     
     backgroundLayer.add(levelMap.getBackgroundLayer());
     foregroundLayer.add(levelMap.getForegroundLayer());
@@ -71,6 +75,7 @@ class GameLevel extends FlxGroup {
     foregroundLayer.add(farmer);
     foregroundLayer.add(items);
     foregroundLayer.add(salesShip);
+    foregroundLayer.add(importShip);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.getForegroundLayer().width, levelMap.getForegroundLayer().height, true);
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);

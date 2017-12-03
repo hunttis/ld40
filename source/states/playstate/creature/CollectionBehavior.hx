@@ -2,6 +2,8 @@ package states.playstate.creature;
 
 import flixel.FlxG;
 import flixel.math.FlxVelocity;
+import states.playstate.ship.SalesShip;
+
 class CollectionBehavior implements Behavior {
   public function new() {}
 
