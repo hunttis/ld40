@@ -92,7 +92,7 @@ class Farmer extends FlxNestedSprite {
       }
 
       if (FlxG.keys.justPressed.S) {
-        scareClosestCreature();
+        scareClosestCreatures();
       }
     #end
   }
@@ -139,11 +139,11 @@ class Farmer extends FlxNestedSprite {
     drop();
   }
 
-  private function scareClosestCreature(): Void {
-    var creature = CreatureUtil.findClosestStableCreature(this, creatures, 200);
-    if (creature != null) {
+  private function scareClosestCreatures(): Void {
+    var foundCreatures = CreatureUtil.findStableCreatures(this, creatures, 100);
+    foundCreatures.forEach(function(creature) {
       creature.becomeScaredLeader();
-    }
+    });
   }
 
   private function plantGrass(): Void {

@@ -6,6 +6,28 @@ import flixel.math.FlxMath;
 
 class CreatureUtil {
 
+  public static function findStableCreatures(source: FlxSprite, creatures: FlxTypedGroup<Creature>, maxDistance: Float): FlxTypedGroup<Creature> {
+    var foundCreatures = findCreatures(source, creatures, maxDistance, function(creature) {
+      return creature.behavior.getType() != BehaviorType.ANGRY
+        && creature.behavior.getType() != BehaviorType.SCARED_LEADER
+        && creature.behavior.getType() != BehaviorType.SCARED_FOLLOWER;
+    });
+    return foundCreatures;
+  }
+
+  public static function findCreatures(source: FlxSprite, creatures: FlxTypedGroup<Creature>, maxDistance: Float, predicate: Creature -> Bool): FlxTypedGroup<Creature> {
+    var foundCreatures: FlxTypedGroup<Creature> = new FlxTypedGroup();
+    creatures.forEachAlive(function(creature) {
+      if (creature != source && predicate(creature)) {
+        var distanceToCreature = FlxMath.distanceBetween(source, creature);
+        if (distanceToCreature <= maxDistance) {
+          foundCreatures.add(creature);
+        }
+      }
+    });
+    return foundCreatures;
+  }
+
   public static function findClosestCreature(source: FlxSprite, creatures: FlxTypedGroup<Creature>): Creature {
     var targetCreature = findClosestCreatureWith(source, creatures, function(creature) return true);
     return targetCreature;

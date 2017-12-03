@@ -196,7 +196,7 @@ class Creature extends FlxNestedSprite {
   }
 
   public function scareClosestStableCreature(): Void {
-    targetCreature = CreatureUtil.findClosestStableCreature(this, creatures, 100);
+    targetCreature = CreatureUtil.findClosestStableCreature(this, creatures, 50);
     if (targetCreature != null) {
       targetCreature.becomeScaredFollower();
     }
