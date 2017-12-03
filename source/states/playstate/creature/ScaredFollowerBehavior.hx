@@ -2,23 +2,29 @@ package states.playstate.creature;
 
 import states.playstate.Creature;
 
-class ScaredFollowerBehavior extends ScaredBehavior {
-  public function new() {super()}
+class ScaredFollowerBehavior implements Behavior {
+  public function new() {}
 
-  override public function getType(): BehaviorType {
-    return BehaviorType.SCARED;
+  public function init(creature: Creature) {
+    creature.loadGraphic("assets/bug_lovin.png");
   }
 
-  override public function update(creature: Creature, elapsed: Float): Void {
+  public function getType(): BehaviorType {
+    return BehaviorType.SCARED_FOLLOWER;
+  }
+
+  public function update(creature: Creature, elapsed: Float): Void {
     creature.hunger += elapsed;
     creature.velocity.set(0, 0);
 
-    if (creature.hunger <= 2) {
-      creature.behavior = new IdleBehavior();
-    }
+    creature.findClosestScaredLeader();
 
-    if (creature.hunger <= 10) {
-      creature.behavior = new HungryBehavior();
+    if (creature.targetCreature != null) {
+      creature.velocity.x = creature.targetCreature.velocity.x - 20;
+      creature.velocity.y = creature.targetCreature.velocity.y - 20;
+      creature.scareClosestStableCreature();
+    } else {
+      creature.behavior = new IdleBehavior();
     }
   }
 }
