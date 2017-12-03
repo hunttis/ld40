@@ -11,16 +11,16 @@ class ReproductionBehavior implements Behavior {
   }
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug_lovin.png");
+    creature.animation.play("loving");
   }
 
   public function update(creature: Creature, elapsed: Float): Void {
-    if (creature.targetCreature == null) {
-      creature.findClosestReproducingCreature();
-    } else {
-      FlxVelocity.moveTowardsObject(creature, creature.targetCreature, 30);
+    creature.targetCreature = CreatureUtil.findClosestReproducingCreature(creature, creature.creatures);
+    if (creature.targetCreature != null) {
+      FlxVelocity.moveTowardsObject(creature, creature.targetCreature, 60);
       FlxG.overlap(creature, creature.targetCreature, function(self: Creature, other: Creature) {
         creature.reproduce();
+        creature.targetCreature.reproduce();
         self.satisfaction = 0;
         other.satisfaction = 0;
         self.behavior = new IdleBehavior();

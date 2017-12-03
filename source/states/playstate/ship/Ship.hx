@@ -17,12 +17,20 @@ class Ship extends FlxGroup {
   
   var shipSprite: FlxSprite;
   var shipLight: FlxSprite;
+  var shipBeam: FlxSprite;
 
   public var arrivalCounter: Float = 0;
   public var waitMaximum: Float = 0;
 
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super();
+
+    shipBeam = new FlxSprite(landingPoint.x, landingPoint.y);
+    shipBeam.visible = false;
+    shipBeam.loadGraphic("assets/ship_beam.png");
+    shipBeam.centerOrigin();
+    add(shipBeam);
+
     shipSprite = new FlxSprite(landingPoint.x, -300);
     shipSprite.loadGraphic("assets/market_ship.png");
     add(shipSprite);
@@ -54,16 +62,22 @@ class Ship extends FlxGroup {
       trace("Ship arrived!");
       state = ARRIVED;
       stateTimer = 10;
+      shipBeam.x = shipSprite.x + 32;
+      shipBeam.y = shipSprite.y + 130;
+      shipBeam.visible = true;
+      shipBeam.alpha = 0.0;
+      FlxTween.tween(shipBeam, {alpha: 0.5}, 0.3, {ease: FlxEase.quadIn});
       arrivedStartAction();
     } else if (state == ARRIVED && stateTimer > 0) {
       arrivedContinuousAction(elapsed);
     } else if (state == ARRIVED && stateTimer < 0) {
       trace("Ship leaving!");
+      FlxTween.tween(shipBeam, {alpha: 0}, 0.3, {ease: FlxEase.quadIn, onComplete: disableBeam});
       state = LEAVING;
       stateTimer = 1;
       FlxTween.tween(shipSprite, {y: -100}, 1, {ease: FlxEase.quadIn});
       FlxTween.tween(shipLight, {alpha: 0}, 1, {ease: FlxEase.quadIn});
-      FlxTween.tween(shipLight.scale, {x: 3, y: 3}, 1, {ease: FlxEase.quintOut});
+      FlxTween.tween(shipLight.scale, {x: 3, y: 3}, 1, {ease: FlxEase.quintIn});
     } else if (state == LEAVING && stateTimer < 0) {
       trace("Ship left, waiting..");
       state = WAITING;
@@ -73,6 +87,10 @@ class Ship extends FlxGroup {
     arrivalCounter = getArrival();
 
     super.update(elapsed);
+  }
+
+  function disableBeam(tween: FlxTween) {
+    shipBeam.visible = false;
   }
 
   function arrivedStartAction(): Void {

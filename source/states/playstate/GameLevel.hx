@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.util.FlxSort;
 import flixel.FlxG;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
@@ -10,6 +11,7 @@ import flixel.addons.display.FlxNestedSprite;
 import states.playstate.ship.*;
 import flixel.math.FlxPoint;
 import states.playstate.ui.*;
+import states.playstate.decoration.*;
 
 class GameLevel extends FlxGroup {
 
@@ -18,7 +20,7 @@ class GameLevel extends FlxGroup {
   private var backgroundLayer: FlxGroup;
   private var foregroundLayer: FlxGroup;
   private var uiLayer: FlxGroup;
-  private var grass: Grass;
+  public var grass(default, null): Grass;
 
   private var weapon: Weapon;
 
@@ -28,8 +30,6 @@ class GameLevel extends FlxGroup {
   public var importShip: ImportShip;
   public var creatures: FlxTypedGroup<Creature>;
 
-  static var GRASS_GROW_DELAY_SECONDS = 0.5;
-  public var grassDelay = GRASS_GROW_DELAY_SECONDS;
   public var shipIndicators: ShipIndicators;
 
 	public function new(levelNumber): Void {
@@ -41,6 +41,7 @@ class GameLevel extends FlxGroup {
     checkControls(elapsed);
     checkCollisions(elapsed);
     grass.update(elapsed);
+    creatures.sort(FlxSort.byY);
 		super.update(elapsed);
 	}
 
@@ -57,8 +58,6 @@ class GameLevel extends FlxGroup {
 
   private function loadLevel(levelNumber: Int): Void {
     createLayers();
-
-    grass = new Grass(this);
 
     items = new ItemGroup();
 
@@ -79,6 +78,9 @@ class GameLevel extends FlxGroup {
     salesShip = new SalesShip(levelMap.getSalesPoint(), this);
     importShip = new ImportShip(new FlxPoint(levelMap.foregroundLayer.width / 2, levelMap.foregroundLayer.height / 2), this);
     
+    var backdropAsteroid = new BackdropAsteroid(FlxG.width, -128);
+    backgroundLayer.add(backdropAsteroid);
+
     backgroundLayer.add(levelMap.backgroundLayer);
     foregroundLayer.add(levelMap.foregroundLayer);
     foregroundLayer.add(levelMap.grassLayer);
@@ -87,6 +89,8 @@ class GameLevel extends FlxGroup {
     foregroundLayer.add(items);
     foregroundLayer.add(salesShip);
     foregroundLayer.add(importShip);
+
+    grass = new Grass(this);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.foregroundLayer.width, levelMap.foregroundLayer.height, true);
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);
@@ -126,12 +130,12 @@ class GameLevel extends FlxGroup {
   }
 
   private function createFood(x: Float, y: Float): Food {
-    var food = new Food(x, y);
+    var food = new Food(x, y, this);
     return food;
   }
 
   private function createWeapon(x: Float, y: Float, creatures: FlxTypedGroup<Creature>): Weapon {
-    var weapon = new Weapon(x, y, creatures);
+    var weapon = new Weapon(x, y, creatures, this);
     return weapon;
   }
 }

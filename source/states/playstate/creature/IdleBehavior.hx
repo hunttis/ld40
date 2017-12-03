@@ -8,7 +8,7 @@ class IdleBehavior implements Behavior {
   }
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug.png");
+    creature.animation.play("idle");
   }
 
   public function update(creature: Creature, elapsed: Float): Void {

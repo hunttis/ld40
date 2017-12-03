@@ -17,4 +17,6 @@
  <tile id="32" terrain=",0,,"/>
  <tile id="33" terrain="0,0,,"/>
  <tile id="34" terrain="0,,,"/>
+ <tile id="35" terrain="0,0,0,0"/>
+ <tile id="36" terrain="0,0,0,0"/>
 </tileset>

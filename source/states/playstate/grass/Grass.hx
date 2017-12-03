@@ -10,13 +10,28 @@ class Grass {
 
   var grassLayer(get, never): FlxTilemap;
 
-  static var GRASS_GROW_DELAY_SECONDS = 0.5;
+  static var GRASS_GROW_DELAY_SECONDS = 1.0;
   public var grassDelay = GRASS_GROW_DELAY_SECONDS;
 
   var eatableGrass = new Array<FlxPoint>();
 
   public function new(gameLevel: GameLevel) {
     this.gameLevel = gameLevel;
+    addMapEatableGrassTiles();
+  }
+
+  function addMapEatableGrassTiles() {
+    var width = grassLayer.widthInTiles;
+    var height = grassLayer.heightInTiles;
+
+    for (y in 0...height) {
+      for (x in 0...width) {
+        var tile = grassLayer.getTile(x, y);
+        if (isEatableTile(tile)) {
+          eatableGrass.push(FlxPoint.get(x, y));
+        }
+      }
+    }
   }
 
   public function update(elapsed: Float) {
@@ -75,7 +90,7 @@ class Grass {
     var newTile = tile + 1;
     grassLayer.setTile(x, y, newTile);
     if (isEatableTile(newTile)) {
-      eatableGrass.push(new FlxPoint(x, y));
+      eatableGrass.push(FlxPoint.get(x, y));
     }
   }
 
@@ -87,19 +102,20 @@ class Grass {
     }
     grassLayer.setTile(x, y, 2);
     removeEatableGrass(x, y);
-    return switch (tile) {
-      case 9: 0.5;
-      case 10: 1.0;
-      case 11: 1.5;
+    var satiation = switch (tile) {
+      case 9: 5;
+      case 10: 7;
+      case 11: 10;
       case _: 0.0;
-    }
+    };
+    return satiation;
   }
 
   function removeEatableGrass(x: Int, y: Int) {
     for (i in 0...eatableGrass.length) {
       var c = eatableGrass[i];
       if (Std.int(c.x) == x && Std.int(c.y) == y) {
-        eatableGrass.splice(i, 1);
+        eatableGrass.splice(i, 1)[0].put();
         return;
       }
     } 
@@ -109,17 +125,20 @@ class Grass {
     var minDist = FlxMath.MAX_VALUE_INT;
     var point: FlxPoint = null;
     for (c in eatableGrass) {
-      var cx = Std.int(c.x);
-      var cy = Std.int(c.x);
-      var dist = manhattanDistance(cx, cy, x, y);
-      if (dist <= 3) {
-        return grassLayer.getTileCoordsByIndex(cx * cy);
-      } else if (dist < minDist) {
-        minDist = dist;
+      var pt = FlxPoint.get(x, y);
+      var dist = c.distanceTo(pt);
+      pt.put();
+      if (dist < minDist) {
+        minDist = Math.round(dist);
         point = c;
       }
     }
-    return point;
+    if (point == null) {
+      return null;
+    }
+    var index = Math.round(point.y * grassLayer.widthInTiles + point.x);
+    var coordsPoint = grassLayer.getTileCoordsByIndex(index);
+    return coordsPoint;
   }
 
   public function manhattanDistance(ax: Int, ay: Int, bx: Int, by: Int): Int {

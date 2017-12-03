@@ -6,7 +6,7 @@ class ScaredFollowerBehavior implements Behavior {
   public function new() {}
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug_lovin.png");
+    creature.animation.play("loving");
   }
 
   public function getType(): BehaviorType {
@@ -17,7 +17,7 @@ class ScaredFollowerBehavior implements Behavior {
     creature.hunger += elapsed;
     creature.velocity.set(0, 0);
 
-    creature.findClosestScaredLeader();
+    creature.targetCreature = CreatureUtil.findClosestScaredLeader(creature, creature.creatures);
 
     if (creature.targetCreature != null) {
       creature.velocity.x = creature.targetCreature.velocity.x - 20;

@@ -4,8 +4,8 @@ import flixel.util.FlxColor;
 
 class Food extends Item {
 
-  public function new(xLoc: Float, yLoc: Float) {
-    super(xLoc, yLoc);
+  public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
+    super(xLoc, yLoc, gameLevel);
     loadGraphic("assets/food.png");
   }
 

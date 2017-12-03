@@ -4,14 +4,19 @@ import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.display.FlxNestedSprite;
 import flixel.util.FlxColor;
+import flixel.FlxSprite;
 
 class Weapon extends Item {
 
   private var creatures: FlxTypedGroup<Creature>;
 
-  public function new(xLoc: Float, yLoc: Float, creatures: FlxTypedGroup<Creature>) {
-    super(xLoc, yLoc);
+  private var hitSprite: FlxSprite;
+
+  public function new(xLoc: Float, yLoc: Float, creatures: FlxTypedGroup<Creature>, gameLevel: GameLevel) {
+    super(xLoc, yLoc, gameLevel);
     makeGraphic(16, 16, FlxColor.ORANGE);
+
+    // hitSprite
     this.creatures = creatures;
   }
 

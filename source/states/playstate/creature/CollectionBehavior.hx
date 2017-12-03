@@ -12,7 +12,7 @@ class CollectionBehavior implements Behavior {
   }
 
   public function init(creature: Creature) {
-    creature.loadGraphic("assets/bug.png");
+    creature.animation.play("idle");
     creature.solid = false;
   }
 
