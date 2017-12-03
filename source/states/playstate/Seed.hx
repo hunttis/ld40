@@ -1,7 +1,6 @@
 package states.playstate;
 
 class Seed extends Item {
-
   public function new(xLoc: Float, yLoc: Float) {
     super(xLoc, yLoc, gameLevel);
     type = ItemType.SEED;

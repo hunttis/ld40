@@ -104,6 +104,7 @@ class Farmer extends FlxNestedSprite {
         item.relativeX = 10;
         item.relativeY = 10;
         this.holding = item;
+        item.pickedUp = true;
       }
     });
   }

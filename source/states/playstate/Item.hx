@@ -5,6 +5,7 @@ import flixel.addons.display.FlxNestedSprite;
 class Item extends FlxNestedSprite {
 
   public var type: ItemType;
+  public var pickedUp: Bool = false;
 
   var gameLevel: GameLevel;
   
