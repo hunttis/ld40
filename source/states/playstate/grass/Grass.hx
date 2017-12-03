@@ -11,7 +11,7 @@ class Grass {
 
   var grassLayer(get, never): FlxTilemap;
 
-  static var GRASS_GROW_DELAY_SECONDS = 1.0;
+  static var GRASS_GROW_DELAY_SECONDS = 2.0;
   public var grassDelay = GRASS_GROW_DELAY_SECONDS;
 
   var eatableGrass = new Array<FlxPoint>();
@@ -129,6 +129,9 @@ class Grass {
 
   public function findNearEatableGrass(x: Int, y: Int): FlxPoint {
     var minDist = FlxMath.MAX_VALUE_INT;
+    if (eatableGrass.length == 0) {
+      return null;
+    }
     var point = eatableGrass.pop();
     /*
     for (c in eatableGrass) {
