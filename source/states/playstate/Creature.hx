@@ -78,46 +78,6 @@ class Creature extends FlxSprite {
     pos.put();
   }
 
-  // public function findClosestCreature(): Creature {
-  //   targetCreature = findClosestCreatureWith(function(creature) return true);
-  //   return targetCreature;
-  // }
-
-  // public function findClosestReproducingCreature(): Void {
-  //   var closestCreature = findClosestCreatureWith(function(creature) return creature.behavior.getType() == BehaviorType.REPRODUCING);
-  //   targetCreature = closestCreature;
-  // }
-
-  // public function findClosestStableCreature(maxDistance: Float = FlxMath.MAX_VALUE_INT): Void {
-  //   var closestCreature = findClosestCreatureWith(maxDistance, function(creature)
-  //     return creature.behavior.getType() != BehaviorType.ANGRY
-  //         && creature.behavior.getType() != BehaviorType.SCARED_LEADER
-  //         && creature.behavior.getType() != BehaviorType.SCARED_FOLLOWER);
-  //   targetCreature = closestCreature;
-  // }
-
-  // public function findClosestScaredLeader(): Void {
-  //    var closestCreature = findClosestCreatureWith(function(creature)
-  //     return creature.behavior.getType() == BehaviorType.SCARED_LEADER);
-  //   targetCreature = closestCreature;
-  // }
-
-  // public function findClosestCreatureWith(maxDistance: Float = FlxMath.MAX_VALUE_INT, predicate: Creature -> Bool): Creature {
-  //   var closestCreature: Creature = null;
-  //   var distance: Float = FlxMath.MAX_VALUE_INT;
-
-  //   creatures.forEachAlive(function(creature) {
-  //     if (creature != this && predicate(creature)) {
-  //       var distanceToCreature: Float = FlxMath.distanceBetween(this, creature);
-  //       if (distanceToCreature < distance && distanceToCreature <= maxDistance) {
-  //         closestCreature = creature;
-  //         distance = distanceToCreature;
-  //       }
-  //     }
-  //   });
-  //   return closestCreature;
-  // }
-
   public function eatGrass(): Void {
     var coords = tileCoords();
     var satiation = gameLevel.grass.eatGrass(Math.round(coords.x), Math.round(coords.y));
