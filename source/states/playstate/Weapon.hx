@@ -47,7 +47,6 @@ class Weapon extends Item {
 
     if (this.creatures.members.length > 0) {
       creatures.forEach(function(creature) {
-        trace("Distance from creature: " + creature.getGraphicMidpoint().distanceTo(hitSprite.getGraphicMidpoint()));
         if (creature.getGraphicMidpoint().distanceTo(hitSprite.getGraphicMidpoint()) < 30) {
           creature.hurt(1);
         }
