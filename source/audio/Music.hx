@@ -7,7 +7,6 @@ import flixel.system.FlxSound;
 import flixel.system.FlxSoundGroup;
 import flixel.system.frontEnds.SoundFrontEnd;
 
-@:build(flixel.system.FlxAssets.buildFileReferences("assets/music"))
 class Music {
   private static var instance: Music;
   private var soundFrontEnd: SoundFrontEnd;
