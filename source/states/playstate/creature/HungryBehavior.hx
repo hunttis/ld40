@@ -30,7 +30,7 @@ class HungryBehavior implements Behavior {
       creature.behavior = new AngryBehavior();
     }
 
-    if (creature.targetGrass == null) {
+    if (creature.targetGrass == null || !creature.isTargetGrassEatable()) {
       creature.checkForFood();
     } else {
       creature.moveTowards(creature.targetGrass.x, creature.targetGrass.y, 50);

@@ -107,6 +107,10 @@ class Creature extends FlxNestedSprite {
     return FlxPoint.get(x, y);
   }
 
+  public function isTargetGrassEatable(): Bool {
+    return gameLevel.grass.isGrassAtPointEatable(targetGrass);
+  }
+
   public function reproduce(): Void {
     var newCreature: Creature = new Creature(x + 50, y + 50, gameLevel);
     creatures.add(newCreature);
@@ -150,8 +154,13 @@ class Creature extends FlxNestedSprite {
     for (c in gameLevel.creatures.members) {
       if (c != this) {
         if (FlxMath.isDistanceWithin(this, c, separationDistance)) {
-          separation.x += c.x - x;
-          separation.y += c.y - y;
+          if (this.behavior.getType() == BehaviorType.HUNGRY && c.behavior.getType() == BehaviorType.HUNGRY) {
+            separation.x += (c.x - x) * 3;
+            separation.y += (c.y - y) * 3;
+          } else {
+            separation.x += c.x - x;
+            separation.y += c.y - y;
+          }
           n++;
         }
       }
@@ -171,6 +180,14 @@ class Creature extends FlxNestedSprite {
       separation.y *= 100;
       separation.add(x, y);
       FlxVelocity.moveTowardsPoint(this, separation, 100);
+    }
+  }
+
+  override function kill(): Void {
+    super.kill();
+    if (targetGrass != null && isTargetGrassEatable()) {
+      gameLevel.grass.recycleTargetGrass(targetGrass);
+      targetGrass = null;
     }
   }
 

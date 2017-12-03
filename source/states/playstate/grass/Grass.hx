@@ -117,47 +117,35 @@ class Grass {
     return satiation;
   }
 
+  public function isGrassAtPointEatable(point: FlxPoint): Bool {
+    var index = grassLayer.getTileIndexByCoords(point);
+    var tile = grassLayer.getTileByIndex(index);
+    return isEatableTile(tile);
+  }
+
   function removeEatableGrass(x: Int, y: Int) {
     for (i in 0...eatableGrass.length) {
       var c = eatableGrass[i];
       if (Std.int(c.x) == x && Std.int(c.y) == y) {
-        eatableGrass.splice(i, 1)[0];
+        eatableGrass.splice(i, 1)[0].put();
         return;
       }
     } 
   }
 
+  public function recycleTargetGrass(grass: FlxPoint) {
+    eatableGrass.push(grass);
+  }
+
   public function findNearEatableGrass(x: Int, y: Int): FlxPoint {
-    var minDist = FlxMath.MAX_VALUE_INT;
     if (eatableGrass.length == 0) {
       return null;
     }
     var point = eatableGrass.pop();
-    /*
-    for (c in eatableGrass) {
-      var pt = FlxPoint.get(x, y);
-      var dist = c.distanceTo(pt);
-      pt.put();
-      if (dist < minDist) {
-        minDist = Math.round(dist);
-        point = c;
-      }
-    }
-    if (point == null) {
-      return null;
-    }
-    */
-    // removeEatableGrass(Math.floor(point.y), Math.floor(point.x));
     var index = Math.round(point.y * grassLayer.widthInTiles + point.x);
     var coordsPoint = grassLayer.getTileCoordsByIndex(index);
     point.put();
     return coordsPoint;
-  }
-
-  public function manhattanDistance(ax: Int, ay: Int, bx: Int, by: Int): Int {
-    var x = if (ax > bx) ax - bx else bx - ax;
-    var y = if (ay > by) ay - by else by - ay;
-    return x + y;
   }
 
   function get_grassLayer() return gameLevel.levelMap.grassLayer;
