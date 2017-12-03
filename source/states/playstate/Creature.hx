@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.util.FlxSpriteUtil;
 import flixel.addons.display.FlxNestedSprite;
 import states.playstate.creature.BehaviorType;
 import flixel.tile.FlxTilemap;
@@ -16,6 +17,10 @@ import states.playstate.creature.CreatureUtil;
 import flixel.math.FlxVector;
 
 class Creature extends FlxNestedSprite {
+
+  public static var HUNGRY_LIMIT: Float = 4;
+  public static var ANGRY_LIMIT: Float = 15;
+  public static var CANNIBAL_DEATH_LIMIT: Float = 30;
 
   public var hunger: Float = 0;
   public var satisfaction: Float = 0;
@@ -41,7 +46,8 @@ class Creature extends FlxNestedSprite {
     animation.add("hungry", [1], 1, false);
     animation.add("loving", [2], 1, false);
     animation.add("angry", [3], 1, false);
-    
+
+
     this.gameLevel = gameLevel;
     this.tilemap = gameLevel.levelMap.foregroundLayer;
 
@@ -57,8 +63,6 @@ class Creature extends FlxNestedSprite {
     shadow.relativeY = 28;
     shadow.solid = false;
     add(shadow);
-
-
   }
 
   public function set_behavior(nextBehavior: Behavior) {
@@ -67,13 +71,14 @@ class Creature extends FlxNestedSprite {
   }
 
   override public function update(elapsed: Float) {
-
     velocity.x = 0;
     velocity.y = 0;
 
     behavior.update(this, elapsed);
 
     super.update(elapsed);
+
+    FlxSpriteUtil.bound(this, 0, 1600, 0, 640);
   }
 
   public function checkForFood(): Void {
@@ -123,6 +128,8 @@ class Creature extends FlxNestedSprite {
     }
     p.put();
 
+    separation.x *= 10;
+    separation.y *= 10;
     targetDirVector.set(x - this.x, y - this.y);
     targetDirVector.normalize();
 
@@ -137,12 +144,12 @@ class Creature extends FlxNestedSprite {
     velocity.y = targetDirVector.y;
   }
 
-  function calculateSeparation() {
+  function calculateSeparation(separationDistance: Float = 30) {
     separation.set(0, 0);
     var n = 0;
     for (c in gameLevel.creatures.members) {
       if (c != this) {
-        if (FlxMath.isDistanceWithin(this, c, 30)) {
+        if (FlxMath.isDistanceWithin(this, c, separationDistance)) {
           separation.x += c.x - x;
           separation.y += c.y - y;
           n++;
@@ -154,14 +161,14 @@ class Creature extends FlxNestedSprite {
       separation.y /= n;
       separation.normalize();
       separation.negate();
-      separation.x *= 100;
-      separation.y *= 100;
     }
   }
 
   public function separate() {
-    calculateSeparation();
+    calculateSeparation(70);
     if (!separation.isZero()) {
+      separation.x *= 100;
+      separation.y *= 100;
       separation.add(x, y);
       FlxVelocity.moveTowardsPoint(this, separation, 100);
     }

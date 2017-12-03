@@ -1,7 +1,9 @@
 package states.playstate;
 
+import states.playstate.creature.BehaviorType;
 import flixel.util.FlxSort;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
@@ -19,6 +21,8 @@ class GameLevel extends FlxGroup {
 
   private var backgroundLayer: FlxGroup;
   private var foregroundLayer: FlxGroup;
+  public var temporaryLayer: FlxTypedGroup<FlxSprite>;
+
   private var uiLayer: FlxGroup;
   public var grass(default, null): Grass;
 
@@ -44,6 +48,10 @@ class GameLevel extends FlxGroup {
     grass.update(elapsed);
     seedMachine.update(elapsed);
     creatures.sort(FlxSort.byY);
+    temporaryLayer.forEachAlive(function(item) {
+      item.hurt(0.05);
+      item.alpha = item.health;
+    });
 		super.update(elapsed);
 	}
 
@@ -71,8 +79,6 @@ class GameLevel extends FlxGroup {
 
     farmer = levelMap.getFarmer();
 
-    var food: Food = createFood(100, 100);
-    items.foods.add(food);
 
     seedMachine = new SeedMachine(this);
     
@@ -106,21 +112,30 @@ class GameLevel extends FlxGroup {
   private function createLayers(): Void {
     backgroundLayer = new FlxGroup();
     foregroundLayer = new FlxGroup();
+    temporaryLayer = new FlxTypedGroup<FlxSprite>();
     uiLayer = new FlxGroup();
 
     add(backgroundLayer);
     add(foregroundLayer);
+    add(temporaryLayer);
     add(uiLayer);
   }
 
   public function isGameOver(): Bool {
+
+    if (importShip.hasVisited) {
+      for (creature in creatures.members) {
+        if (creature.alive && creature.behavior.getType() != BehaviorType.ANGRY) {
+          return false;
+        }
+      }
+    } 
+    return importShip.hasVisited;
     #if debug // This part (cheat) of the code is only active if the -debug parameter is present
       if (FlxG.keys.justPressed.ZERO) {
         return true;
       }
     #end
-    // Write your game over check here
-    return false;
   }
 
   public function isLevelComplete(): Bool {

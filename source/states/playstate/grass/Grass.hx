@@ -1,5 +1,6 @@
 package states.playstate.grass;
 
+import flixel.FlxG;
 import flixel.tile.FlxTilemap;
 import flixel.math.FlxPoint;
 import flixel.math.FlxMath;
@@ -10,7 +11,7 @@ class Grass {
 
   var grassLayer(get, never): FlxTilemap;
 
-  static var GRASS_GROW_DELAY_SECONDS = 1.0;
+  static var GRASS_GROW_DELAY_SECONDS = 2.0;
   public var grassDelay = GRASS_GROW_DELAY_SECONDS;
 
   var eatableGrass = new Array<FlxPoint>();
@@ -100,6 +101,11 @@ class Grass {
     if (!isEatableTile(tile)) {
       return 0.0;
     }
+    if (Math.random() < 0.5) {
+      FlxG.sound.play("assets/chomp.mp3");
+    } else {
+      FlxG.sound.play("assets/chomp2.mp3");
+    }
     grassLayer.setTile(x, y, 2);
     removeEatableGrass(x, y);
     var satiation = switch (tile) {
@@ -123,6 +129,9 @@ class Grass {
 
   public function findNearEatableGrass(x: Int, y: Int): FlxPoint {
     var minDist = FlxMath.MAX_VALUE_INT;
+    if (eatableGrass.length == 0) {
+      return null;
+    }
     var point = eatableGrass.pop();
     /*
     for (c in eatableGrass) {
