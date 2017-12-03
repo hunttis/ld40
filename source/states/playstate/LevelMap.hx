@@ -75,7 +75,7 @@ class LevelMap extends FlxGroup {
           if (item.name == "creature") {
             creatures.add(new Creature(item.x, item.y, gameLevel));
           } else if (item.name == "farmer") {
-            farmer = new Farmer(gameLevel.items, item.x, item.y);
+            farmer = new Farmer(item.x, item.y, gameLevel);
           } else if (item.name == "salespoint") {
             salesPoint = new FlxPoint(item.x, item.y);
           }
