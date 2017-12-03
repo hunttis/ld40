@@ -18,7 +18,7 @@ class GameLevel extends FlxGroup {
   private var backgroundLayer: FlxGroup;
   private var foregroundLayer: FlxGroup;
   private var uiLayer: FlxGroup;
-  private var grass: Grass;
+  public var grass(default, null): Grass;
 
   private var farmer: Farmer;
   private var weapon: Weapon;
@@ -58,8 +58,6 @@ class GameLevel extends FlxGroup {
   private function loadLevel(levelNumber: Int): Void {
     createLayers();
 
-    grass = new Grass(this);
-
     items = new ItemGroup();
 
     levelMap = new LevelMap(levelNumber, this);
@@ -87,6 +85,8 @@ class GameLevel extends FlxGroup {
     foregroundLayer.add(items);
     foregroundLayer.add(salesShip);
     foregroundLayer.add(importShip);
+
+    grass = new Grass(this);
 
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.foregroundLayer.width, levelMap.foregroundLayer.height, true);
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);

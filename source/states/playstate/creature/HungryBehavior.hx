@@ -2,6 +2,7 @@ package states.playstate.creature;
 
 import flixel.math.FlxVelocity;
 import flixel.FlxG;
+import flixel.math.FlxMath;
 
 class HungryBehavior implements Behavior {
   public function new() {}
@@ -26,14 +27,13 @@ class HungryBehavior implements Behavior {
       creature.behavior = new AngryBehavior();
     }
 
-    if (creature.targetFood == null) {
+    if (creature.targetGrass == null) {
       creature.checkForFood();
     } else {
-      FlxVelocity.moveTowardsObject(creature, creature.targetFood, 50);
-      FlxG.overlap(creature, creature.targetFood, function(self: Creature, food: Food) {
-        food.hurt(0.1);
-        creature.hunger = 0;
-      });
+      FlxVelocity.moveTowardsPoint(creature, creature.targetGrass, 50);
+      if (FlxMath.isDistanceToPointWithin(creature, creature.targetGrass, 1)) {
+        creature.eatGrass();
+      }
     }
   }
 }

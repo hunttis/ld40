@@ -3,6 +3,7 @@ package states.playstate;
 import states.playstate.creature.BehaviorType;
 import flixel.tile.FlxTilemap;
 import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import states.playstate.creature.Behavior;
@@ -13,7 +14,7 @@ class Creature extends FlxSprite {
   public var hunger: Float = 0;
   public var satisfaction: Float = 0;
   
-  public var targetFood: Food;
+  public var targetGrass: FlxPoint;
   public var targetCreature: Creature;
   public var tilemap: FlxTilemap;
 
@@ -32,7 +33,6 @@ class Creature extends FlxSprite {
     behavior = new IdleBehavior();
     this.foods = gameLevel.items.foods;
     this.creatures = gameLevel.creatures;
-    // hunger = Math.random() * 10;
   }
 
   public function set_behavior(nextBehavior: Behavior) {
@@ -41,7 +41,6 @@ class Creature extends FlxSprite {
   }
 
   override public function update(elapsed: Float) {
-    // trace(hunger);
 
     velocity.x = 0;
     velocity.y = 0;
@@ -52,19 +51,10 @@ class Creature extends FlxSprite {
   }
 
   public function checkForFood(): Void {
-    var closestFood: Food = null;
-    var distance: Float = 1000000;
-    foods.forEachAlive(function(food) {
-      var distanceToFood: Float = FlxMath.distanceBetween(this, food);
-      if (distanceToFood < 100) {
-        if (closestFood == null || distanceToFood < distance) {
-          trace("Found closest food!");
-          closestFood = food;
-          distance = distanceToFood;
-        }
-      }
-    });
-    targetFood = closestFood;
+    var pos = tileCoords();
+    var grass = gameLevel.grass.findNearEatableGrass(Math.round(pos.x), Math.round(pos.y));
+    targetGrass = grass;
+    pos.put();
   }
 
   public function findClosestCreature(): Creature {
@@ -91,6 +81,24 @@ class Creature extends FlxSprite {
       }
     });
     return closestCreature;
+  }
+
+  public function eatGrass(): Void {
+    var coords = tileCoords();
+    var satiation = gameLevel.grass.eatGrass(Math.round(coords.x), Math.round(coords.y));
+    coords.put();
+    this.hunger -= satiation;
+    this.targetGrass = null;
+  }
+
+  function tileCoords(): FlxPoint {
+    var pos = FlxPoint.get(x, y);
+    var index = gameLevel.levelMap.grassLayer.getTileIndexByCoords(pos);
+    pos.put();
+    var width = gameLevel.levelMap.grassLayer.widthInTiles;
+    var x = index % Math.round(width);
+    var y = index / Math.round(width);
+    return FlxPoint.get(x + 1, y + 1);
   }
 
   public function reproduce(): Void {
