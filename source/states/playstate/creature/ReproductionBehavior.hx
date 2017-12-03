@@ -16,7 +16,7 @@ class ReproductionBehavior implements Behavior {
 
   public function update(creature: Creature, elapsed: Float): Void {
     if (creature.targetCreature == null) {
-      creature.findClosestReproducingCreature();
+      creature.targetCreature = CreatureUtil.findClosestReproducingCreature(creature, creature.creatures);
     } else {
       FlxVelocity.moveTowardsObject(creature, creature.targetCreature, 30);
       FlxG.overlap(creature, creature.targetCreature, function(self: Creature, other: Creature) {

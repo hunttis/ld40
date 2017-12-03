@@ -17,7 +17,7 @@ class ScaredFollowerBehavior implements Behavior {
     creature.hunger += elapsed;
     creature.velocity.set(0, 0);
 
-    creature.findClosestScaredLeader();
+    creature.targetCreature = CreatureUtil.findClosestScaredLeader(creature, creature.creatures);
 
     if (creature.targetCreature != null) {
       creature.velocity.x = creature.targetCreature.velocity.x - 20;
