@@ -1,7 +1,7 @@
 package states.playstate;
 
 class SeedMachine {
-  var processTime: Float;
+  var processTime: Float = 0.0;
   var gameLevel: GameLevel;
 
   public function new(gameLevel: GameLevel) {
