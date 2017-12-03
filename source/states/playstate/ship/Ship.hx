@@ -14,6 +14,9 @@ class Ship extends FlxSprite {
   var landingPoint: FlxPoint;
   var gameLevel: GameLevel;
 
+  public var arrivalCounter: Float = 0;
+  public var waitMaximum: Float = 0;
+
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint.x, -100);
     loadGraphic("assets/market_ship.png");
@@ -35,8 +38,9 @@ class Ship extends FlxSprite {
       trace("Ship arrived!");
       state = ARRIVED;
       stateTimer = 10;
+      arrivedStartAction();
     } else if (state == ARRIVED && stateTimer > 0) {
-      arrivedStateAction(elapsed);
+      arrivedContinuousAction(elapsed);
     } else if (state == ARRIVED && stateTimer < 0) {
       trace("Ship leaving!");
       state = LEAVING;
@@ -45,14 +49,30 @@ class Ship extends FlxSprite {
     } else if (state == LEAVING && stateTimer < 0) {
       trace("Ship left, waiting..");
       state = WAITING;
-      stateTimer = 1;
+      stateTimer = waitMaximum;
     }
-    
+
+    arrivalCounter = getArrival();
+
     super.update(elapsed);
   }
 
-  function arrivedStateAction(elapsed: Float): Void {
+  function arrivedStartAction(): Void {
+    trace("THIS SHIP DOES NOTHING ON ARRIVAL!");
+  }
+
+  function arrivedContinuousAction(elapsed: Float): Void {
     trace("ARRIVED STATE NOT IMPLEMENTED!");
+  }
+
+  public function getArrival(): Float {
+    if (state == WAITING) {
+      trace("returning stateTimer: " + stateTimer);
+      return stateTimer;
+    } else {
+      trace("Not waiting: " + state);
+      return 0;
+    }
   }
 
 }

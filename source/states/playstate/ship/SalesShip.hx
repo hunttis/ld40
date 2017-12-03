@@ -10,7 +10,8 @@ class SalesShip extends Ship {
 
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
-    stateTimer = 10;
+    waitMaximum = 120;
+    stateTimer = waitMaximum;
   }
 
   override public function update(elapsed: Float): Void {
@@ -40,7 +41,7 @@ class SalesShip extends Ship {
     return closestCreature;
   }
 
-  override function arrivedStateAction(elapsed: Float) {
+  override function arrivedContinuousAction(elapsed: Float) {
     tagCreatureForCollection();
   }
 
