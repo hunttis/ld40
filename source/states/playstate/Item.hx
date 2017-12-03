@@ -8,7 +8,7 @@ class Item extends FlxNestedSprite {
   public var pickedUp: Bool = false;
 
   var gameLevel: GameLevel;
-  
+
   public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
     super(xLoc, yLoc);
     type = ItemType.ITEM;

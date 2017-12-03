@@ -26,7 +26,7 @@ class ImportShip extends Ship {
   }
 
   override function arrivedContinuousAction(elapsed: Float) {
-      
+
   }
 
   override function visitedAction(): Void {

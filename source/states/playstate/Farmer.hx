@@ -39,7 +39,7 @@ class Farmer extends FlxNestedSprite {
   override public function update(elapsed: Float): Void {
     checkKeys(elapsed);
 
-    // You probably want to do most of the logic before super.update(). This is because after the update, 
+    // You probably want to do most of the logic before super.update(). This is because after the update,
     // colliding objects are separated and will no longer be touching.
 
     super.update(elapsed);
@@ -125,7 +125,7 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function attack(): Void {
-    
+
     this.holding.use(facing);
   }
 

@@ -41,7 +41,7 @@ class GameLevel extends FlxGroup {
 		super();
     loadLevel(levelNumber);
 	}
-	
+
 	override public function update(elapsed: Float): Void {
     checkControls(elapsed);
     checkCollisions(elapsed);
@@ -81,13 +81,13 @@ class GameLevel extends FlxGroup {
 
 
     seedMachine = new SeedMachine(this);
-    
+
     var weapon: Weapon = createWeapon(200, 200, creatures);
     items.weapons.add(weapon);
 
     salesShip = new SalesShip(levelMap.getSalesPoint(), this);
     importShip = new ImportShip(new FlxPoint(levelMap.foregroundLayer.width / 2, levelMap.foregroundLayer.height / 2), this);
-    
+
     var backdropAsteroid = new BackdropAsteroid(FlxG.width, -128);
     backgroundLayer.add(backdropAsteroid);
 
@@ -129,7 +129,7 @@ class GameLevel extends FlxGroup {
           return false;
         }
       }
-    } 
+    }
     return importShip.hasVisited;
     #if debug // This part (cheat) of the code is only active if the -debug parameter is present
       if (FlxG.keys.justPressed.ZERO) {

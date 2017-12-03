@@ -36,10 +36,10 @@ class Weapon extends Item {
 
     relativeX = 0;
     relativeY = 0;
-    
+
     if (facing == FlxObject.UP) {
       relativeAngle = 0;
-      relativeY = -32; 
+      relativeY = -32;
     } else if (facing == FlxObject.DOWN) {
       relativeAngle = 180;
       relativeY = 48;
@@ -54,10 +54,10 @@ class Weapon extends Item {
     }
     updateHitbox();
 
-    
+
     trace("Location: " + facing + " " + angle);
 
-    
+
     for (times in 1...10) {
       var sparkSprite = new FlxSprite(getGraphicMidpoint().x, getGraphicMidpoint().y, "assets/spark.png");
       sparkSprite.velocity.x = Math.random() * 400 - 200;

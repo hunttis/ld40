@@ -130,7 +130,7 @@ class Grass {
         eatableGrass.splice(i, 1)[0].put();
         return;
       }
-    } 
+    }
   }
 
   public function recycleTargetGrass(grass: FlxPoint) {

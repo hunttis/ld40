@@ -16,7 +16,7 @@ class GameOverState extends FlxState {
     createTitle();
     createInstructions();
 	}
-	
+
 	override public function update(elapsed: Float): Void {
 		super.update(elapsed);
     Util.checkQuitKey();

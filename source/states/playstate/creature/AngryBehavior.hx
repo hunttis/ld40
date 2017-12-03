@@ -21,7 +21,7 @@ class AngryBehavior implements Behavior {
     if (creature.hunger > Creature.CANNIBAL_DEATH_LIMIT) {
       creature.kill();
     }
-    
+
     var target = creature.targetCreature;
     if (target == null || !target.alive || target.behavior.getType() == BehaviorType.ANGRY) {
       findTarget(creature);

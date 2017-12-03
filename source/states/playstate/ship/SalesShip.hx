@@ -37,7 +37,7 @@ class SalesShip extends Ship {
         distance = distanceToCreature;
       }
     });
-    
+
     return closestCreature;
   }
 

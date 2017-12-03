@@ -14,7 +14,7 @@ class Ship extends FlxGroup {
   var creatures: FlxTypedGroup<Creature>;
   var landingPoint: FlxPoint;
   var gameLevel: GameLevel;
-  
+
   var shipSprite: FlxSprite;
   var shipLight: FlxSprite;
   var shipBeam: FlxSprite;

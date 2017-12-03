@@ -8,7 +8,7 @@ import states.MathUtil;
 class ScaredLeaderBehavior implements Behavior {
   var directionSet: Bool = false;
   var escapeVelocity: FlxPoint = new FlxPoint(0, 0);
-  
+
   public function new() {}
 
   public function init(creature: Creature) {

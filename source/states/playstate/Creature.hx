@@ -25,7 +25,7 @@ class Creature extends FlxNestedSprite {
   public var hunger: Float = 0;
   public var satisfaction: Float = 0;
   public var scareTime: Float = 0;
-  
+
   public var targetGrass: FlxPoint;
   public var targetCreature: Creature;
   public var tilemap: FlxTilemap;
@@ -35,7 +35,7 @@ class Creature extends FlxNestedSprite {
   public var behavior(default, set): Behavior;
   var separation = new FlxVector(0.0, 0.0);
   var targetDirVector = new FlxVector(0.0, 0.0);
-  
+
   public var gameLevel: GameLevel;
 
   public function new(xLoc: Float, yLoc: Float, gameLevel: GameLevel) {
