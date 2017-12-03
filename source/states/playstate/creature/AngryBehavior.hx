@@ -62,7 +62,8 @@ class AngryBehavior implements Behavior {
   }
 
   function findTarget(creature: Creature) {
-    var closest = creature.findClosestCreature();
+    var closest = CreatureUtil.findClosestCreature(creature, creature.creatures);
+    creature.targetCreature = closest;
     if (closest == null) {
       return;
     }
