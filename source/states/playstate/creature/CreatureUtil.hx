@@ -8,9 +8,7 @@ class CreatureUtil {
 
   public static function findStableCreatures(source: FlxSprite, creatures: FlxTypedGroup<Creature>, maxDistance: Float): FlxTypedGroup<Creature> {
     var foundCreatures = findCreatures(source, creatures, maxDistance, function(creature) {
-      return creature.behavior.getType() != BehaviorType.ANGRY
-        && creature.behavior.getType() != BehaviorType.SCARED_LEADER
-        && creature.behavior.getType() != BehaviorType.SCARED_FOLLOWER;
+      return creature.behavior.getType() != BehaviorType.ANGRY;
     });
     return foundCreatures;
   }
