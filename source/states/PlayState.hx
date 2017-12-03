@@ -2,7 +2,7 @@ package states;
 
 import flixel.FlxG;
 import flixel.FlxState;
-import music.Music;
+import audio.Music;
 import states.playstate.Creature;
 import states.playstate.GameLevel;
 import states.playstate.creature.BehaviorType;
