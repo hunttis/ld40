@@ -21,13 +21,13 @@ class Sounds {
 
     chomp = soundFrontEnd.load(
       getChompAsset(),
-      1,
+      0.5,
       true,
       soundEffectGroup,
       false,
       false
     );
-    chomp.volume = 1.0;
+    chomp.volume = 0.5;
     chomp.time = 0;
     chomp.looped = false;
     chomp.loopTime = 0;
@@ -36,13 +36,13 @@ class Sounds {
 
     chomp2 = soundFrontEnd.load(
       getChomp2Asset(),
-      1,
+      0.5,
       true,
       soundEffectGroup,
       false,
       false
     );
-    chomp2.volume = 1.0;
+    chomp2.volume = 0.5;
     chomp2.time = 0;
     chomp2.looped = false;
     chomp2.loopTime = 0;
