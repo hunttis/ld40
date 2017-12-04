@@ -72,7 +72,9 @@ class LevelMap extends FlxGroup {
           } else if (item.name == "salespoint") {
             salesPoint = new FlxPoint(item.x, item.y);
           } else {
-            Sys.stderr('Unknown item (no branch for item.name): ${item.name}. This is a bug.');
+            #if !web
+              Sys.stderr('Unknown item (no branch for item.name): ${item.name}. This is a bug.');
+            #end
           }
         };
       }

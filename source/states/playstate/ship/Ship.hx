@@ -90,15 +90,9 @@ class Ship extends FlxGroup {
     shipBeam.visible = false;
   }
 
-  function arrivedStartAction(): Void {
-    // TODO @kukko: Is this a bug?
-    Sys.stderr("THIS SHIP DOES NOTHING ON ARRIVAL!");
-  }
+  function arrivedStartAction(): Void {}
 
-  function arrivedContinuousAction(elapsed: Float): Void {
-    // TODO @kukko: Is this a bug?
-    Sys.stderr("ARRIVED STATE NOT IMPLEMENTED!");
-  }
+  function arrivedContinuousAction(elapsed: Float): Void {}
 
   public function getArrival(): Float {
     if (state == WAITING) {
