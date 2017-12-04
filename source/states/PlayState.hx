@@ -1,5 +1,6 @@
 package states;
 
+import flixel.util.FlxSave;
 import flixel.text.FlxText;
 import flixel.FlxG;
 import flixel.FlxState;
@@ -39,6 +40,12 @@ class PlayState extends FlxState {
   private function checkForGameOver(): Void {
     if (!headingToGameOver && currentLevel.isGameOver()) {
       trace("Heading to game over!");
+      var save = new FlxSave();
+      save.bind("score");
+      save.erase();
+      save.bind("score");
+      save.data.score = currentLevel.soldCreatures;
+      save.flush();
       headingToGameOver = true;
       var gameoverReason: FlxText;
       if (currentLevel.soldCreatures > 0) {

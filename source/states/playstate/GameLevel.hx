@@ -133,18 +133,12 @@ class GameLevel extends FlxGroup {
   }
 
   public function isGameOver(): Bool {
-    if (importShip.hasVisited) {
+    if (importShip.hasVisited && !salesShip.hasVisited) {
       for (creature in creatures.members) {
         if (creature.alive && creature.behavior.getType() != BehaviorType.ANGRY) {
           return false;
         }
       }
-      var save = new FlxSave();
-      save.bind("score");
-      save.erase();
-      save.bind("score");
-      save.data.score = soldCreatures;
-      save.flush();
       return true;
     }
     return importShip.hasVisited && salesShip.hasVisited;

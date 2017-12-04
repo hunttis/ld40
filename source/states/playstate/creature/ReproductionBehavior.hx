@@ -4,6 +4,9 @@ import flixel.FlxG;
 import flixel.math.FlxVelocity;
 
 class ReproductionBehavior implements Behavior {
+
+  var foreverAlone: Float = 0;
+
   public function new() {}
 
   public function getType(): BehaviorType {
@@ -15,6 +18,11 @@ class ReproductionBehavior implements Behavior {
   }
 
   public function update(creature: Creature, elapsed: Float): Void {
+    foreverAlone += elapsed;
+    if (foreverAlone > 30) {
+      creature.behavior = new IdleBehavior();
+    }
+
     creature.targetCreature = CreatureUtil.findClosestReproducingCreature(creature, creature.creatures);
     if (creature.targetCreature != null) {
       FlxVelocity.moveTowardsObject(creature, creature.targetCreature, 60);
