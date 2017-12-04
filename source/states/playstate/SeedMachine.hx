@@ -26,7 +26,6 @@ class SeedMachine {
       FlxTween.tween(seed, {x: 250, y: 250}, 1, { ease: FlxEase.quadOut, onComplete: seed.landOnAsteroid} );
       producedSeed = seed;
       gameLevel.items.seeds.add(seed);
-      trace("Seed ready!");
     }
   }
 }

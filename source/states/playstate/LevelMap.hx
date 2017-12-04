@@ -33,8 +33,6 @@ class LevelMap extends FlxGroup {
     var mapHeight = tiledData.height;
 
     creatures = new FlxTypedGroup<Creature>();
-
-    trace("Loaded map with: " + tileSize + " size tiles and " + mapWidth + "x" + mapHeight + " map");
   }
 
   public function createTileLayers() {
@@ -42,24 +40,19 @@ class LevelMap extends FlxGroup {
       if (layer.type == TiledLayerType.TILE) {
         var tileLayer = cast(layer, TiledTileLayer);
 
-        trace("Loading TILE LAYER: " + layer.name);
-
         if (tileLayer.name == "foreground") {
-          trace("Creating foreground!");
           foregroundLayer = new FlxTilemap();
           foregroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 2, 1);
         }
         else if (tileLayer.name == "grass") {
-          trace("Creating grass!");
           grassLayer = new FlxTilemap();
           grassLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 6, 1);
         } else if (tileLayer.name == "background") {
-          trace("Creating background!");
           backgroundLayer = new FlxTilemap();
           backgroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 1, 1);
         }
         else {
-          trace("Unknown layer, not creating! " + tileLayer.name);
+          Sys.stderr('Tried to load a tile layer with name ${tileLayer.name} but we don\'t have a branch for it. This is a bug.');
         }
       }
     }
