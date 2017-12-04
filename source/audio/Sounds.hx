@@ -18,29 +18,23 @@ class Sounds extends AudioSingleton<Sounds> {
   }
 
   override private function loadSounds(): Void {
-    chomp = soundFrontEnd.load(
-      getChompAsset(),
-      0.5,
-      true,
-      soundGroup,
-      false,
-      false
-    );
-    resetSound(chomp);
-    soundGroup.add(chomp);
-    soundFrontEnd.cache(getChompAsset());
+    chomp = loadSound(getChompAsset());
+    chomp2 = loadSound(getChomp2Asset());
+  }
 
-    chomp2 = soundFrontEnd.load(
-      getChomp2Asset(),
+  private function loadSound(asset: FlxSoundAsset): FlxSound {
+    var sound: FlxSound = soundFrontEnd.load(
+      asset,
       0.5,
-      true,
+      false,
       soundGroup,
       false,
       false
     );
-    resetSound(chomp);
-    soundGroup.add(chomp2);
-    soundFrontEnd.cache(getChomp2Asset());
+    resetSound(sound);
+    soundGroup.add(sound);
+    soundFrontEnd.cache(asset);
+    return sound;
   }
 
   private function playSound(sound: FlxSound): Void {

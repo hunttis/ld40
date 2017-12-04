@@ -20,29 +20,23 @@ class Music extends AudioSingleton<Music> {
   }
 
   override private function loadSounds(): Void {
-    happyTheme = soundFrontEnd.load(
-      getHappyThemeAsset(),
-      1,
-      true,
-      soundGroup,
-      false,
-      false
-    );
-    resetTheme(happyTheme);
-    soundFrontEnd.cache(getHappyThemeAsset());
-    soundGroup.add(happyTheme);
+    happyTheme = loadSound(getHappyThemeAsset());
+    angryTheme = loadSound(getAngryThemeAsset());
+  }
 
-    angryTheme = soundFrontEnd.load(
-      getAngryThemeAsset(),
+  private function loadSound(asset: FlxSoundAsset): FlxSound {
+    var sound: FlxSound = soundFrontEnd.load(
+      asset,
       1,
       true,
       soundGroup,
       false,
       false
     );
-    resetTheme(angryTheme);
-    soundFrontEnd.cache(getAngryThemeAsset());
-    soundGroup.add(angryTheme);
+    resetTheme(sound);
+    soundGroup.add(sound);
+    soundFrontEnd.cache(asset);
+    return sound;
   }
 
   private function playTheme(theme: FlxSound): Void {
@@ -85,7 +79,6 @@ class Music extends AudioSingleton<Music> {
     instance.happyTheme.volume = 1.0;
     instance.happyTheme.play(false, instance.happyTheme.time);
   }
-
 
   private static function getMusicAsset(filename: String): FlxSoundAsset {
     #if flash
