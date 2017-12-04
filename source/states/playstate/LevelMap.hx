@@ -63,16 +63,15 @@ class LevelMap extends FlxGroup {
       if (layer.type == TiledLayerType.OBJECT) {
         var objectLayer = cast(layer, TiledObjectLayer);
         for (item in objectLayer.objects) {
-
-          trace("object in layer: " + item.name);
           if (item.name == "creature") {
             creatures.add(new Creature(item.x, item.y, gameLevel));
           } else if (item.name == "farmer") {
             farmer = new Farmer(item.x, item.y, gameLevel);
           } else if (item.name == "salespoint") {
             salesPoint = new FlxPoint(item.x, item.y);
+          } else {
+            Sys.stderr('Unknown item (no branch for item.name): ${item.name}. This is a bug.');
           }
-
         };
       }
     }
