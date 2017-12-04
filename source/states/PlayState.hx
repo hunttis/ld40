@@ -43,7 +43,7 @@ class PlayState extends FlxState {
       if (currentLevel.salesShip.hasVisited) {
         gameoverReason = new FlxText(FlxG.width / 2, FlxG.height / 2, 0, "Let's see how you did..", 32);
       } else {
-        gameoverReason = new FlxText(FlxG.width / 2, FlxG.height / 2, 0, "All your creatures are dead..", 32);
+        gameoverReason = new FlxText(FlxG.width / 2, FlxG.height / 2, 0, "All your creatures are goners..", 32);
       }
       gameoverReason.x = FlxG.width / 2 - gameoverReason.width / 2;
       gameoverReason.scrollFactor.set(0,0);
