@@ -52,7 +52,9 @@ class LevelMap extends FlxGroup {
           backgroundLayer.loadMapFromCSV(tileLayer.csvData, "assets/tiles.png", tileSize, tileSize, null, 1, 1, 1);
         }
         else {
-          Sys.stderr('Tried to load a tile layer with name ${tileLayer.name} but we don\'t have a branch for it. This is a bug.');
+          #if !web
+            Sys.stderr('Tried to load a tile layer with name ${tileLayer.name} but we don\'t have a branch for it. This is a bug.');
+          #end
         }
       }
     }
