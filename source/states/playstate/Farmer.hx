@@ -30,7 +30,6 @@ class Farmer extends FlxNestedSprite {
     this.gameLevel = gameLevel;
     this.items = gameLevel.items;
     this.creatures = gameLevel.creatures;
-    this.shockWave = new ShockWave(this, gameLevel);
 
     loadGraphic("assets/farmer.png");
     maxVelocity.set(300, 300);
@@ -142,7 +141,13 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function useShockWave(): Void {
-    shockWave.release(creatures);
+    var waveSprite = new ShockWave(x + 16, y + 16);
+    gameLevel.schockWaves.add(waveSprite);
+
+    var foundCreatures = CreatureUtil.findStableCreatures(this, creatures, 100);
+    foundCreatures.forEach(function(creature) {
+      creature.becomeScaredLeader();
+    });
   }
 
   private function plantGrass(): Void {

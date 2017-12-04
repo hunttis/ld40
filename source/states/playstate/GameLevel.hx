@@ -35,6 +35,7 @@ class GameLevel extends FlxGroup {
   public var importShip: ImportShip;
   public var creatures: FlxTypedGroup<Creature>;
   public var seedMachine: SeedMachine;
+  public var schockWaves: FlxTypedGroup<ShockWave> = new FlxTypedGroup();
 
   public var shipIndicators: ShipIndicators;
   public var creatureStatistics: CreatureStatistics;
@@ -103,6 +104,7 @@ class GameLevel extends FlxGroup {
     foregroundLayer.add(levelMap.grassLayer);
     foregroundLayer.add(creatures);
     foregroundLayer.add(farmer);
+    foregroundLayer.add(schockWaves);
     foregroundLayer.add(items);
     foregroundLayer.add(salesShip);
     foregroundLayer.add(importShip);
