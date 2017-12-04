@@ -1,6 +1,6 @@
 package states;
 
-
+import audio.Music;
 import flixel.util.FlxSave;
 import flixel.FlxState;
 import flixel.FlxG;
@@ -20,6 +20,7 @@ class GameOverState extends FlxState {
     createTitle();
     createInstructions();
     createScore();
+    Music.stop();
 	}
 
 	override public function update(elapsed: Float): Void {

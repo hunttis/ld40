@@ -67,6 +67,16 @@ class Music {
     }
   }
 
+  private function stopMusic(): Void {
+    if (currentlyPlaying != null) {
+      currentlyPlaying.fadeOut(1.6, 0, function(_) {
+        currentlyPlaying.stop();
+        resetTheme(currentlyPlaying);
+        currentlyPlaying = null;
+      });
+    }
+  }
+
   private static function startAngryTheme(tween: FlxTween) {
     instance.angryTheme.volume = 1.0;
     instance.angryTheme.play(false, instance.angryTheme.time);
@@ -115,5 +125,12 @@ class Music {
       instance = new Music();
     }
     instance.playTheme(instance.angryTheme);
+  }
+
+  static public function stop(): Void {
+    if (instance == null) {
+      instance = new Music();
+    }
+    instance.stopMusic();
   }
 }
