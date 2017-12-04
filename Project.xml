@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
   <!-- APPLICATION SETTINGS -->
-  <app title="LD-Template" file="LD-template" main="Main" version="0.0.1" company="Hunttis"/>
+  <app title="AstroFarmer" file="AstroFarmer" main="Main" version="0.0.1" company="Hunttis"/>
 
   <!-- The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
        or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"! -->
