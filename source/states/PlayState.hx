@@ -39,7 +39,6 @@ class PlayState extends FlxState {
 
   private function checkForGameOver(): Void {
     if (!headingToGameOver && currentLevel.isGameOver()) {
-      trace("Heading to game over!");
       var save = new FlxSave();
       save.bind("score");
       save.erase();
