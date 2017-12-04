@@ -68,11 +68,11 @@ class Tutorial extends FlxGroup {
         changeStep(USE_WEAPON_WITH_C);
       }
     } else if (step == USE_WEAPON_WITH_C) {
-      if (gameLevel.creatureStatistics.getEnragedCreatureCount() > 0) {
+      if (gameLevel.getEnragedCreatureCount() > 0) {
         changeStep(ENRAGED_CREATURE);
       }
     } else if (step == ENRAGED_CREATURE) {
-      if (gameLevel.creatureStatistics.getEnragedCreatureCount() == 0) {
+      if (gameLevel.getEnragedCreatureCount() == 0) {
         changeStep(USE_WEAPON_WITH_C);
       }
     } else if (step == SALES_SHIP_INCOMING) {
@@ -80,7 +80,7 @@ class Tutorial extends FlxGroup {
         changeStep(SHEPHERD_TOWARDS_BEAM);
       }
     } else if (step == SHEPHERD_TOWARDS_BEAM) {
-      
+
     }
 
     if ((step == ENRAGED_CREATURE || step == USE_WEAPON_WITH_C) && gameLevel.salesShip.arrivalCounter < 5) {

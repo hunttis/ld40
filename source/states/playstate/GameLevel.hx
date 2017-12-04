@@ -136,7 +136,6 @@ class GameLevel extends FlxGroup {
   }
 
   public function isGameOver(): Bool {
-
     if (importShip.hasVisited) {
       for (creature in creatures.members) {
         if (creature.alive && creature.behavior.getType() != BehaviorType.ANGRY) {
@@ -166,6 +165,25 @@ class GameLevel extends FlxGroup {
     #end
     // Write your level completion terms here
     return false;
+  }
+
+  public function getLivingCreatureCount(): Int {
+    var livingCreatureCount = creatures.countLiving();
+    if (livingCreatureCount == -1) {
+      return 0;
+    }
+
+    return livingCreatureCount;
+  }
+
+  public function getEnragedCreatureCount(): Int {
+    var angryCount: Int = 0;
+    for (creature in creatures.members) {
+      if (creature.alive && creature.behavior.getType() == BehaviorType.ANGRY) {
+        angryCount ++;
+      }
+    }
+    return angryCount;
   }
 
   private function createFood(x: Float, y: Float): Food {
