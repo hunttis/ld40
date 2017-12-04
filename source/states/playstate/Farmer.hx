@@ -15,7 +15,7 @@ import flixel.addons.display.FlxNestedSprite;
 
 class Farmer extends FlxNestedSprite {
 
-  var holding: Item;
+  public var holding: Item;
   var gameLevel: GameLevel;
   var items: ItemGroup;
   var creatures: FlxTypedGroup<Creature>;

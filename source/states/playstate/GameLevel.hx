@@ -37,6 +37,8 @@ class GameLevel extends FlxGroup {
   public var seedMachine: SeedMachine;
 
   public var shipIndicators: ShipIndicators;
+  public var creatureStatistics: CreatureStatistics;
+  public var tutorial: Tutorial;
 
   public var soldCreatures: Int = 0;
 
@@ -111,9 +113,12 @@ class GameLevel extends FlxGroup {
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);
 
     var indicatorBars = new ShipIndicators(this);
-    var creatureStatistics = new CreatureStatistics(this);
+    creatureStatistics = new CreatureStatistics(this);
+    tutorial = new Tutorial(this);
+
     uiLayer.add(indicatorBars);
     uiLayer.add(creatureStatistics);
+    uiLayer.add(tutorial);
   }
 
   private function createLayers(): Void {
