@@ -7,46 +7,39 @@ import flixel.system.FlxSound;
 import flixel.system.FlxSoundGroup;
 import flixel.system.frontEnds.SoundFrontEnd;
 
-class Sounds {
+class Sounds extends AudioSingleton<Sounds> {
   private static var instance: Sounds;
-  private var soundFrontEnd: SoundFrontEnd;
-  private var soundEffectGroup: FlxSoundGroup;
   private var chomp: FlxSound;
   private var chomp2: FlxSound;
   private var currentlyPlaying: FlxSound;
 
   private function new() {
-    soundFrontEnd = FlxG.sound;
-    soundEffectGroup = new FlxSoundGroup();
+    super();
+  }
 
+  override private function loadSounds(): Void {
     chomp = soundFrontEnd.load(
       getChompAsset(),
       0.5,
       true,
-      soundEffectGroup,
+      soundGroup,
       false,
       false
     );
-    chomp.volume = 0.5;
-    chomp.time = 0;
-    chomp.looped = false;
-    chomp.loopTime = 0;
-    soundEffectGroup.add(chomp);
+    resetSound(chomp);
+    soundGroup.add(chomp);
     soundFrontEnd.cache(getChompAsset());
 
     chomp2 = soundFrontEnd.load(
       getChomp2Asset(),
       0.5,
       true,
-      soundEffectGroup,
+      soundGroup,
       false,
       false
     );
-    chomp2.volume = 0.5;
-    chomp2.time = 0;
-    chomp2.looped = false;
-    chomp2.loopTime = 0;
-    soundEffectGroup.add(chomp2);
+    resetSound(chomp);
+    soundGroup.add(chomp2);
     soundFrontEnd.cache(getChomp2Asset());
   }
 
@@ -69,6 +62,13 @@ class Sounds {
 
   private static function getChomp2Asset(): FlxSoundAsset {
     return getSoundEffectAsset("chomp2");
+  }
+
+  private static function resetSound(sound: FlxSound): Void {
+    sound.volume = 0.5;
+    sound.time = 0;
+    sound.looped = false;
+    sound.loopTime = 0;
   }
 
   static public function playChomp(): Void {

@@ -8,42 +8,41 @@ import flixel.system.FlxSound;
 import flixel.system.FlxSoundGroup;
 import flixel.system.frontEnds.SoundFrontEnd;
 
-class Music {
+class Music extends AudioSingleton<Music> {
   private static var instance: Music;
-  private var soundFrontEnd: SoundFrontEnd;
-  private var backgroundMusicGroup: FlxSoundGroup;
   private var happyTheme: FlxSound;
   private var angryTheme: FlxSound;
   private var currentlyPlaying: FlxSound;
   private var mutex = false;
 
   private function new() {
-    soundFrontEnd = FlxG.sound;
-    backgroundMusicGroup = new FlxSoundGroup();
+    super();
+  }
 
+  override private function loadSounds(): Void {
     happyTheme = soundFrontEnd.load(
       getHappyThemeAsset(),
       1,
       true,
-      backgroundMusicGroup,
+      soundGroup,
       false,
       false
     );
     resetTheme(happyTheme);
     soundFrontEnd.cache(getHappyThemeAsset());
-    backgroundMusicGroup.add(happyTheme);
+    soundGroup.add(happyTheme);
 
     angryTheme = soundFrontEnd.load(
       getAngryThemeAsset(),
       1,
       true,
-      backgroundMusicGroup,
+      soundGroup,
       false,
       false
     );
     resetTheme(angryTheme);
     soundFrontEnd.cache(getAngryThemeAsset());
-    backgroundMusicGroup.add(angryTheme);
+    soundGroup.add(angryTheme);
   }
 
   private function playTheme(theme: FlxSound): Void {
