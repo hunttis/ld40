@@ -18,11 +18,11 @@ class Music extends AudioSingleton<Music> {
 
   override private function loadSounds(): Void {
     happyTheme = loadSound(
-      getHappyThemeAsset(),
+      asset("happy_theme_v1"),
       true
     );
     angryTheme = loadSound(
-      getAngryThemeAsset(),
+      asset("angry_theme_v1"),
       true
     );
   }
@@ -34,6 +34,10 @@ class Music extends AudioSingleton<Music> {
     sound.loopTime = 4800;
     sound.autoDestroy = false;
     sound.persist = true;
+  }
+
+  override private function assetPath(): String {
+    return "assets/music";
   }
 
   private function playSound(sound: FlxSound): Void {
@@ -65,22 +69,6 @@ class Music extends AudioSingleton<Music> {
         currentlyPlaying = null;
       });
     }
-  }
-
-  private static function getMusicAsset(filename: String): FlxSoundAsset {
-    #if flash
-      return 'assets/music/$filename.mp3';
-    #else
-      return 'assets/music/$filename.ogg';
-    #end
-  }
-
-  private static function getHappyThemeAsset(): FlxSoundAsset {
-    return getMusicAsset("happy_theme_v1");
-  }
-
-  private static function getAngryThemeAsset(): FlxSoundAsset {
-    return getMusicAsset("angry_theme_v1");
   }
 
   static public function playHappyTheme(): Void {

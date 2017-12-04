@@ -15,12 +15,12 @@ class Sounds extends AudioSingleton<Sounds> {
 
   override private function loadSounds(): Void {
     chomp = loadSound(
-      getChompAsset(),
+      asset("chomp"),
       0.5,
       false
     );
     chomp2 = loadSound(
-      getChomp2Asset(),
+      asset("chomp2"),
       0.5,
       false
     );
@@ -35,27 +35,15 @@ class Sounds extends AudioSingleton<Sounds> {
     sound.persist = true;
   }
 
+  override private function assetPath(): String {
+    return "assets/sounds";
+  }
+
   private function playSound(sound: FlxSound): Void {
     sound.onComplete = function() {
       resetSoundProperties(sound);
     };
     sound.play(true);
-  }
-
-  private static function getSoundEffectAsset(filename: String): FlxSoundAsset {
-    #if flash
-      return 'assets/sounds/$filename.mp3';
-    #else
-      return 'assets/sounds/$filename.ogg';
-    #end
-  }
-
-  private static function getChompAsset(): FlxSoundAsset {
-    return getSoundEffectAsset("chomp");
-  }
-
-  private static function getChomp2Asset(): FlxSoundAsset {
-    return getSoundEffectAsset("chomp2");
   }
 
   static public function playChomp(): Void {

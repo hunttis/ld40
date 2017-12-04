@@ -16,7 +16,9 @@ class AudioSingleton<T> {
     loadSounds();
   }
 
-  private function loadSounds(): Void {}
+  private function loadSounds(): Void {
+    throw '"Abstract" function "loadSounds()" not implemented.';
+  }
 
   private function loadSound(
     asset: FlxSoundAsset,
@@ -40,5 +42,19 @@ class AudioSingleton<T> {
     return sound;
   }
 
-  private function resetSoundProperties(sound: FlxSound): Void {}
+  private function resetSoundProperties(sound: FlxSound): Void {
+    throw '"Abstract" function "resetSoundProperties(sound: FlxSound)" not implemented.';
+  }
+
+  private function assetPath(): String {
+    throw '"Abstract" function "assetPath()" not implemented.';
+  }
+
+  private function asset(filename: String): FlxSoundAsset {
+    #if flash
+      return '${assetPath()}/$filename.mp3';
+    #else
+      return '${assetPath()}/$filename.ogg';
+    #end
+  }
 }
