@@ -15,19 +15,18 @@ import states.playstate.ship.*;
 import flixel.math.FlxPoint;
 import states.playstate.ui.*;
 import states.playstate.decoration.*;
+import audio.Music;
 
 class GameLevel extends FlxGroup {
 
   public var levelMap: LevelMap;
 
   private var backgroundLayer: FlxGroup;
-  private var foregroundLayer: FlxGroup;
+  public var foregroundLayer: FlxGroup;
   public var temporaryLayer: FlxTypedGroup<FlxSprite>;
 
   private var uiLayer: FlxGroup;
   public var grass(default, null): Grass;
-
-  private var weapon: Weapon;
 
   public var farmer: Farmer;
   public var items: ItemGroup;
@@ -58,6 +57,7 @@ class GameLevel extends FlxGroup {
       item.hurt(0.05);
       item.alpha = item.health;
     });
+    checkForMusicChange();
 		super.update(elapsed);
 	}
 
@@ -87,9 +87,6 @@ class GameLevel extends FlxGroup {
 
 
     seedMachine = new SeedMachine(this);
-
-    var weapon: Weapon = createWeapon(200, 200, creatures);
-    items.weapons.add(weapon);
 
     salesShip = new SalesShip(levelMap.getSalesPoint(), this);
     importShip = new ImportShip(new FlxPoint(levelMap.foregroundLayer.width / 2, levelMap.foregroundLayer.height / 2), this);
@@ -148,8 +145,9 @@ class GameLevel extends FlxGroup {
       save.bind("score");
       save.data.score = soldCreatures;
       save.flush();
+      return true;
     }
-    return importShip.hasVisited && salesShip.visitations >= 2;
+    return importShip.hasVisited && salesShip.hasVisited;
     #if debug // This part (cheat) of the code is only active if the -debug parameter is present
       if (FlxG.keys.justPressed.ZERO) {
         return true;
@@ -191,8 +189,11 @@ class GameLevel extends FlxGroup {
     return food;
   }
 
-  private function createWeapon(x: Float, y: Float, creatures: FlxTypedGroup<Creature>): Weapon {
-    var weapon = new Weapon(x, y, creatures, this);
-    return weapon;
+  private function checkForMusicChange(): Void {
+    if (creatures.members.length > 0 && creatureStatistics.getEnragedCreatureCount() > Math.round(creatures.members.length / 5)) {
+      Music.playAngryTheme();
+    } else {
+      Music.playHappyTheme();
+    }
   }
 }

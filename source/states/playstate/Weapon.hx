@@ -1,80 +1,76 @@
 package states.playstate;
 
+import flixel.group.FlxGroup;
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.addons.display.FlxNestedSprite;
-import flixel.util.FlxColor;
 import flixel.FlxSprite;
-import flixel.math.FlxMath;
 
-class Weapon extends Item {
+class Weapon extends FlxGroup {
 
   private var creatures: FlxTypedGroup<Creature>;
 
-  private var hitSprite: FlxSprite;
+  private var blade: FlxSprite;
+  private var farmer: Farmer;
 
-  public function new(xLoc: Float, yLoc: Float, creatures: FlxTypedGroup<Creature>, gameLevel: GameLevel) {
-    super(xLoc, yLoc, gameLevel);
-    loadGraphic("assets/saber.png", true, 64, 32);
+  private var gameLevel: GameLevel;
 
-    animation.add("idle", [0], 1, false);
-    animation.add("swipe", [1, 2, 3, 4, 0], 10, false);
-    animation.play("idle");
+  public function new(gameLevel: GameLevel) {
+    super();
+    
+    blade = new FlxSprite();
+    blade.loadGraphic("assets/saber.png", true, 64, 64);
 
-    // origin.set(width / 2, height);
-
-    this.creatures = creatures;
+    blade.animation.add("idle", [0], 1, false);
+    blade.animation.add("swipe", [1, 2, 3, 4, 0], 20, false);
+    blade.animation.play("idle");
+    add(blade);
+    
+    this.farmer = gameLevel.farmer;
+    this.creatures = gameLevel.creatures;
+    this.gameLevel = gameLevel;
   }
 
   override public function update(elapsed: Float): Void {
+    if (farmer == null && gameLevel.farmer != null) {
+      this.farmer = gameLevel.farmer;
+    }
+    setFacing(blade.facing);
     super.update(elapsed);
   }
 
-  override public function use(facing: Int): Void {
-    animation.play("swipe");
-
-    relativeX = 0;
-    relativeY = 0;
-
-    if (facing == FlxObject.UP) {
-      relativeAngle = 0;
-      relativeY = -32;
-    } else if (facing == FlxObject.DOWN) {
-      relativeAngle = 180;
-      relativeY = 48;
-    } else if (facing == FlxObject.LEFT) {
-      relativeAngle = 270;
-      relativeY = 24;
-      relativeX = -32;
-    } else if (facing == FlxObject.RIGHT) {
-      relativeAngle = 90;
-      relativeY = 24;
-      relativeX = 32;
-    }
-    updateHitbox();
-
-
-    trace("Location: " + facing + " " + angle);
-
-
-    for (times in 1...10) {
-      var sparkSprite = new FlxSprite(getGraphicMidpoint().x, getGraphicMidpoint().y, "assets/spark.png");
-      sparkSprite.velocity.x = Math.random() * 400 - 200;
-      sparkSprite.velocity.y = Math.random() * 400 - 200;
-      gameLevel.temporaryLayer.add(sparkSprite);
-    }
+  public function use(farmer: Farmer, facing: Int): Void {
+    blade.facing = facing;
+    setFacing(facing);
+    
+    blade.animation.play("swipe");
 
     if (this.creatures.members.length > 0) {
-      // creatures.forEach(function(creature) {
-      //   if (creature.getGraphicMidpoint().distanceTo(getGraphicMidpoint()) < 30) {
-      //     creature.hurt(1);
-      //   }
-      // });
       FlxG.overlap(this, creatures, function(self: Weapon, creature: Creature) {
         creature.hurt(1);
       });
     }
+  }
+
+  private function setFacing(facing: Int) {
+    if (facing == FlxObject.UP) {
+      blade.angle = 0;
+      blade.x = farmer.x;
+      blade.y = farmer.y - 24;
+    } else if (facing == FlxObject.DOWN) {
+      blade.angle = 180;
+      blade.x = farmer.x;
+      blade.y = farmer.y + 24;
+    } else if (facing == FlxObject.LEFT) {
+      blade.angle = 270;
+      blade.y = farmer.y;
+      blade.x = farmer.x - 32;
+    } else if (facing == FlxObject.RIGHT) {
+      blade.angle = 90;
+      blade.y = farmer.y;
+      blade.x = farmer.x + 32;
+    }
+    blade.updateHitbox();
   }
 
 }

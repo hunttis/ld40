@@ -10,7 +10,7 @@ import states.playstate.creature.CollectionBehavior;
 class SalesShip extends Ship {
 
   private var finishingLoading: Bool = false;
-  public var visitations: Int = 0;
+  public var hasVisited: Bool = false;
 
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
@@ -29,7 +29,7 @@ class SalesShip extends Ship {
     }
 
     for (creature in gameLevel.creatures.members) {
-      if (finishingLoading && state == ARRIVED && creature.behavior.getType() == BehaviorType.COLLECTED && stateTimer < 1) {
+      if (finishingLoading && state == ARRIVED && creature.alive && creature.behavior.getType() == BehaviorType.COLLECTED && stateTimer < 1) {
         stateTimer = 1;
       }
     }
@@ -68,7 +68,7 @@ class SalesShip extends Ship {
   }
 
   override function visitedAction() {
-    visitations++;
+    hasVisited = true;
   }
 
 }

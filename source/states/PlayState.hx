@@ -1,8 +1,8 @@
 package states;
 
+import flixel.text.FlxText;
 import flixel.FlxG;
 import flixel.FlxState;
-import audio.Music;
 import states.playstate.Creature;
 import states.playstate.GameLevel;
 import states.playstate.creature.BehaviorType;
@@ -11,6 +11,8 @@ class PlayState extends FlxState {
 
   private var currentLevel: GameLevel;
   private var currentLevelNumber: Int = 1;
+  private var gameoverTimer: Float = 3;
+  private var headingToGameOver: Bool = false;
 
 	override public function create(): Void {
 		super.create();
@@ -22,8 +24,12 @@ class PlayState extends FlxState {
     super.update(elapsed);
     Util.checkQuitKey();
     checkForGameOver();
-    checkForLevelEnd();
-    checkForMusicChange();
+    if (headingToGameOver) {
+      gameoverTimer -= elapsed;
+      if (gameoverTimer < 0) {
+        FlxG.switchState(new GameOverState());
+      }
+    }
 	}
 
   private function loadLevel(levelNumber: Int): GameLevel {
@@ -31,16 +37,17 @@ class PlayState extends FlxState {
   }
 
   private function checkForGameOver(): Void {
-    if (currentLevel.isGameOver()) {
-      FlxG.switchState(new GameOverState());
-    }
-  }
-
-  private function checkForLevelEnd(): Void {
-    // Remember to account for the fact that there might not be a "next level"!
-    if (currentLevel.isLevelComplete()) {
-      currentLevelNumber++;
-      currentLevel = loadLevel(currentLevelNumber);
+    if (!headingToGameOver && currentLevel.isGameOver()) {
+      headingToGameOver = true;
+      var gameoverReason: FlxText;
+      if (currentLevel.salesShip.hasVisited) {
+        gameoverReason = new FlxText(FlxG.width / 2, FlxG.height / 2, 0, "Let's see how you did..", 32);
+      } else {
+        gameoverReason = new FlxText(FlxG.width / 2, FlxG.height / 2, 0, "All your creatures are goners..", 32);
+      }
+      gameoverReason.x = FlxG.width / 2 - gameoverReason.width / 2;
+      gameoverReason.scrollFactor.set(0,0);
+      add(gameoverReason);
     }
   }
 

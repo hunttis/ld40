@@ -30,6 +30,8 @@ class Farmer extends FlxNestedSprite {
     this.gameLevel = gameLevel;
     this.items = gameLevel.items;
     this.creatures = gameLevel.creatures;
+    weapon = new Weapon(this.gameLevel);
+    gameLevel.foregroundLayer.add(weapon);
 
     loadGraphic("assets/farmer.png");
     maxVelocity.set(300, 300);
@@ -81,9 +83,7 @@ class Farmer extends FlxNestedSprite {
       }
 
       if (FlxG.keys.justPressed.C) {
-        if (holding != null) {
-          attack();
-        }
+        attack();
       }
 
       if (FlxG.keys.justPressed.V) {
@@ -126,8 +126,7 @@ class Farmer extends FlxNestedSprite {
   }
 
   private function attack(): Void {
-
-    this.holding.use(facing);
+    this.weapon.use(this, facing);
   }
 
   private function throwItem(): Void {

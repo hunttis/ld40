@@ -20,9 +20,6 @@ class GameOverState extends FlxState {
     createTitle();
     createInstructions();
     createScore();
-    var save = new FlxSave();
-    save.bind("score");
-    this.score = save.data.score;
 	}
 
 	override public function update(elapsed: Float): Void {
@@ -47,6 +44,9 @@ class GameOverState extends FlxState {
   }
 
   private function createScore(): Void {
+    var save = new FlxSave();
+    save.bind("score");
+    this.score = save.data.score;
     scoreText = new FlxText(FlxG.width / 2, 300, "You delivered " + score + " creatures!", 16);
     scoreText.x -= scoreText.width / 2;
     add(scoreText);

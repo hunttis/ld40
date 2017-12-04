@@ -90,11 +90,11 @@ class Tutorial extends FlxGroup {
 
   private function changeStep(nextStep: TutorialStep): Void {
     if (nextStep == PICK_UP_SEEDS) {
-      currentInstructions.text = "Pick up seeds with SPACEBAR";
+      currentInstructions.text = "Pick up seeds with SPACEBAR.";
     } else if (nextStep == PLANT_SEEDS) {
       currentInstructions.text = "Plant seeds with somewhere SPACEBAR";
     } else if (nextStep == PLANT_MORE) {
-      currentInstructions.text = "Plant some more seeds";
+      currentInstructions.text = "Plant some more seeds. They will be delivered periodically.";
     } else if (nextStep == CATTLE_INCOMING) {
       currentInstructions.text = "Cattle delivery will occur soon! Hope you planted some grass!";
     } else if (nextStep == USE_WEAPON_WITH_C) {

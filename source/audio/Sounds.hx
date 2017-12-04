@@ -42,10 +42,10 @@ class Sounds {
       false,
       false
     );
-    chomp.volume = 1.0;
-    chomp.time = 0;
-    chomp.looped = false;
-    chomp.loopTime = 0;
+    chomp2.volume = 1.0;
+    chomp2.time = 0;
+    chomp2.looped = false;
+    chomp2.loopTime = 0;
     soundEffectGroup.add(chomp2);
     soundFrontEnd.cache(getChomp2Asset());
   }
