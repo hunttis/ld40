@@ -50,14 +50,4 @@ class PlayState extends FlxState {
       add(gameoverReason);
     }
   }
-
-  private function checkForMusicChange(): Void {
-    // If a creature gets angry, change the music to angry_theme.
-    var angryCreatureCount = currentLevel.getEnragedCreatureCount();
-    if (angryCreatureCount > 0) {
-      Music.playAngryTheme();
-    } else {
-      Music.playHappyTheme();
-    }
-  }
 }
