@@ -143,7 +143,7 @@ class GameLevel extends FlxGroup {
       save.data.score = soldCreatures;
       save.flush();
     }
-    return importShip.hasVisited;
+    return importShip.hasVisited && salesShip.visitations >= 2;
     #if debug // This part (cheat) of the code is only active if the -debug parameter is present
       if (FlxG.keys.justPressed.ZERO) {
         return true;
