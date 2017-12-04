@@ -11,35 +11,41 @@ class Sounds extends AudioSingleton<Sounds> {
   private static var instance: Sounds;
   private var chomp: FlxSound;
   private var chomp2: FlxSound;
-  private var currentlyPlaying: FlxSound;
 
   private function new() {
     super();
   }
 
   override private function loadSounds(): Void {
-    chomp = loadSound(getChompAsset());
-    chomp2 = loadSound(getChomp2Asset());
-  }
-
-  private function loadSound(asset: FlxSoundAsset): FlxSound {
-    var sound: FlxSound = soundFrontEnd.load(
-      asset,
+    chomp = loadSound(
+      getChompAsset(),
       0.5,
       false,
-      soundGroup,
-      false,
-      false
+      function onComplete(): Void {
+        resetSoundProperties(chomp);
+      }
     );
-    resetSound(sound);
-    soundGroup.add(sound);
-    soundFrontEnd.cache(asset);
-    return sound;
+    chomp2 = loadSound(
+      getChomp2Asset(),
+      0.5,
+      false,
+      function onComplete(): Void {
+        resetSoundProperties(chomp2);
+      }
+    );
+  }
+
+  override private function resetSoundProperties(sound: FlxSound): Void {
+    sound.volume = 0.5;
+    sound.time = 0;
+    sound.looped = false;
+    sound.loopTime = 0;
+    sound.autoDestroy = false;
+    sound.persist = true;
   }
 
   private function playSound(sound: FlxSound): Void {
     sound.play(true);
-    currentlyPlaying = sound;
   }
 
   private static function getSoundEffectAsset(filename: String): FlxSoundAsset {
@@ -56,13 +62,6 @@ class Sounds extends AudioSingleton<Sounds> {
 
   private static function getChomp2Asset(): FlxSoundAsset {
     return getSoundEffectAsset("chomp2");
-  }
-
-  private static function resetSound(sound: FlxSound): Void {
-    sound.volume = 0.5;
-    sound.time = 0;
-    sound.looped = false;
-    sound.loopTime = 0;
   }
 
   static public function playChomp(): Void {

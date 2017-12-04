@@ -20,41 +20,41 @@ class Music extends AudioSingleton<Music> {
   }
 
   override private function loadSounds(): Void {
-    happyTheme = loadSound(getHappyThemeAsset());
-    angryTheme = loadSound(getAngryThemeAsset());
-  }
-
-  private function loadSound(asset: FlxSoundAsset): FlxSound {
-    var sound: FlxSound = soundFrontEnd.load(
-      asset,
-      1,
-      true,
-      soundGroup,
-      false,
-      false
+    happyTheme = loadSound(
+      getHappyThemeAsset(),
+      true
     );
-    resetTheme(sound);
-    soundGroup.add(sound);
-    soundFrontEnd.cache(asset);
-    return sound;
+    angryTheme = loadSound(
+      getAngryThemeAsset(),
+      true
+    );
   }
 
-  private function playTheme(theme: FlxSound): Void {
+  override private function resetSoundProperties(sound: FlxSound): Void {
+    sound.volume = 1.0;
+    sound.time = 1600;
+    sound.looped = true;
+    sound.loopTime = 4800;
+    sound.autoDestroy = false;
+    sound.persist = true;
+  }
+
+  private function playSound(sound: FlxSound): Void {
     if (mutex == true) {
       return;
     }
     if (currentlyPlaying == null) {
-      theme.play(true, 1600);
-      currentlyPlaying = theme;
-    } else if (currentlyPlaying == theme) {
+      sound.play(true, 1600);
+      currentlyPlaying = sound;
+    } else if (currentlyPlaying == sound) {
       // Let it play on, don't restart it.
     } else {
       mutex = true;
-      theme.play(true, 1600);
-      currentlyPlaying.fadeOut(1.6, 0, function(_) {
+      sound.play(true, 1600);
+      currentlyPlaying.fadeOut(3.2, 0, function(_) {
         currentlyPlaying.stop();
-        resetTheme(currentlyPlaying);
-        currentlyPlaying = theme;
+        resetSoundProperties(currentlyPlaying);
+        currentlyPlaying = sound;
         mutex = false;
       });
     }
@@ -64,7 +64,7 @@ class Music extends AudioSingleton<Music> {
     if (currentlyPlaying != null) {
       currentlyPlaying.fadeOut(1.6, 0, function(_) {
         currentlyPlaying.stop();
-        resetTheme(currentlyPlaying);
+        resetSoundProperties(currentlyPlaying);
         currentlyPlaying = null;
       });
     }
@@ -86,27 +86,18 @@ class Music extends AudioSingleton<Music> {
     return getMusicAsset("angry_theme_v1");
   }
 
-  private static function resetTheme(theme: FlxSound): Void {
-    theme.volume = 1.0;
-    theme.time = 1600;
-    theme.looped = true;
-    theme.loopTime = 4800;
-    theme.autoDestroy = false;
-    theme.persist = true;
-  }
-
   static public function playHappyTheme(): Void {
     if (instance == null) {
       instance = new Music();
     }
-    instance.playTheme(instance.happyTheme);
+    instance.playSound(instance.happyTheme);
   }
 
   static public function playAngryTheme(): Void {
     if (instance == null) {
       instance = new Music();
     }
-    instance.playTheme(instance.angryTheme);
+    instance.playSound(instance.angryTheme);
   }
 
   static public function stop(): Void {
