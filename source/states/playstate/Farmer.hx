@@ -20,6 +20,7 @@ class Farmer extends FlxNestedSprite {
   var items: ItemGroup;
   var creatures: FlxTypedGroup<Creature>;
   var weapon: Weapon;
+  var shockWave: ShockWave;
 
   var throwingDistance: Float;
 
@@ -29,6 +30,7 @@ class Farmer extends FlxNestedSprite {
     this.gameLevel = gameLevel;
     this.items = gameLevel.items;
     this.creatures = gameLevel.creatures;
+    this.shockWave = new ShockWave(this, gameLevel);
 
     loadGraphic("assets/farmer.png");
     maxVelocity.set(300, 300);
@@ -91,8 +93,8 @@ class Farmer extends FlxNestedSprite {
         }
       }
 
-      if (FlxG.keys.justPressed.S) {
-        scareClosestCreatures();
+      if (FlxG.keys.justPressed.X) {
+        useShockWave();
       }
     #end
   }
@@ -139,11 +141,8 @@ class Farmer extends FlxNestedSprite {
     drop();
   }
 
-  private function scareClosestCreatures(): Void {
-    var foundCreatures = CreatureUtil.findStableCreatures(this, creatures, 100);
-    foundCreatures.forEach(function(creature) {
-      creature.becomeScaredLeader();
-    });
+  private function useShockWave(): Void {
+    shockWave.release(creatures);
   }
 
   private function plantGrass(): Void {
