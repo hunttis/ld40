@@ -21,13 +21,11 @@ class GameLevel extends FlxGroup {
   public var levelMap: LevelMap;
 
   private var backgroundLayer: FlxGroup;
-  private var foregroundLayer: FlxGroup;
+  public var foregroundLayer: FlxGroup;
   public var temporaryLayer: FlxTypedGroup<FlxSprite>;
 
   private var uiLayer: FlxGroup;
   public var grass(default, null): Grass;
-
-  private var weapon: Weapon;
 
   public var farmer: Farmer;
   public var items: ItemGroup;
@@ -87,9 +85,6 @@ class GameLevel extends FlxGroup {
 
 
     seedMachine = new SeedMachine(this);
-
-    var weapon: Weapon = createWeapon(200, 200, creatures);
-    items.weapons.add(weapon);
 
     salesShip = new SalesShip(levelMap.getSalesPoint(), this);
     importShip = new ImportShip(new FlxPoint(levelMap.foregroundLayer.width / 2, levelMap.foregroundLayer.height / 2), this);
@@ -173,8 +168,4 @@ class GameLevel extends FlxGroup {
     return food;
   }
 
-  private function createWeapon(x: Float, y: Float, creatures: FlxTypedGroup<Creature>): Weapon {
-    var weapon = new Weapon(x, y, creatures, this);
-    return weapon;
-  }
 }
