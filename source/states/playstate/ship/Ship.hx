@@ -92,12 +92,12 @@ class Ship extends FlxGroup {
 
   function arrivedStartAction(): Void {
     // TODO @kukko: Is this a bug?
-    Sys.stderr("THIS SHIP DOES NOTHING ON ARRIVAL!");
+    Sys.stderr().writeString("THIS SHIP DOES NOTHING ON ARRIVAL!");
   }
 
   function arrivedContinuousAction(elapsed: Float): Void {
     // TODO @kukko: Is this a bug?
-    Sys.stderr("ARRIVED STATE NOT IMPLEMENTED!");
+    Sys.stderr().writeString("ARRIVED STATE NOT IMPLEMENTED!");
   }
 
   public function getArrival(): Float {
