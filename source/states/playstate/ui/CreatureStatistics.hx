@@ -16,24 +16,24 @@ class CreatureStatistics extends FlxGroup {
 
     this.gameLevel = gameLevel;
 
-    totalAmountOfCreatures = createText("Creature total", gameLevel.creatures, 32);
+    totalAmountOfCreatures = createText("Creature total", 32);
     totalAmountOfCreatures.scrollFactor.set(0, 0);
 
-    enragedCreatures = createText("Enraged", gameLevel.creatures, 48);
+    enragedCreatures = createText("Enraged", 48);
     enragedCreatures.scrollFactor.set(0, 0);
 
     add(totalAmountOfCreatures);
     add(enragedCreatures);
   }
 
-  private function createText(name: String, creatures: FlxTypedGroup<Creature>, yLoc): FlxText {
-    return new FlxText(0, yLoc, 0, '${name}: ${creatures.members.length}', 12, true);
+  private function createText(name: String, yLoc: Int): FlxText {
+    return new FlxText(0, yLoc, 0, "name", 12, true);
   }
 
   override public function update(elapsed: Float): Void {
     super.update(elapsed);
 
-    updateIfNewText(totalAmountOfCreatures, "Creature total: " + gameLevel.creatures.countLiving);
+    updateIfNewText(totalAmountOfCreatures, "Creature total: " + getLivingCreatureCount());
     updateIfNewText(enragedCreatures, "Enraged: " + getEnragedCreatureCount());
   }
 
@@ -42,6 +42,15 @@ class CreatureStatistics extends FlxGroup {
       trace("Updating text: " + newText);
       textObject.text = newText;
     }
+  }
+
+  private function getLivingCreatureCount(): Int {
+    var livingCreatureCount = gameLevel.creatures.countLiving();
+    if (livingCreatureCount == -1) {
+      return 0;
+    }
+    
+    return livingCreatureCount; 
   }
 
   private function getEnragedCreatureCount(): Int {
