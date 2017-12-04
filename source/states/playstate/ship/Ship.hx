@@ -8,7 +8,6 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 
 class Ship extends FlxGroup {
-
   var stateTimer: Float = 1;
   var state: ShipState;
   var creatures: FlxTypedGroup<Creature>;
@@ -52,7 +51,6 @@ class Ship extends FlxGroup {
     stateTimer -= elapsed;
 
     if (state == WAITING && stateTimer < 0) {
-      trace("Ship arriving!");
       state = ARRIVING;
       stateTimer = 1;
       // FlxTween.tween(this, {y: 0, x: 0}, 1, {ease: FlxEase.quintOut});
@@ -71,7 +69,6 @@ class Ship extends FlxGroup {
     } else if (state == ARRIVED && stateTimer > 0) {
       arrivedContinuousAction(elapsed);
     } else if (state == ARRIVED && stateTimer < 0) {
-      trace("Ship leaving!");
       FlxTween.tween(shipBeam, {alpha: 0}, 0.3, {ease: FlxEase.quadIn, onComplete: disableBeam});
       state = LEAVING;
       stateTimer = 1;
@@ -80,7 +77,6 @@ class Ship extends FlxGroup {
       FlxTween.tween(shipLight.scale, {x: 3, y: 3}, 1, {ease: FlxEase.quintIn});
     } else if (state == LEAVING && stateTimer < 0) {
       visitedAction();
-      trace("Ship left, waiting..");
       state = WAITING;
       stateTimer = waitMaximum;
     }
@@ -95,11 +91,13 @@ class Ship extends FlxGroup {
   }
 
   function arrivedStartAction(): Void {
-    trace("THIS SHIP DOES NOTHING ON ARRIVAL!");
+    // TODO @kukko: Is this a bug?
+    Sys.stderr("THIS SHIP DOES NOTHING ON ARRIVAL!");
   }
 
   function arrivedContinuousAction(elapsed: Float): Void {
-    trace("ARRIVED STATE NOT IMPLEMENTED!");
+    // TODO @kukko: Is this a bug?
+    Sys.stderr("ARRIVED STATE NOT IMPLEMENTED!");
   }
 
   public function getArrival(): Float {
@@ -111,5 +109,4 @@ class Ship extends FlxGroup {
   }
 
   public function visitedAction(): Void {}
-
 }
