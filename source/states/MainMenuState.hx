@@ -45,10 +45,8 @@ class MainMenuState extends FlxState {
     helpLeft.alignment = FlxTextAlign.RIGHT;
     helpLeft.x -= helpLeft.width;
     helpRight.alignment = FlxTextAlign.LEFT;
-    // helpRight.x -= helpLeft.width / 2;
     add(helpLeft);
     add(helpRight);
-
   }
 
 

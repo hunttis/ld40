@@ -32,9 +32,9 @@ class GameOverState extends FlxState {
 	}
 
   private function createTitle(): Void {
-    gameOverText = new FlxText(FlxG.width / 2, 100, "Game over!", 64);
+    gameOverText = new FlxText(FlxG.width / 2, 100, "Thanks for playing!", 64);
     gameOverText.x -= gameOverText.width / 2;
-    gameOverText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.RED, 2, 1);
+    gameOverText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLUE, 2, 1);
     add(gameOverText);
   }
 
@@ -48,7 +48,7 @@ class GameOverState extends FlxState {
     var save = new FlxSave();
     save.bind("score");
     this.score = save.data.score;
-    scoreText = new FlxText(FlxG.width / 2, 300, "You delivered " + score + " creatures!", 16);
+    scoreText = new FlxText(FlxG.width / 2, 250, "You delivered " + score + " creatures!", 24);
     scoreText.x -= scoreText.width / 2;
     add(scoreText);
   }
