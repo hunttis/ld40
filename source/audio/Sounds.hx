@@ -51,7 +51,7 @@ class Sounds {
   }
 
   private function playSound(sound: FlxSound): Void {
-    sound.play(true, sound.time);
+    sound.play(true);
     currentlyPlaying = sound;
   }
 
