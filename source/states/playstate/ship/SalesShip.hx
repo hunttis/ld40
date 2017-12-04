@@ -10,7 +10,7 @@ import states.playstate.creature.CollectionBehavior;
 class SalesShip extends Ship {
 
   private var finishingLoading: Bool = false;
-  public var visitations: Int = 0;
+  public var hasVisited: Bool = false;
 
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
@@ -68,7 +68,7 @@ class SalesShip extends Ship {
   }
 
   override function visitedAction() {
-    visitations++;
+    hasVisited = true;
   }
 
 }
