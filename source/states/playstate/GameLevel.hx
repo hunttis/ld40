@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.util.FlxSave;
 import states.playstate.creature.BehaviorType;
 import flixel.util.FlxSort;
 import flixel.FlxG;
@@ -135,6 +136,12 @@ class GameLevel extends FlxGroup {
           return false;
         }
       }
+      var save = new FlxSave();
+      save.bind("score");
+      save.erase();
+      save.bind("score");
+      save.data.score = soldCreatures;
+      save.flush();
     }
     return importShip.hasVisited;
     #if debug // This part (cheat) of the code is only active if the -debug parameter is present

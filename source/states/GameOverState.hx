@@ -1,6 +1,7 @@
 package states;
 
 
+import flixel.util.FlxSave;
 import flixel.FlxState;
 import flixel.FlxG;
 import flixel.text.FlxText;
@@ -10,11 +11,18 @@ class GameOverState extends FlxState {
 
   private var gameOverText: FlxText;
   private var continueText: FlxText;
+  private var scoreText: FlxText;
+
+  private var score: Int = -1;
 
 	override public function create(): Void {
 		super.create();
     createTitle();
     createInstructions();
+    createScore();
+    var save = new FlxSave();
+    save.bind("score");
+    this.score = save.data.score;
 	}
 
 	override public function update(elapsed: Float): Void {
@@ -33,9 +41,15 @@ class GameOverState extends FlxState {
   }
 
   private function createInstructions(): Void {
-    continueText = new FlxText(FlxG.width / 2, 300, "Press space to return to main menu", 16);
+    continueText = new FlxText(FlxG.width / 2, 332, "Press space to return to main menu", 16);
     continueText.x -= continueText.width / 2;
     add(continueText);
+  }
+
+  private function createScore(): Void {
+    scoreText = new FlxText(FlxG.width / 2, 300, "You delivered " + score + " creatures!", 16);
+    scoreText.x -= scoreText.width / 2;
+    add(scoreText);
   }
 
 

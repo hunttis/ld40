@@ -1,5 +1,6 @@
 package states.playstate.ship;
 
+import states.playstate.creature.IdleBehavior;
 import states.playstate.creature.BehaviorType;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxTween;
@@ -8,6 +9,8 @@ import states.playstate.creature.CollectionBehavior;
 
 class SalesShip extends Ship {
 
+  private var finishingLoading: Bool = false;
+
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
     waitMaximum = 120;
@@ -15,10 +18,28 @@ class SalesShip extends Ship {
   }
 
   override public function update(elapsed: Float): Void {
+    
+    if (state == ARRIVED && stateTimer < 1) {
+      finishingLoading = true;
+    }
+
+    if (state == ARRIVED) {
+      trace("Sales Ship: " + finishingLoading + " - " + state + " - " + stateTimer);
+    }
+
+    for (creature in gameLevel.creatures.members) {
+      if (finishingLoading && state == ARRIVED && creature.behavior.getType() == BehaviorType.COLLECTED && stateTimer < 1) {
+        stateTimer = 1;
+      }
+    }
+
     super.update(elapsed);
   }
 
   function tagCreatureForCollection() {
+    if (finishingLoading) {
+      return;
+    }
     var creature: Creature = findClosestCreature();
     if (creature != null) {
       creature.behavior = new CollectionBehavior();
