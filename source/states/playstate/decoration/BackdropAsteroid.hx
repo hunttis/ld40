@@ -11,6 +11,7 @@ class BackdropAsteroid extends FlxSprite {
   public function new(xLoc: Float, yLoc: Float, speed: Float) {
     super(xLoc, yLoc, "assets/asteroid.png");
     scale.set(1 - speed, 1 - speed);
+    centerOrigin();
     solid = false;
     var value: Int = Math.round(Math.random() * 0xFF) | 0;
     color = FlxColor.fromRGB(value, value, value);
