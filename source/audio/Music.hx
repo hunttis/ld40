@@ -8,7 +8,7 @@ import flixel.system.FlxSoundGroup;
 import flixel.system.frontEnds.SoundFrontEnd;
 
 class Music extends AudioSingleton<Music> {
-  private static var instance: Music;
+  private static var singleton: Music;
 
   private var happyTheme: FlxSound;
   private var angryTheme: FlxSound;
@@ -71,24 +71,22 @@ class Music extends AudioSingleton<Music> {
     }
   }
 
-  static public function playHappyTheme(): Void {
-    if (instance == null) {
-      instance = new Music();
+  public static function instance(): Music {
+    if (singleton == null) {
+      singleton = new Music();
     }
-    instance.playSound(instance.happyTheme);
+    return singleton;
   }
 
-  static public function playAngryTheme(): Void {
-    if (instance == null) {
-      instance = new Music();
-    }
-    instance.playSound(instance.angryTheme);
+  public static function playHappyTheme(): Void {
+    instance().playSound(instance().happyTheme);
   }
 
-  static public function stopMusic(): Void {
-    if (instance == null) {
-      instance = new Music();
-    }
-    instance.stopSound();
+  public static function playAngryTheme(): Void {
+    instance().playSound(instance().angryTheme);
+  }
+
+  public static function stopMusic(): Void {
+    instance().stopSound();
   }
 }

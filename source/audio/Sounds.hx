@@ -8,7 +8,7 @@ import flixel.system.FlxSoundGroup;
 import flixel.system.frontEnds.SoundFrontEnd;
 
 class Sounds extends AudioSingleton<Sounds> {
-  private static var instance: Sounds;
+  private static var singleton: Sounds;
 
   private var chomp: FlxSound;
   private var chomp2: FlxSound;
@@ -46,17 +46,18 @@ class Sounds extends AudioSingleton<Sounds> {
     sound.play(true);
   }
 
-  static public function playChomp(): Void {
-    if (instance == null) {
-      instance = new Sounds();
+  public static function instance(): Sounds {
+    if (singleton == null) {
+      singleton = new Sounds();
     }
-    instance.playSound(instance.chomp);
+    return singleton;
   }
 
-  static public function playChomp2(): Void {
-    if (instance == null) {
-      instance = new Sounds();
-    }
-    instance.playSound(instance.chomp2);
+  public static function playChomp(): Void {
+    instance().playSound(instance().chomp);
+  }
+
+  public static function playChomp2(): Void {
+    instance().playSound(instance().chomp2);
   }
 }
