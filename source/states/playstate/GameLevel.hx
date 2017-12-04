@@ -15,6 +15,7 @@ import states.playstate.ship.*;
 import flixel.math.FlxPoint;
 import states.playstate.ui.*;
 import states.playstate.decoration.*;
+import audio.Music;
 
 class GameLevel extends FlxGroup {
 
@@ -56,6 +57,7 @@ class GameLevel extends FlxGroup {
       item.hurt(0.05);
       item.alpha = item.health;
     });
+    checkForMusicChange();
 		super.update(elapsed);
 	}
 
@@ -168,4 +170,11 @@ class GameLevel extends FlxGroup {
     return food;
   }
 
+  private function checkForMusicChange(): Void {
+    if (creatures.members.length > 0 && creatureStatistics.getEnragedCreatureCount() > Math.round(creatures.members.length / 5)) {
+      Music.playAngryTheme();
+    } else {
+      Music.playHappyTheme();
+    }
+  }
 }
