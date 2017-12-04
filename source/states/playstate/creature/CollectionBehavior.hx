@@ -25,6 +25,6 @@ class CollectionBehavior implements Behavior {
 
   function creatureCollidesSales(creature: Creature, salesShip: SalesShip) {
     trace("Creature hitting collector!");
-    creature.kill();
+    creature.sell();
   }
 }

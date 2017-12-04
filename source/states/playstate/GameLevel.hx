@@ -37,6 +37,8 @@ class GameLevel extends FlxGroup {
 
   public var shipIndicators: ShipIndicators;
 
+  public var soldCreatures: Int = 0;
+
 	public function new(levelNumber): Void {
 		super();
     loadLevel(levelNumber);

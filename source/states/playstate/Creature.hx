@@ -187,6 +187,11 @@ class Creature extends FlxNestedSprite {
     }
   }
 
+  public function sell(): Void {
+    gameLevel.soldCreatures++;
+    this.kill();
+  }
+
   override function kill(): Void {
     super.kill();
     if (targetGrass != null && isTargetGrassEatable()) {
