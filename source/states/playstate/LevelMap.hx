@@ -53,7 +53,7 @@ class LevelMap extends FlxGroup {
         }
         else {
           #if !web
-            Sys.stderr('Tried to load a tile layer with name ${tileLayer.name} but we don\'t have a branch for it. This is a bug.');
+            Sys.stderr().writeString('Tried to load a tile layer with name ${tileLayer.name} but we don\'t have a branch for it. This is a bug.');
           #end
         }
       }
@@ -73,7 +73,7 @@ class LevelMap extends FlxGroup {
             salesPoint = new FlxPoint(item.x, item.y);
           } else {
             #if !web
-              Sys.stderr('Unknown item (no branch for item.name): ${item.name}. This is a bug.');
+              Sys.stderr().writeString('Unknown item (no branch for item.name): ${item.name}. This is a bug.');
             #end
           }
         };
