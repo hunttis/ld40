@@ -14,6 +14,7 @@ class Music {
   private var happyTheme: FlxSound;
   private var angryTheme: FlxSound;
   private var currentlyPlaying: FlxSound;
+  private var mutex = false;
 
   private function new() {
     soundFrontEnd = FlxG.sound;
@@ -27,12 +28,9 @@ class Music {
       false,
       false
     );
-    happyTheme.volume = 1.0;
-    happyTheme.time = 1600;
-    happyTheme.looped = true;
-    happyTheme.loopTime = 4800;
-    backgroundMusicGroup.add(happyTheme);
+    resetTheme(happyTheme);
     soundFrontEnd.cache(getHappyThemeAsset());
+    backgroundMusicGroup.add(happyTheme);
 
     angryTheme = soundFrontEnd.load(
       getAngryThemeAsset(),
@@ -42,25 +40,30 @@ class Music {
       false,
       false
     );
-    angryTheme.volume = 1.0;
-    angryTheme.time = 1600;
-    angryTheme.looped = true;
-    angryTheme.loopTime = 4800;
+    resetTheme(angryTheme);
     soundFrontEnd.cache(getAngryThemeAsset());
     backgroundMusicGroup.add(angryTheme);
   }
 
   private function playTheme(theme: FlxSound): Void {
+    if (mutex == true) {
+      return;
+    }
     if (currentlyPlaying == null) {
-      theme.play(false, theme.time);
+      theme.play(true, 1600);
+      currentlyPlaying = theme;
     } else if (currentlyPlaying == theme) {
       // Let it play on, don't restart it.
     } else {
-      currentlyPlaying.fadeOut(1000, 0, function(_) {
-        theme.play(false, theme.time);
+      mutex = true;
+      theme.play(true, 1600);
+      currentlyPlaying.fadeOut(1.6, 0, function(_) {
+        currentlyPlaying.stop();
+        resetTheme(currentlyPlaying);
+        currentlyPlaying = theme;
+        mutex = false;
       });
     }
-    currentlyPlaying = theme;
   }
 
   private static function getMusicAsset(filename: String): FlxSoundAsset {
@@ -77,6 +80,15 @@ class Music {
 
   private static function getAngryThemeAsset(): FlxSoundAsset {
     return getMusicAsset("angry_theme_v1");
+  }
+
+  private static function resetTheme(theme: FlxSound): Void {
+    theme.volume = 1.0;
+    theme.time = 1600;
+    theme.looped = true;
+    theme.loopTime = 4800;
+    theme.autoDestroy = false;
+    theme.persist = true;
   }
 
   static public function playHappyTheme(): Void {
