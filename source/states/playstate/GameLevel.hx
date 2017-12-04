@@ -190,7 +190,7 @@ class GameLevel extends FlxGroup {
   }
 
   private function checkForMusicChange(): Void {
-    if (creatures.members.length > 0 && creatureStatistics.getEnragedCreatureCount() > Math.round(creatures.members.length / 5)) {
+    if (getLivingCreatureCount() > 0 && getEnragedCreatureCount() > Math.round(getLivingCreatureCount() / 5)) {
       Music.playAngryTheme();
     } else {
       Music.playHappyTheme();
