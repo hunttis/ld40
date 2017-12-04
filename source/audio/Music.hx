@@ -70,16 +70,6 @@ class Music extends AudioSingleton<Music> {
     }
   }
 
-  private static function startAngryTheme(tween: FlxTween) {
-    instance.angryTheme.volume = 1.0;
-    instance.angryTheme.play(false, instance.angryTheme.time);
-  }
-
-  private static function startHappyTheme(tween: FlxTween) {
-    instance.happyTheme.volume = 1.0;
-    instance.happyTheme.play(false, instance.happyTheme.time);
-  }
-
   private static function getMusicAsset(filename: String): FlxSoundAsset {
     #if flash
       return 'assets/music/$filename.mp3';
