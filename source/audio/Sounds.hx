@@ -12,10 +12,6 @@ class Sounds extends AudioSingleton<Sounds> {
   private var chomp: FlxSound;
   private var chomp2: FlxSound;
 
-  private function new() {
-    super();
-  }
-
   override private function loadSounds(): Void {
     chomp = loadSound(
       getChompAsset(),

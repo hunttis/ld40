@@ -15,10 +15,6 @@ class Music extends AudioSingleton<Music> {
   private var currentlyPlaying: FlxSound;
   private var mutex = false;
 
-  private function new() {
-    super();
-  }
-
   override private function loadSounds(): Void {
     happyTheme = loadSound(
       getHappyThemeAsset(),
