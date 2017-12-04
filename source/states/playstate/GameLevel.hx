@@ -88,8 +88,10 @@ class GameLevel extends FlxGroup {
     salesShip = new SalesShip(levelMap.getSalesPoint(), this);
     importShip = new ImportShip(new FlxPoint(levelMap.foregroundLayer.width / 2, levelMap.foregroundLayer.height / 2), this);
 
-    var backdropAsteroid = new BackdropAsteroid(FlxG.width, -128);
-    backgroundLayer.add(backdropAsteroid);
+    for (number in 1...10) {
+      var backdropAsteroid = new BackdropAsteroid(Math.random() * FlxG.width, Math.random() * (FlxG.height + 256) - 128, Math.random());
+      backgroundLayer.add(backdropAsteroid);
+    }
 
     backgroundLayer.add(levelMap.backgroundLayer);
     foregroundLayer.add(levelMap.foregroundLayer);
