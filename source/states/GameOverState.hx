@@ -20,7 +20,7 @@ class GameOverState extends FlxState {
     createTitle();
     createInstructions();
     createScore();
-    Music.stop();
+    Music.stopMusic();
 	}
 
 	override public function update(elapsed: Float): Void {

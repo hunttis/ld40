@@ -9,6 +9,7 @@ import flixel.system.frontEnds.SoundFrontEnd;
 
 class Sounds extends AudioSingleton<Sounds> {
   private static var instance: Sounds;
+
   private var chomp: FlxSound;
   private var chomp2: FlxSound;
 
@@ -16,18 +17,12 @@ class Sounds extends AudioSingleton<Sounds> {
     chomp = loadSound(
       getChompAsset(),
       0.5,
-      false,
-      function onComplete(): Void {
-        resetSoundProperties(chomp);
-      }
+      false
     );
     chomp2 = loadSound(
       getChomp2Asset(),
       0.5,
-      false,
-      function onComplete(): Void {
-        resetSoundProperties(chomp2);
-      }
+      false
     );
   }
 
@@ -41,6 +36,9 @@ class Sounds extends AudioSingleton<Sounds> {
   }
 
   private function playSound(sound: FlxSound): Void {
+    sound.onComplete = function() {
+      resetSoundProperties(sound);
+    };
     sound.play(true);
   }
 

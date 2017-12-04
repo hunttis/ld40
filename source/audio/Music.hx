@@ -1,6 +1,5 @@
 package audio;
 
-import flixel.tweens.FlxTween;
 import flixel.system.FlxSound;
 import flixel.FlxG;
 import flixel.system.FlxAssets.FlxSoundAsset;
@@ -10,8 +9,10 @@ import flixel.system.frontEnds.SoundFrontEnd;
 
 class Music extends AudioSingleton<Music> {
   private static var instance: Music;
+
   private var happyTheme: FlxSound;
   private var angryTheme: FlxSound;
+
   private var currentlyPlaying: FlxSound;
   private var mutex = false;
 
@@ -56,9 +57,9 @@ class Music extends AudioSingleton<Music> {
     }
   }
 
-  private function stopMusic(): Void {
+  private function stopSound(): Void {
     if (currentlyPlaying != null) {
-      currentlyPlaying.fadeOut(1.6, 0, function(_) {
+      currentlyPlaying.fadeOut(3.2, 0, function(_) {
         currentlyPlaying.stop();
         resetSoundProperties(currentlyPlaying);
         currentlyPlaying = null;
@@ -96,10 +97,10 @@ class Music extends AudioSingleton<Music> {
     instance.playSound(instance.angryTheme);
   }
 
-  static public function stop(): Void {
+  static public function stopMusic(): Void {
     if (instance == null) {
       instance = new Music();
     }
-    instance.stopMusic();
+    instance.stopSound();
   }
 }
