@@ -38,9 +38,10 @@ class PlayState extends FlxState {
 
   private function checkForGameOver(): Void {
     if (!headingToGameOver && currentLevel.isGameOver()) {
+      trace("Heading to game over!");
       headingToGameOver = true;
       var gameoverReason: FlxText;
-      if (currentLevel.salesShip.hasVisited) {
+      if (currentLevel.soldCreatures > 0) {
         gameoverReason = new FlxText(FlxG.width / 2, FlxG.height / 2, 0, "Let's see how you did..", 32);
       } else {
         gameoverReason = new FlxText(FlxG.width / 2, FlxG.height / 2, 0, "All your creatures are goners..", 32);

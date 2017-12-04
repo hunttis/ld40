@@ -24,10 +24,6 @@ class SalesShip extends Ship {
       finishingLoading = true;
     }
 
-    if (state == ARRIVED) {
-      trace("Sales Ship: " + finishingLoading + " - " + state + " - " + stateTimer);
-    }
-
     for (creature in gameLevel.creatures.members) {
       if (finishingLoading && state == ARRIVED && creature.alive && creature.behavior.getType() == BehaviorType.COLLECTED && stateTimer < 1) {
         stateTimer = 1;
@@ -44,7 +40,7 @@ class SalesShip extends Ship {
     var creature: Creature = findClosestCreature();
     if (creature != null) {
       creature.behavior = new CollectionBehavior();
-      FlxTween.tween(creature, {x: shipSprite.getGraphicMidpoint().x, y: shipSprite.getGraphicMidpoint().y }, 3);
+      FlxTween.tween(creature, {x: shipLight.getGraphicMidpoint().x + Math.random() * 50 - 25, y: shipLight.getGraphicMidpoint().y + Math.random() * 50 - 25}, 1 + Math.random() * 2, {onComplete: creature.sell});
     }
   }
 

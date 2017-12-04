@@ -1,5 +1,6 @@
 package states.playstate;
 
+import flixel.tweens.FlxTween;
 import flixel.util.FlxSpriteUtil;
 import flixel.addons.display.FlxNestedSprite;
 import states.playstate.creature.BehaviorType;
@@ -71,6 +72,9 @@ class Creature extends FlxNestedSprite {
   }
 
   override public function update(elapsed: Float) {
+    if (!alive) {
+      return;
+    }
     velocity.x = 0;
     velocity.y = 0;
 
@@ -187,8 +191,11 @@ class Creature extends FlxNestedSprite {
     }
   }
 
-  public function sell(): Void {
+  public function sell(tween: FlxTween): Void {
     gameLevel.soldCreatures++;
+    var plop = new FlxSprite(x, y - 16, "assets/zoom.png");
+    FlxTween.tween(plop.scale, {x: 0, y: 1}, 0.5);
+    gameLevel.temporaryLayer.add(plop);
     this.kill();
   }
 

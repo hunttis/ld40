@@ -16,7 +16,7 @@ class Ship extends FlxGroup {
   var gameLevel: GameLevel;
 
   var shipSprite: FlxSprite;
-  var shipLight: FlxSprite;
+  public var shipLight: FlxSprite;
   var shipBeam: FlxSprite;
 
   public var arrivalCounter: Float = 0;
@@ -60,7 +60,6 @@ class Ship extends FlxGroup {
       FlxTween.tween(shipLight, {alpha: 0.3}, 1, {ease: FlxEase.quintOut});
       FlxTween.tween(shipLight.scale, {x: 1, y: 1}, 1, {ease: FlxEase.quintOut});
     } else if (state == ARRIVING && stateTimer < 0) {
-      trace("Ship arrived!");
       state = ARRIVED;
       stateTimer = visitingTime;
       shipBeam.x = shipSprite.x + 32;
