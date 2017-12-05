@@ -6,7 +6,6 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
 class MainMenuState extends FlxState {
-
   private var titleText: FlxText;
   private var startText: FlxText;
   private var keyHelp: FlxText;
@@ -40,7 +39,7 @@ class MainMenuState extends FlxState {
   }
 
   private function createKeyHelp(): Void {
-    var helpLeft = new FlxText(FlxG.width / 2, 232, "Arrows  :\nSPACEBAR  :\nC  :\nX  : ", 16);
+    var helpLeft = new FlxText(FlxG.width / 2, 232, "Arrows  :\nSPACEBAR  :\nC  :\nX  :", 16);
     var helpRight = new FlxText(FlxG.width / 2, 232, " move\n pick up / drop\n strike\n shout", 16);
     helpLeft.alignment = FlxTextAlign.RIGHT;
     helpLeft.x -= helpLeft.width;
@@ -48,6 +47,4 @@ class MainMenuState extends FlxState {
     add(helpLeft);
     add(helpRight);
   }
-
-
 }
