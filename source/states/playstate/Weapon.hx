@@ -17,7 +17,7 @@ class Weapon extends FlxGroup {
 
   public function new(gameLevel: GameLevel) {
     super();
-    
+
     blade = new FlxSprite();
     blade.loadGraphic("assets/saber.png", true, 64, 64);
 
@@ -25,7 +25,7 @@ class Weapon extends FlxGroup {
     blade.animation.add("swipe", [1, 2, 3, 4, 0], 20, false);
     blade.animation.play("idle");
     add(blade);
-    
+
     this.farmer = gameLevel.farmer;
     this.creatures = gameLevel.creatures;
     this.gameLevel = gameLevel;
@@ -42,7 +42,7 @@ class Weapon extends FlxGroup {
   public function use(farmer: Farmer, facing: Int): Void {
     blade.facing = facing;
     setFacing(facing);
-    
+
     blade.animation.play("swipe");
 
     if (this.creatures.members.length > 0) {

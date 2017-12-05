@@ -19,7 +19,7 @@ class SalesShip extends Ship {
   }
 
   override public function update(elapsed: Float): Void {
-    
+
     if (state == ARRIVED && stateTimer < 1) {
       finishingLoading = true;
     }
