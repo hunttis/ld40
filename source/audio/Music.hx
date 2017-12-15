@@ -12,6 +12,7 @@ class Music extends AudioSingleton<Music> {
 
   private var happyTheme: FlxSound;
   private var angryTheme: FlxSound;
+  private var mainMenuTheme: FlxSound;
 
   private var currentlyPlaying: FlxSound;
   private var mutex = false;
@@ -23,6 +24,10 @@ class Music extends AudioSingleton<Music> {
     );
     angryTheme = loadSound(
       asset("angry_theme_v1"),
+      true
+    );
+    mainMenuTheme = loadSound(
+      asset("choir_theme_v1"),
       true
     );
   }
@@ -76,6 +81,10 @@ class Music extends AudioSingleton<Music> {
       singleton = new Music();
     }
     return singleton;
+  }
+
+  public static function playMainMenuTheme(): Void {
+    instance().playSound(instance().mainMenuTheme);
   }
 
   public static function playHappyTheme(): Void {

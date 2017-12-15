@@ -1,5 +1,6 @@
 package states;
 
+import audio.Music;
 import flixel.FlxState;
 import flixel.FlxG;
 import flixel.text.FlxText;
@@ -15,6 +16,7 @@ class MainMenuState extends FlxState {
     createTitle();
     createInstructions();
     createKeyHelp();
+    Music.playMainMenuTheme();
 	}
 
 	override public function update(elapsed: Float): Void {

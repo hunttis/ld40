@@ -8,7 +8,6 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
 class GameOverState extends FlxState {
-
   private var gameOverText: FlxText;
   private var continueText: FlxText;
   private var scoreText: FlxText;
@@ -52,6 +51,4 @@ class GameOverState extends FlxState {
     scoreText.x -= scoreText.width / 2;
     add(scoreText);
   }
-
-
 }
