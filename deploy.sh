@@ -25,8 +25,10 @@ BACKGROUND_COMPILER_PID=$!
 lime build html5
 kill $BACKGROUND_COMPILER_PID >/dev/null 2>&1
 wait $BACKGROUND_COMPILER_PID >/dev/null 2>&1
-gsutil -m defacl ch -u AllUsers:READ gs://astrofarmer.net
-gsutil -m rsync -d -r export/html5/bin gs://astrofarmer.net
-gsutil -m acl ch -u AllUsers:READ gs://astrofarmer.net
+cp extra-deployment-resources/privacy_policy.txt export/html5/bin/
+gsutil -m defacl ch -u AllUsers:READ gs://www.astrofarmer.net
+gsutil -m rsync -d -r export/html5/bin gs://www.astrofarmer.net
+gsutil -m acl ch -u AllUsers:READ gs://www.astrofarmer.net
+gsutil web set -m index.html gs://www.astrofarmer.net
 popd >/dev/null
 
