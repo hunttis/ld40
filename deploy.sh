@@ -16,7 +16,11 @@
 #
 # If all goes well, the game will be playable at the following places
 # after running this script:
-# - 
+# - [https://astrofarmer.net]
+# - [https://www.astrofarmer.net]
+# - [http://astrofarmer.net]
+# - [http://www.astrofarmer.net]
+
 echo "Starting to build and deploy Astrofarmer to Firebase..."
 DEPLOYER_NAME=$(finger -l | grep "Name:" | sed 's/^.*Name: //g')
 DEPLOYMENT_TIME=$(date -j "+%A %d.%m.%Y% at %H:%M:%S")
