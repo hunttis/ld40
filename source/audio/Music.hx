@@ -27,7 +27,7 @@ class Music extends AudioSingleton<Music> {
       true
     );
     mainMenuTheme = loadSound(
-      asset("choir_theme_v1"),
+      asset("choir_theme_v3"),
       true
     );
   }
