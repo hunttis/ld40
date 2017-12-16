@@ -26,8 +26,16 @@ lime build html5
 kill $BACKGROUND_COMPILER_PID >/dev/null 2>&1
 wait $BACKGROUND_COMPILER_PID >/dev/null 2>&1
 cp extra-deployment-resources/privacy_policy.txt export/html5/bin/
+# We temporarily copy all stuff both to gs://astrofarmer.net
+# and gs://www.astrofarmer.net, since I haven't found a way
+# to configure DNS for gs://astrofarmer.net, so we use
+# gs://www.astrofarmer.net as a fallback.
+gsutil -m defacl ch -u AllUsers:READ gs://astrofarmer.net
+gsutil -m rsync -d -r export/html5/bin gs://astrofarmer.net
+gsutil -m acl ch -u AllUsers:READ gs://astrofarmer.net
+gsutil web set -m index.html gs://astrofarmer.net
 gsutil -m defacl ch -u AllUsers:READ gs://www.astrofarmer.net
-gsutil -m rsync -d -r export/html5/bin gs://www.astrofarmer.net
+gsutil -m rsync -d -r gs://astrofarmer.net gs://www.astrofarmer.net
 gsutil -m acl ch -u AllUsers:READ gs://www.astrofarmer.net
 gsutil web set -m index.html gs://www.astrofarmer.net
 popd >/dev/null
