@@ -4,7 +4,8 @@
 #
 # To run this script successfully, you need to be
 # logged in to Google Cloud as a user who has
-# the required permissions to bucket gs://astrofarmer.net.
+# the required permissions to buckets gs://astrofarmer.net
+# and gs://www.astrofarmer.net.
 #
 # The way to obtain those permissions is to ask
 # Ville Peurala, also known as Kukko at Wunderdog.
@@ -13,7 +14,7 @@
 # Your current working directory must be inside the ld40
 # git repository when you run this script.
 #
-# If all goes well, the game will be playable at [http://astrofarmer.net]
+# If all goes well, the game will be playable at [http://www.astrofarmer.net]
 # after running this script.
 
 echo "Starting to build and deploy Astrofarmer to Google Cloud..."
