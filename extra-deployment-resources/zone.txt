@@ -1,0 +1,12 @@
+$ORIGIN astrofarmer.net.
+$TTL 1h
+astrofarmer.net. 3600 IN SOA ns1.dnsimple.com. admin.dnsimple.com. 1513080218 86400 7200 604800 300
+astrofarmer.net. 3600 IN NS ns1.dnsimple.com.
+astrofarmer.net. 3600 IN NS ns2.dnsimple.com.
+astrofarmer.net. 3600 IN NS ns3.dnsimple.com.
+astrofarmer.net. 3600 IN NS ns4.dnsimple.com.
+astrofarmer.net. 3600 IN TXT google-site-verification=7VBg4fCtt37qtrMiRoyx2ziE0SNP1G8XY-d8yeJGACQ
+astrofarmer.net. 3600 IN A 151.101.1.195
+astrofarmer.net. 3600 IN A 151.101.65.195
+www.astrofarmer.net. 3600 IN A 151.101.1.195
+www.astrofarmer.net. 3600 IN A 151.101.65.195
