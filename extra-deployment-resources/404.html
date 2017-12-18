@@ -49,12 +49,13 @@
       height: 100%;
       overflow: hidden;
       background: black;
+      color: white;
     }
 
     #openfl-content {
+      max-width: 800px;
+      max-height: 600px;
       margin: 0 auto;
-      width: 800px;
-      height: 600px;
     }
 
     @font-face {
@@ -98,9 +99,6 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div id="errormessage">Oops! You got an HTTP 404. It means that the page you tried to access does not exist.</div>
-<div id="backtostart">Click <a href="https://www.astrofarmer.net/index.html">here</a> to immediately go back to <a href="https://www.astrofarmer.net/index.html"><b><i>https://www.astrofarmer.net</i></b></a>. You will be automatically redirected there in 5 seconds.</div>
-
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -114,6 +112,9 @@
   };
   firebase.initializeApp(config, "Astrofarmer");
 </script>
+
+<div id="errormessage">Oops! You got an HTTP 404. It means that the page you tried to access does not exist.</div>
+<div id="backtostart">Click <a href="https://www.astrofarmer.net/index.html">here</a> to immediately go back to <a href="https://www.astrofarmer.net/index.html"><b><i>https://www.astrofarmer.net</i></b></a>. You will be automatically redirected there in 5 seconds.</div>
 
 </body>
 </html>
