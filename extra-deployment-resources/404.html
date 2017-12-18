@@ -22,15 +22,16 @@
         content="516240012086965" />
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="canonical" href="https://www.astrofarmer.net/index.html"/>
 
   <title>AstroFarmer - 404</title>
 
-  <link rel="canonical" href="https://www.astrofarmer.net/"/>
   <noscript>
-    <meta http-equiv="refresh" content="5; url=https://www.astrofarmer.net/">
+    <meta http-equiv="refresh" content="5;url=https://www.astrofarmer.net/index.html">
   </noscript>
+
   <script type="text/javascript">
-    var url = "https://www.astrofarmer.net/";
+    var url = "https://www.astrofarmer.net/index.html";
     var delay = 5000;
     window.onload = function () {
       setTimeout(go, delay);
@@ -78,11 +79,27 @@
   </style>
 </head>
 <body>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId  : '105162198806',
+      xfbml  : true,
+      version: 'v2.11'
+    });
+    FB.AppEvents.logPageView();
+  };
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
 <div id="errormessage">Oops! You got an HTTP 404. It means that the page you tried to access does not exist.</div>
-<div id="backtostart">Click <a href="https://www.astrofarmer.net/">here</a> to immediately go back to <a
-  href="https://www.astrofarmer.net/"><b><i>https://www.astrofarmer.net</i></b></a>.
-  You will be automatically redirected there in 5 seconds.
-</div>
+<div id="backtostart">Click <a href="https://www.astrofarmer.net/index.html">here</a> to immediately go back to <a href="https://www.astrofarmer.net/index.html"><b><i>https://www.astrofarmer.net</i></b></a>. You will be automatically redirected there in 5 seconds.</div>
 
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
 <script>
@@ -95,8 +112,9 @@
     storageBucket: "astrofarmer-1977.appspot.com",
     messagingSenderId: "270381619913"
   };
-  firebase.initializeApp(config);
+  firebase.initializeApp(config, "Astrofarmer");
 </script>
+
 </body>
 </html>
 

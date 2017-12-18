@@ -22,6 +22,7 @@
         content="516240012086965" />
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="canonical" href="https://www.astrofarmer.net/index.html"/>
 
   <title>AstroFarmer</title>
 
@@ -32,7 +33,7 @@
     window.addEventListener("touchmove", function (event) {
       event.preventDefault();
     }, false);
-    if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
+    if (typeof window.devicePixelRatio !== 'undefined' && window.devicePixelRatio > 2) {
       var meta = document.getElementById("viewport");
       meta.setAttribute('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
     }
@@ -75,8 +76,27 @@
   </style>
 </head>
 <body>
-<noscript>This webpage makes extensive use of JavaScript. Please enable JavaScript in your web browser to view this
-  page.
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId  : '105162198806',
+      xfbml  : true,
+      version: 'v2.11'
+    });
+    FB.AppEvents.logPageView();
+  };
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<noscript>
+This webpage makes extensive use of JavaScript. Please enable JavaScript in your web browser to view this page.
 </noscript>
 
 <div id="openfl-content"></div>
@@ -92,12 +112,12 @@
     storageBucket: "astrofarmer-1977.appspot.com",
     messagingSenderId: "270381619913"
   };
-  firebase.initializeApp(config);
+  firebase.initializeApp(config, "Astrofarmer");
 </script>
 
 <script type="text/javascript">
   lime.embed("openfl-content", 800, 600, "000000");
 </script>
+
 </body>
 </html>
-
