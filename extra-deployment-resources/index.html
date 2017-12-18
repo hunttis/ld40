@@ -9,17 +9,17 @@
 
   <!-- Facebook properties -->
   <meta property="og:url"
-        content="https://www.astrofarmer.net/index.html" />
+        content="https://www.astrofarmer.net/index.html"/>
   <meta property="og:type"
-        content="website" />
+        content="website"/>
   <meta property="og:title"
-        content="Astrofarmer" />
+        content="Astrofarmer"/>
   <meta property="og:description"
-        content="A browser-playable game where you are a space farmer who raises cattle on an asteroid. &copy; 2017 Ville Nuutinen, Joni Katajam&auml;ki, Ville Peurala, Tommi Helander and Jani Kaarela." />
+        content="A browser-playable game where you are a space farmer who raises cattle on an asteroid. &copy; 2017 Ville Nuutinen, Joni Katajam&auml;ki, Ville Peurala, Tommi Helander and Jani Kaarela."/>
   <meta property="og:image"
-        content="https://www.astrofarmer.net/fb_screenshot.jpg" />
+        content="https://www.astrofarmer.net/fb_screenshot.jpg"/>
   <meta property="fb:app_id"
-        content="516240012086965" />
+        content="516240012086965"/>
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="canonical" href="https://www.astrofarmer.net/index.html"/>
@@ -33,12 +33,13 @@
       height: 100%;
       overflow: hidden;
       background: black;
+      color: white;
     }
 
     #openfl-content {
+      max-width: 800px;
+      max-height: 600px;
       margin: 0 auto;
-      width: 800px;
-      height: 600px;
     }
 
     @font-face {
@@ -75,25 +76,28 @@
 </script>
 
 <script>
-  window.fbAsyncInit = function() {
+  window.fbAsyncInit = function () {
     FB.init({
-      appId  : '516240012086965',
-      xfbml  : true,
+      appId: '516240012086965',
+      xfbml: true,
       version: 'v2.11'
     });
     FB.AppEvents.logPageView();
   };
-  (function(d, s, id) {
+  (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) { return; }
-    js = d.createElement(s); js.id = id;
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
     js.src = "https://connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
 <noscript>
-This webpage makes extensive use of JavaScript. Please enable JavaScript in your web browser to view this page.
+  This webpage makes extensive use of JavaScript. Please enable JavaScript in your web browser to view this page.
 </noscript>
 
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
