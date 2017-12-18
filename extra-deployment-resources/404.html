@@ -29,6 +29,8 @@
         content="600"/>
   <meta property="og:image:height"
         content="315"/>
+  <meta property="og:image:alt"
+        content="Screenshot of Astrofarmer #1. The situation is quite calm and things are looking good; there is plenty of grass, most of the creatures are happy and there is only one enraged creature."/>
 
   <meta property="og:image"
         content="https://www.astrofarmer.net/fb_screenshot_2.png"/>
@@ -42,6 +44,8 @@
         content="600"/>
   <meta property="og:image:height"
         content="315"/>
+  <meta property="og:image:alt"
+        content="Screenshot of Astrofarmer #2. The situation is quite hectic and dangerous; the creatures have run out of grass and most of them are getting very hungry. There are already many enraged creatures, and it looks like we will soon have even more of them."/>
 
   <meta property="fb:app_id"
         content="516240012086965"/>
@@ -129,10 +133,13 @@
   firebase.initializeApp(config, "Astrofarmer");
 </script>
 
-<div id="errormessage">Oops! You got an HTTP 404. It means that the page you tried to access does not exist.</div>
-<div id="backtostart">Click <a href="https://www.astrofarmer.net/index.html">here</a> to immediately go back to <a
-  href="https://www.astrofarmer.net/index.html"><b><i>https://www.astrofarmer.net</i></b></a>. You will be automatically
-  redirected there in 5 seconds.
+<div id="openfl-content">
+  <div id="errormessage">Oops! You got an HTTP 404. It means that the page you tried to access does not exist.</div>
+  <div id="backtostart">Click <a href="https://www.astrofarmer.net/index.html">here</a> to immediately go back to <a
+    href="https://www.astrofarmer.net/index.html"><b><i>https://www.astrofarmer.net</i></b></a>. You will be
+    automatically
+    redirected there in 5 seconds.
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -141,7 +148,6 @@
   window.onload = function () {
     setTimeout(go, delay);
   };
-
   function go() {
     window.location.replace(url);
   }
