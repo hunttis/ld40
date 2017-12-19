@@ -11,6 +11,9 @@
 # Ville Peurala, also known as Kukko at Wunderdog.
 # Contact him in Slack or send mail to <ville.peurala@wunderdog.fi>.
 #
+# Then run `firebase login`. And after that you can
+# run this script: `./deploy.sh`.
+#
 # Your current working directory must be inside the ld40
 # git repository when you run this script.
 #
