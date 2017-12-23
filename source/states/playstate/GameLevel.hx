@@ -1,16 +1,12 @@
 package states.playstate;
 
-import flixel.util.FlxSave;
 import states.playstate.creature.BehaviorType;
 import flixel.util.FlxSort;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
-import flixel.text.FlxText;
 import states.playstate.LevelMap;
 import states.playstate.grass.Grass;
-import flixel.addons.display.FlxNestedSprite;
 import states.playstate.ship.*;
 import flixel.math.FlxPoint;
 import states.playstate.ui.*;
@@ -36,11 +32,13 @@ class GameLevel extends FlxGroup {
   public var seedMachine: SeedMachine;
   public var schockWaves: FlxTypedGroup<ShockWave> = new FlxTypedGroup();
 
-  public var shipIndicators: ShipIndicators;
   public var creatureStatistics: CreatureStatistics;
   public var tutorial: Tutorial;
 
   public var soldCreatures: Int = 0;
+
+  public var timedEventTriggers: TimedEventTriggers;
+  public var eventIndicator: EventIndicator;
 
 	public function new(levelNumber): Void {
 		super();
@@ -111,13 +109,17 @@ class GameLevel extends FlxGroup {
     FlxG.camera.setScrollBoundsRect(0, 0, levelMap.foregroundLayer.width, levelMap.foregroundLayer.height, true);
     FlxG.camera.follow(farmer, PLATFORMER, 0.3);
 
-    var indicatorBars = new ShipIndicators(this);
     creatureStatistics = new CreatureStatistics(this);
     tutorial = new Tutorial(this);
 
-    uiLayer.add(indicatorBars);
     uiLayer.add(creatureStatistics);
     uiLayer.add(tutorial);
+
+    timedEventTriggers = new TimedEventTriggers(this);
+    add(timedEventTriggers);
+
+    eventIndicator = new EventIndicator(this);
+    uiLayer.add(eventIndicator);
   }
 
   private function createLayers(): Void {

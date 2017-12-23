@@ -4,9 +4,7 @@ import flixel.util.FlxSave;
 import flixel.text.FlxText;
 import flixel.FlxG;
 import flixel.FlxState;
-import states.playstate.Creature;
 import states.playstate.GameLevel;
-import states.playstate.creature.BehaviorType;
 
 class PlayState extends FlxState {
   private var currentLevel: GameLevel;

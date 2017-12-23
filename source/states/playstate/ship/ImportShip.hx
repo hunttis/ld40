@@ -9,28 +9,14 @@ class ImportShip extends Ship {
 
   public function new(landingPoint: FlxPoint, gameLevel: GameLevel) {
     super(landingPoint, gameLevel);
-    waitMaximum = 30;
-    stateTimer = waitMaximum;
-    visitingTime = 1;
   }
 
   override public function update(elapsed: Float): Void {
-    if (hasVisited) {
-      return;
-    }
     super.update(elapsed);
   }
 
-  override function arrivedStartAction() {
+  override function arrivedAction() {
     Timer.delay(dropCreatures, 400);
-  }
-
-  override function arrivedContinuousAction(elapsed: Float) {
-
-  }
-
-  override function visitedAction(): Void {
-    hasVisited = true;
   }
 
   function dropCreatures() {

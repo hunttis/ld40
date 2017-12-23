@@ -1,6 +1,5 @@
 package states.playstate.ship;
 
-import states.playstate.creature.IdleBehavior;
 import states.playstate.creature.BehaviorType;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxTween;
@@ -20,13 +19,16 @@ class SalesShip extends Ship {
 
   override public function update(elapsed: Float): Void {
 
-    if (state == ARRIVED && stateTimer < 1) {
-      finishingLoading = true;
-    }
+    if (state == ARRIVED) {
+      tagCreatureForCollection();
+    } else if (state == LEAVING) {
+      var creaturesBeingCollected: Int = gameLevel.creatures.members.filter(function(creature) {
+        return creature.alive && creature.behavior.getType() == BehaviorType.COLLECTED;
+      }).length;
 
-    for (creature in gameLevel.creatures.members) {
-      if (finishingLoading && state == ARRIVED && creature.alive && creature.behavior.getType() == BehaviorType.COLLECTED && stateTimer < 1) {
-        stateTimer = 1;
+      if (creaturesBeingCollected == 0) {
+        leaveAnimation();
+        state = WAITING;
       }
     }
 
@@ -59,12 +61,8 @@ class SalesShip extends Ship {
     return closestCreature;
   }
 
-  override function arrivedContinuousAction(elapsed: Float) {
-    tagCreatureForCollection();
-  }
-
-  override function visitedAction() {
-    hasVisited = true;
+  override public function leave() {
+    state = LEAVING;
   }
 
 }

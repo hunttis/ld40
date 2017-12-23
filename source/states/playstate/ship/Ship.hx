@@ -50,49 +50,42 @@ class Ship extends FlxGroup {
   override public function update(elapsed: Float): Void {
     stateTimer -= elapsed;
 
-    if (state == WAITING && stateTimer < 0) {
-      state = ARRIVING;
-      stateTimer = 1;
-      // FlxTween.tween(this, {y: 0, x: 0}, 1, {ease: FlxEase.quintOut});
-      FlxTween.tween(shipSprite, {y: landingPoint.y - shipSprite.origin.y - 100}, 1, {ease: FlxEase.quintOut});
-      FlxTween.tween(shipLight, {alpha: 0.3}, 1, {ease: FlxEase.quintOut});
-      FlxTween.tween(shipLight.scale, {x: 1, y: 1}, 1, {ease: FlxEase.quintOut});
-    } else if (state == ARRIVING && stateTimer < 0) {
-      state = ARRIVED;
-      stateTimer = visitingTime;
-      shipBeam.x = shipSprite.x + 32;
-      shipBeam.y = shipSprite.y + 130;
-      shipBeam.visible = true;
-      shipBeam.alpha = 0.0;
-      FlxTween.tween(shipBeam, {alpha: 0.5}, 0.3, {ease: FlxEase.quadIn});
-      arrivedStartAction();
-    } else if (state == ARRIVED && stateTimer > 0) {
-      arrivedContinuousAction(elapsed);
-    } else if (state == ARRIVED && stateTimer < 0) {
-      FlxTween.tween(shipBeam, {alpha: 0}, 0.3, {ease: FlxEase.quadIn, onComplete: disableBeam});
-      state = LEAVING;
-      stateTimer = 1;
-      FlxTween.tween(shipSprite, {y: -300}, 1, {ease: FlxEase.quadIn});
-      FlxTween.tween(shipLight, {alpha: 0}, 1, {ease: FlxEase.quadIn});
-      FlxTween.tween(shipLight.scale, {x: 3, y: 3}, 1, {ease: FlxEase.quintIn});
-    } else if (state == LEAVING && stateTimer < 0) {
-      visitedAction();
-      state = WAITING;
-      stateTimer = waitMaximum;
-    }
-
     arrivalCounter = getArrival();
 
     super.update(elapsed);
+  }
+
+  public function arrive() {
+    FlxTween.tween(shipSprite, {y: landingPoint.y - shipSprite.origin.y - 100}, 1, {ease: FlxEase.quintOut, onComplete: hasArrived});
+    FlxTween.tween(shipLight, {alpha: 0.3}, 1, {ease: FlxEase.quintOut});
+    FlxTween.tween(shipLight.scale, {x: 1, y: 1}, 1, {ease: FlxEase.quintOut});
+  }
+
+  function hasArrived(tween: FlxTween) {
+    state = ARRIVED;
+  }
+
+  public function action() {
+    arrivedAction();
+  }
+
+  public function leave() {
+    state = LEAVING;
+    leaveAnimation();
+  }
+
+  public function leaveAnimation() {
+    FlxTween.tween(shipBeam, {alpha: 0}, 0.3, {ease: FlxEase.quadIn, onComplete: disableBeam});
+    FlxTween.tween(shipSprite, {y: -300}, 1, {ease: FlxEase.quadIn});
+    FlxTween.tween(shipLight, {alpha: 0}, 1, {ease: FlxEase.quadIn});
+    FlxTween.tween(shipLight.scale, {x: 3, y: 3}, 1, {ease: FlxEase.quintIn});
   }
 
   function disableBeam(tween: FlxTween) {
     shipBeam.visible = false;
   }
 
-  function arrivedStartAction(): Void {}
-
-  function arrivedContinuousAction(elapsed: Float): Void {}
+  function arrivedAction(): Void {}
 
   public function getArrival(): Float {
     if (state == WAITING) {
@@ -102,5 +95,4 @@ class Ship extends FlxGroup {
     }
   }
 
-  public function visitedAction(): Void {}
 }
