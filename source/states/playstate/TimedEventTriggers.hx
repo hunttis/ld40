@@ -17,41 +17,40 @@ typedef TimedEvent = {
   var occured: Bool;
   var type: TimedEventType;
   @:optional var icon: String;
+  @:optional var text: String;
 }
 
 class TimedEventTriggers extends FlxGroup {
 
   public var events: Array<TimedEvent> = [
     { 
-      time: 10, occured: false,
+      time: 30, occured: false,
       type: TimedEventType.IMPORT_SHIP_ARRIVAL,
-      icon: "assets/down.png"
+      icon: "assets/down.png", text: "Cattle arrives"
     }, {
-      time: 11, occured: false,
+      time: 31, occured: false,
       type: TimedEventType.IMPORT_SHIP_BEAM
     }, { 
-      time: 13, occured: false,
-      type: TimedEventType.IMPORT_SHIP_LEAVE,
-      icon: "assets/up.png"
+      time: 32, occured: false,
+      type: TimedEventType.IMPORT_SHIP_LEAVE
     }, { 
-      time: 15, occured: false,
+      time: 120, occured: false,
       type: TimedEventType.SALES_SHIP_ARRIVAL,
-      icon: "assets/down.png"
+      icon: "assets/down.png", text: "Sales ship arrives"
     }, { 
-      time: 16, occured: false,
+      time: 121, occured: false,
       type: TimedEventType.SALES_SHIP_BEAM
     }, { 
-      time: 17, occured: false,
+      time: 130, occured: false,
       type: TimedEventType.SALES_SHIP_LEAVE,
-      icon: "assets/up.png"
+      icon: "assets/up.png", text: "Sales ship leaves"
     }, {
-      time: 20, occured: false,
-      type: TimedEventType.GAME_END
+      time: 140, occured: false,
+      type: TimedEventType.GAME_END,
+      text: "Game ends"
     }
 
   ];
-
-  public static inline var TIMELINE_TOTAL: Float = 130;
 
   var gameLevel: GameLevel;
 
@@ -65,10 +64,8 @@ class TimedEventTriggers extends FlxGroup {
   override public function update(elapsed: Float) {
     super.update(elapsed);
     currentTime += elapsed;
-    // trace(currentTime);
 
     var triggeredEvents: Array<TimedEvent> = events.filter(function(event) {
-      // trace("Event should occur: " + event.type + ": " + (!event.occured && event.time < currentTime));
       return !event.occured && event.time < currentTime;
     });
 
@@ -87,9 +84,12 @@ class TimedEventTriggers extends FlxGroup {
       case TimedEventType.SALES_SHIP_ARRIVAL: gameLevel.salesShip.arrive();
       case TimedEventType.SALES_SHIP_BEAM: gameLevel.salesShip.action();
       case TimedEventType.SALES_SHIP_LEAVE: gameLevel.salesShip.leave();
+      case TimedEventType.GAME_END: gameLevel.levelFinished();
       default: trace("Undefined event trigger!" + type);
     }
 
   }
+
+  
 
 }

@@ -40,6 +40,8 @@ class GameLevel extends FlxGroup {
   public var timedEventTriggers: TimedEventTriggers;
   public var eventIndicator: EventIndicator;
 
+  private var readyToFinishLevel: Bool = false;
+
 	public function new(levelNumber): Void {
 		super();
     loadLevel(levelNumber);
@@ -135,30 +137,16 @@ class GameLevel extends FlxGroup {
   }
 
   public function isGameOver(): Bool {
-    if (importShip.hasVisited && !salesShip.hasVisited) {
-      for (creature in creatures.members) {
-        if (creature.alive && creature.behavior.getType() != BehaviorType.ANGRY) {
-          return false;
-        }
-      }
-      return true;
-    }
-    return importShip.hasVisited && salesShip.hasVisited;
-    #if debug // This part (cheat) of the code is only active if the -debug parameter is present
+    #if debug 
       if (FlxG.keys.justPressed.ZERO) {
         return true;
       }
     #end
+    return readyToFinishLevel;
   }
 
-  public function isLevelComplete(): Bool {
-    #if debug // Read above comment
-      if (FlxG.keys.justPressed.NINE) {
-        return true;
-      }
-    #end
-    // Write your level completion terms here
-    return false;
+  public function levelFinished(): Void {
+    readyToFinishLevel = true;
   }
 
   public function getLivingCreatureCount(): Int {

@@ -66,7 +66,7 @@ class Ship extends FlxGroup {
   }
 
   public function action() {
-    arrivedAction();
+    onArrivalAction();
   }
 
   public function leave() {
@@ -85,7 +85,7 @@ class Ship extends FlxGroup {
     shipBeam.visible = false;
   }
 
-  function arrivedAction(): Void {}
+  function onArrivalAction(): Void {}
 
   public function getArrival(): Float {
     if (state == WAITING) {

@@ -15,7 +15,7 @@ class ImportShip extends Ship {
     super.update(elapsed);
   }
 
-  override function arrivedAction() {
+  override function onArrivalAction() {
     Timer.delay(dropCreatures, 400);
   }
 
