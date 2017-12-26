@@ -17,16 +17,29 @@ export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 
 ### Once you have haxe installed
 
+Install Haxeflixel:
 ```
 haxelib setup
-
 haxelib install flixel
-haxelib install flixel-tools
+```
 
-haxelib run flixel setup
+Setup 'lime' command:
+```
+haxelib run lime setup
+```
+
+Install flixel-tools:
+```
+haxelib install flixel-tools
+haxelib run flixel-tools setup
 ```
 
 ### Installing lime
+
+EDIT: this should not be relevant anymore, because the following command should take care of this:
+```
+haxelib run lime setup 
+```
 
 At least for me (vpeurala) lime did not appear in my path automatically when I ran `haxelib install lime`.
 I had to create a file in `/usr/local/bin/lime` (or whichever location you like to use for the lime script, as long as it's in your PATH) with contents:
