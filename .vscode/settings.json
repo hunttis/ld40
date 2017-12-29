@@ -1,9 +1,9 @@
 {
 	"haxe.displayConfigurations": [
+		["export/html5/haxe/debug.hxml"],
 		["export/mac64/neko/haxe/debug.hxml"],
 		["export/flash/haxe/debug.hxml"],
 		["export/flash/haxe/release.hxml"],
-		["export/html5/haxe/debug.hxml"],
 		["export/html5/haxe/release.hxml"],
 		["export/windows/cpp/haxe/debug.hxml"],
 		["export/windows/cpp/haxe/release.hxml"],
